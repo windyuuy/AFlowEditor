@@ -1,0 +1,40 @@
+{
+	"compilerOptions": {
+		"strictNullChecks": true,
+		"outDir": "./dist/",
+		"module": "esnext",
+		"moduleResolution": "Node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"target": "es6",
+		"lib": [
+			"es6",
+			"dom",
+			"es2015.promise",
+		],
+		"sourceMap": true,
+		// "noImplicitAny": true,
+		"allowJs": true,
+		"declaration": true,
+		"inlineSources": true,
+		"composite": true,
+	},
+	"exclude": [
+		"node_modules",
+	],
+	"references": [
+		{
+			"path": "./src",
+		}
+	],
+	"typeAcquisition": {
+		"enable": true,
+		"include": [
+			"src"
+		]
+	},
+	"include": [
+		"./test/*.ts",
+		// "./dist/webgl/webgl.js",
+	]
+}
