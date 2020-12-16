@@ -1,5 +1,26 @@
 
 namespace flowui {
+	/**
+	 * 节点槽位类型信息
+	 */
+	export class BodySlotSpec {
+		inputs: SlotGroup[]
+		outputs: SlotGroup[]
+
+		init() {
+			this.inputs = CleanArray(this.inputs)
+			this.outputs = CleanArray(this.inputs)
+			return this
+		}
+
+		reset() {
+			this.init()
+		}
+	}
+
+	/**
+	 * 节点信息
+	 */
 	export class BodyTemp implements eds.IDataClass {
 		readonly oid: string
 		readonly otype: string
@@ -18,6 +39,20 @@ namespace flowui {
 		init() {
 			this.slotSpec = New(BodySlotSpec)
 			return this
+		}
+
+		forEachSlots(call: (slotTemp: SlotTemp) => void) {
+			const slotSpec = this.slotSpec
+			slotSpec.inputs.forEach(group => {
+				group.slots.forEach(slotTemp => {
+					call(slotTemp)
+				})
+			})
+			slotSpec.outputs.forEach(group => {
+				group.slots.forEach(slotTemp => {
+					call(slotTemp)
+				})
+			})
 		}
 
 		/**
@@ -45,8 +80,12 @@ namespace flowui {
 					if (groupName == null) {
 						groupName = "default"
 					}
-					let groupMap = prefix == "out" ? slotSpec.outputs : slotSpec.inputs
-					let group = groupMap[groupName] ? groupMap[groupName] : groupMap[groupName] = New(SlotGroup)
+					let groups = prefix == "out" ? slotSpec.outputs : slotSpec.inputs
+					let group = groups.find(group => group.name == groupName)
+					if (group == null) {
+						group = New(SlotGroup)
+						groups.push(group)
+					}
 					let slot = New(SlotTemp)
 					slot.name = slotName
 					slot.slotType = slotType

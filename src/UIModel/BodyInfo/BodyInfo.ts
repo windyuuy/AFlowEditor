@@ -34,6 +34,9 @@ namespace flowui {
 		 */
 		bodySlotsInfo = Null(BodySlotsInfo)
 
+		/**
+		 * 类型
+		 */
 		get bodyType() {
 			return this.bodyTemp.name
 		}
@@ -41,6 +44,16 @@ namespace flowui {
 		init() {
 			this.bodySlotsInfo = New(BodySlotsInfo)
 
+			return this
+		}
+
+		load(temp: BodyTemp) {
+			this.bodyTemp = temp
+
+			temp.forEachSlots((slotTemp) => {
+				let slot = New(SlotInfo)
+				slot.slotTemp = slotTemp
+			})
 			return this
 		}
 
