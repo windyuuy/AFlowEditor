@@ -34,7 +34,7 @@ namespace flowui {
 		 */
 		bodySlotsInfo = Null(BodySlotsInfo)
 
-		get title() {
+		get bodyType() {
 			return this.bodyTemp.name
 		}
 

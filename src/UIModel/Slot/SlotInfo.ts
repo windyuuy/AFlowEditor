@@ -9,13 +9,13 @@ namespace flowui {
 		/**
 		 * 模板信息
 		 */
-		slotType = Null(SlotTemp)
+		slotTemp = Null(SlotTemp)
 
 		/**
 		 * 槽点名称
 		 */
 		get slotTitle() {
-			return this.slotType.name
+			return this.slotTemp.name
 		}
 	}
 
