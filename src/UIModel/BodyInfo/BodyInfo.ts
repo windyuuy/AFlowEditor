@@ -4,8 +4,8 @@ namespace flowui {
 	 * 存储槽位实例信息
 	 */
 	export class BodySlotsInfo {
-		inputs: Table<Slot>
-		outputs: Table<Slot>
+		inputs: Table<SlotInfo>
+		outputs: Table<SlotInfo>
 
 		init() {
 			this.inputs = CleanTable(this.inputs)
@@ -17,19 +17,26 @@ namespace flowui {
 	 * 存储body type实例信息
 	 */
 	export class BodyInfo implements eds.IDataClass {
-		readonly oid: string = ""
-		readonly otype: string = ""
-		name: string = ""
+		oid: string
+
+		/**
+		 * 节点名称
+		 */
+		name: string
 
 		/**
 		 * 模板信息
 		 */
-		bodyType = Null(BodyType)
+		bodyTemp = Null(BodyTemp)
 
 		/**
 		 * 存储槽位实例信息
 		 */
 		bodySlotsInfo = Null(BodySlotsInfo)
+
+		get title() {
+			return this.bodyTemp.name
+		}
 
 		init() {
 			this.bodySlotsInfo = New(BodySlotsInfo)

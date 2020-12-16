@@ -1,6 +1,6 @@
 
 namespace flowui {
-	export class BodyType implements eds.IDataClass {
+	export class BodyTemp implements eds.IDataClass {
 		readonly oid: string
 		readonly otype: string
 		name: string
@@ -47,9 +47,10 @@ namespace flowui {
 					}
 					let groupMap = prefix == "out" ? slotSpec.outputs : slotSpec.inputs
 					let group = groupMap[groupName] ? groupMap[groupName] : groupMap[groupName] = New(SlotGroup)
-					let slot = New(SlotType)
-					slot.name = slotInfo
+					let slot = New(SlotTemp)
+					slot.name = slotName
 					slot.slotType = slotType
+					slot.group = group
 					group[slotName] = slot
 				})
 			})

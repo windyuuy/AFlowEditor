@@ -15,7 +15,7 @@ namespace flowui {
 		}
 	}
 
-	export class CodeBodyType extends BodyType {
+	export class CodeBodyTemp extends BodyTemp {
 		code: string
 
 	}
