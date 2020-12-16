@@ -4,7 +4,13 @@ namespace flowui {
 	 * 节点槽位类型信息
 	 */
 	export class BodySlotSpec {
+		/**
+		 * 输入槽位列表
+		 */
 		inputs: SlotGroup[]
+		/**
+		 * 输出槽位列表
+		 */
 		outputs: SlotGroup[]
 
 		init() {
@@ -24,6 +30,10 @@ namespace flowui {
 	export class BodyTemp implements eds.IDataClass {
 		readonly oid: string
 		readonly otype: string
+
+		/**
+		 * 模板名称
+		 */
 		name: string
 
 		/**
