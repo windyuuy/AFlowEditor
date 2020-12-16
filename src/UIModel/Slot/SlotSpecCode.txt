@@ -1,0 +1,9 @@
+
+槽位书写格式：
+
+语法：
+[in|out] varname:typename,...;
+
+示例：
+in slot1:DataClass,slot2:DataClass;
+out slot3:DataClass,slot4:DataClass;

@@ -11,7 +11,7 @@ namespace eds {
 		/**
 		 * 是否自动gc释放
 		 */
-		autoRelease?: bool
+		// autoRelease?: bool
 	}
 	export class DataClass implements IDataClass {
 		readonly oid?: TDataClassID;
