@@ -30,17 +30,8 @@ namespace eds {
 			return this
 		}
 
-		protected enableCache: boolean = true
-		withCache(enable: boolean) {
-			this.enableCache = enable
-		}
-
 		forEach(call: (data: IDataClass) => any): DataQuery {
-			let cacheKey: string = null
-			if (this.enableCache) {
-				cacheKey = this.filter.includes.map(feature => feature.name).join("_+_")
-			}
-			this.dataManager.forEachWithFeatures(this.filter.includes, call, cacheKey)
+			this.dataManager.forEachWithFeatures(this.filter.includes, call)
 			return this
 		}
 

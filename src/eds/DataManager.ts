@@ -46,8 +46,9 @@ namespace eds {
 			return data
 		}
 
-		deattachDatas<T extends IDataClass>(cls: new () => T): void {
-			let group = this.dataContainer.deattachFeatureGroup(cls.name) || []
+		deattachDatas<T extends IDataClass>(cls: new () => T): T[] | undefined {
+			let group = this.dataContainer.deattachFeatureGroup(cls) || []
+			return group as T[]
 		}
 
 		deattachData<T extends IDataClass>(data: T): void {
@@ -62,25 +63,12 @@ namespace eds {
 
 		//#region feature function
 
-		addFeature(feature: IDataFeature) {
-			this.dataContainer.addFeature(feature)
-		}
-		addFeatures(features: IDataFeature[]) {
-			this.dataContainer.addFeatures(features)
-		}
-		removeFeature(feature: IDataFeature) {
-			this.dataContainer.removeFeature(feature)
-		}
-		removeFeatures(features: IDataFeature[]) {
-			this.dataContainer.removeFeatures(features)
-		}
-
 		/**
 		 * 移除特征组
 		 * @param feature
 		 */
 		deattachFeatureGroup<T extends IDataClass = IDataClass>(feature: IDataFeature<T>): T[] {
-			let group = this.dataContainer.deattachFeatureGroup(feature.name)
+			let group = this.dataContainer.deattachFeatureGroup(feature)
 			return (group || []) as T[]
 		}
 
@@ -90,14 +78,6 @@ namespace eds {
 		 */
 		getTypeFeatureGroup<T extends IDataClass>(cls: new () => T): T[] {
 			return this.dataContainer.getTypeFeatureGroup(cls) || [] as T[]
-		}
-
-		/**
-		 * 按feature名称取
-		 * @param name 
-		 */
-		getFeatureGroupByName<T extends IDataClass = IDataClass>(name: string): T[] {
-			return this.dataContainer.getFeatureGroupByName(name) || [] as T[]
 		}
 
 		/**
@@ -118,24 +98,9 @@ namespace eds {
 			return map as TFeatureGroupMap<T>
 		}
 
-		forEachWithFeatures(features: IDataFeature[], call: (data: IDataClass) => any, cacheKey?: string): void {
+		forEachWithFeatures(features: IDataFeature[], call: (data: IDataClass) => any): void {
 			if (!call) {
 				call = EmptyCall
-			}
-
-			const dataContainer = this.dataContainer
-
-			/**
-			 * 先检查是否已构建缓存
-			 */
-			let directGroup = dataContainer.getFeatureGroupByName(cacheKey)
-			if (directGroup) {
-				for (let data of directGroup) {
-					if (call(data)) {
-						break;
-					}
-				}
-				return
 			}
 
 			let minFeature = ArrayHelper.min(features, (feature) => {
@@ -144,45 +109,29 @@ namespace eds {
 
 			if (minFeature) {
 				let index = features.indexOf(minFeature)
-				let maps = features.map(feature => {
+				let otherFeatures = features.concat().splice(index, 1)
+				let maps = otherFeatures.map(feature => {
 					return this.getFeatureGroupMap(feature)
 				})
-				maps.splice(index, 1)
 
-
-				if (cacheKey) {
-					var validGroupMap = EmptyTable()
-					var validGroup = []
-				}
 
 				let group = this.getFeatureGroup(minFeature)
-				let isContinue = true
 				for (let data of group) {
 					let isMatched = true
 					for (let map of maps) {
-						if (map[data.oid]) {
+						if (!map[data.oid]) {
 							isMatched = false
 							break
 						}
 					}
 
 					if (isMatched) {
-						if (cacheKey) {
-							validGroup.push(data)
-							validGroupMap[data.oid] = data
-						}
-
-						if (isContinue) {
-							if (call(data)) {
-								isContinue = false
-							}
+						if (call(data)) {
+							break
 						}
 					}
 				}
 
-				if (cacheKey) {
-					dataContainer.addFeatureGroup(cacheKey, validGroup, validGroupMap)
-				}
 			}
 		}
 

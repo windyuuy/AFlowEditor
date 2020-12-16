@@ -18,9 +18,6 @@ namespace eds {
 			}
 			this.referRelationMap = EmptyTable()
 			this.dataMap = EmptyTable()
-			this.usingFeatures = EmptyTable()
-			this.featureCache = EmptyTable()
-			this.featureCacheMap = EmptyTable()
 			return this
 		}
 
@@ -81,6 +78,10 @@ namespace eds {
 			this.allDatas.forEach(call)
 		}
 
+		filterDatas(call: (data: IDataClass) => boolean) {
+			return this.allDatas.filter(call)
+		}
+
 		existsData(ecsdata: IDataClass) {
 			return !!this.dataMap[ecsdata.oid]
 		}
@@ -89,44 +90,10 @@ namespace eds {
 			return this.dataMap[oid]
 		}
 
-		protected presetDataFeature(data: IDataClass) {
-			const featureCache = this.featureCache
-			const featureCacheMap = this.featureCacheMap
-
-			for (let key in this.usingFeatures) {
-				let feature = this.usingFeatures[key]
-				let b = doFilter(feature, data)
-				if (b) {
-					let cacheKey = feature.name
-					const ls = featureCache[cacheKey]
-					const map = featureCacheMap[cacheKey]
-					ls.push(data)
-					map[data.oid] = data
-				}
-			}
-		}
-		protected cleanDataFeature(data: IDataClass) {
-			const featureCache = this.featureCache
-			const featureCacheMap = this.featureCacheMap
-
-			for (let key in this.usingFeatures) {
-				let feature = this.usingFeatures[key]
-				let cacheKey = feature.name
-				const ls = featureCache[cacheKey]
-				const map = featureCacheMap[cacheKey]
-				let index = ls.indexOf(data)
-				if (index >= 0) {
-					ls.splice(index, 1)
-				}
-				delete map[data.oid]
-			}
-		}
-
 		attach(data: IDataClass) {
 			if (!this.dataMap[data.oid]) {
 				this.dataMap[data.oid] = data
 				this.allDatas.push(data)
-				this.presetDataFeature(data)
 			}
 			return data
 		}
@@ -147,116 +114,14 @@ namespace eds {
 			}
 		}
 
-		protected usingFeatures: { [key: string]: IDataFeature }
-		protected featureCache: { [key: string]: IDataClass[] }
-		protected featureCacheMap: { [key: string]: TFeatureGroupMap }
-
-		addFeature(feature: IDataFeature) {
-			this.usingFeatures[feature.name] = feature
-		}
-		addFeatures(features: IDataFeature[]) {
-			features.forEach(feature => {
-				this.addFeature(feature)
-			})
-		}
-		removeFeature(feature: IDataFeature) {
-			delete this.usingFeatures[feature.name]
-		}
-		removeFeatures(features: IDataFeature[]) {
-			features.forEach(feature => {
-				this.removeFeature(feature)
-			})
-		}
-
-		/**
-		 * 构建特征群组
-		 */
-		buildFeatureGroups(features: IDataFeature[]): void {
-			const featureCache = this.featureCache
-			const featureCacheMap = this.featureCacheMap
-
-			// 生成默认的类映射
-			this.forEachDatas((data) => {
-				let key = data.otype
-				if (featureCache[key]) {
-					featureCache[key].length = 0
-				} else {
-					featureCache[key] = []
-				}
-				featureCacheMap[key] = EmptyTable()
-			})
-			this.forEachDatas((data) => {
-				let key = data.otype
-				featureCache[key].push(data)
-				featureCacheMap[key][data.oid] = data
-			})
-
-			// 生成features的类映射
-			features.forEach(feature => {
-				let key = feature.name
-				if (featureCache[key]) {
-					featureCache[key].length = 0
-				} else {
-					featureCache[key] = []
-				}
-				featureCacheMap[key] = EmptyTable()
-			})
-			features.forEach(feature => {
-				this._buildFeatureGroup(feature, feature.name)
-			})
-
-		}
-
-		protected _buildFeatureGroup(feature: IDataFeature, key?: string): void {
-			const featureCache = this.featureCache
-			const featureCacheMap = this.featureCacheMap
-
-			const ls = featureCache[key]
-			const map = featureCacheMap[key]
-			this.forEachDatas((data) => {
-				let b = doFilter(feature, data)
-				if (b) {
-					ls.push(data)
-					map[data.oid] = data
-				}
-			})
-		}
-
-		buildFeatureGroup(feature: IDataFeature, key?: string): void {
-			const featureCache = this.featureCache
-			const featureCacheMap = this.featureCacheMap
-
-			key = key || feature.name
-			if (featureCache[key]) {
-				featureCache[key].length = 0
-			} else {
-				featureCache[key] = []
-			}
-			featureCacheMap[key] = EmptyTable()
-
-			this._buildFeatureGroup(feature, key)
-		}
-
-		addFeatureGroup(cacheKey: string, validGroup: any[], validGroupMap: any) {
-			this.featureCache[cacheKey] = validGroup
-			this.featureCacheMap[cacheKey] = validGroupMap
-		}
-
-		existFeatureGroup(key: string) {
-			return !!this.featureCache[key]
-		}
-
-		getFeatureGroupByName<T extends IDataClass = IDataClass>(name: string): T[] | undefined {
-			let group = this.featureCache[name]
-			return group as T[]
-		}
-
 		/**
 		 * 获取类型所属特征组
 		 * @param cls 
 		 */
 		getTypeFeatureGroup<T extends IDataClass>(cls: new () => T): T[] | undefined {
-			return this.getFeatureGroupByName(cls.name) as T[]
+			let otype = cls.name;
+			let datas = this.filterDatas(data => data.otype == otype)
+			return datas as T[]
 		}
 
 		/**
@@ -264,8 +129,8 @@ namespace eds {
 		 * @param feature 
 		 */
 		getFeatureGroup<T extends IDataClass>(feature: IDataFeature<T>): T[] | undefined {
-			let group = this.featureCache[feature.name]
-			return group as T[]
+			let datas = this.filterDatas(data => doFilter(feature, data))
+			return datas as T[]
 		}
 
 		/**
@@ -273,7 +138,11 @@ namespace eds {
 		 * @param feature 
 		 */
 		getFeatureGroupMap<T extends IDataClass>(feature: IDataFeature<T>): TFeatureGroupMap<T> {
-			let map = this.featureCacheMap[feature.name]
+			let datas = this.filterDatas(data => doFilter(feature, data))
+			let map: { [key: string]: IDataClass } = {}
+			datas.forEach((data) => {
+				map[data.oid] = data
+			})
 			return map as TFeatureGroupMap<T>
 		}
 
@@ -281,14 +150,26 @@ namespace eds {
 		 * 按特征组移除所有对象
 		 * @param feature
 		 */
-		deattachFeatureGroup(name: string): IDataClass[] | undefined {
-			let group = this.featureCache[name]
+		deattachFeatureGroup(feature: IDataFeature): IDataClass[] | undefined {
+			let group = this.getFeatureGroup(feature)
 			if (group) {
 				group.forEach(data => {
 					this.deattach(data)
 				})
-				delete this.featureCache[name]
-				delete this.featureCacheMap[name]
+			}
+			return group
+		}
+
+		/**
+		 * 按特征组移除所有对象
+		 * @param feature
+		 */
+		deattachTypeFeatureGroup(cls: new () => IDataClass): IDataClass[] | undefined {
+			let group = this.getTypeFeatureGroup(cls)
+			if (group) {
+				group.forEach(data => {
+					this.deattach(data)
+				})
 			}
 			return group
 		}
