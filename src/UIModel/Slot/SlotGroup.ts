@@ -3,7 +3,14 @@ namespace flowui {
 	export class SlotGroup {
 		oid: string
 		name: string
-		slotGroupSpec: string
+
+		slots: SlotType[]
+
+		init() {
+			this.slots = CleanArray(this.slots)
+
+			return this;
+		}
 	}
 
 }

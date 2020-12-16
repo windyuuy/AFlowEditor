@@ -12,5 +12,6 @@ namespace eds {
 	export import ArrayHelper = lang.helper.ArrayHelper
 	export import EmptyTable = lang.EmptyTable
 	export import EmptyCall = lang.EmptyCall
+	export import StrTypeMap = lang.StrTypeMap
 
 }

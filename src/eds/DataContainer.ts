@@ -111,7 +111,9 @@ namespace eds {
 
 				delete dataMap[key]
 				delete data["dataManager"]
+				return true
 			}
+			return false
 		}
 
 		/**

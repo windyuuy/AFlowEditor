@@ -51,8 +51,8 @@ namespace eds {
 			return group as T[]
 		}
 
-		deattachData<T extends IDataClass>(data: T): void {
-			this.dataContainer.deattach(data)
+		deattachData<T extends IDataClass>(data: T): bool {
+			return this.dataContainer.deattach(data)
 		}
 
 		attachData<T extends IDataClass>(data: T): T {

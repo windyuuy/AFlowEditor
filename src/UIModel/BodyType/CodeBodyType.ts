@@ -1,18 +1,17 @@
 
 namespace flowui {
 	export class BodySlotSpec {
-		inputs: SlotGroup[]
-		outputs: SlotGroup[]
+		inputs: Table<SlotGroup>
+		outputs: Table<SlotGroup>
 
 		init() {
-			this.inputs = []
-			this.outputs = []
+			this.inputs = CleanTable(this.inputs)
+			this.outputs = CleanTable(this.inputs)
 			return this
 		}
 
 		reset() {
-			this.inputs.length = 0
-			this.outputs.length = 0
+			this.init()
 		}
 	}
 

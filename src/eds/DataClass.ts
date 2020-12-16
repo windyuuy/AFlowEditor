@@ -47,13 +47,21 @@ namespace eds {
 		writable: false,
 		enumerable: false,
 	})
-	export function NullData<T extends IDataClass>(cls: new () => T): T {
+	export function NullData<T extends Object>(cls: new () => T): T {
 		return _NullData as any as T
 	}
 
-	export function NewData<T extends IDataClass>(cls: new () => T): T {
+	const DataClassDefTypeMap: StrTypeMap<DataClassDef> = EmptyTable()
+	export function NewData<T extends Object>(cls: new () => T): T {
+		let obj = DataClassDefTypeMap[cls.name]
+		if (obj) {
+			return obj as any as T
+		}
+
 		let typeData = new DataClassDef()
 		typeData.t = cls
+		DataClassDefTypeMap[cls.name] = typeData
+
 		return typeData as any as T
 	}
 

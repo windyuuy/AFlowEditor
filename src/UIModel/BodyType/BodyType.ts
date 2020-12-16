@@ -13,10 +13,10 @@ namespace flowui {
 		/**
 		 * 由代码生成的槽点信息缓存
 		 */
-		slotSpec: BodySlotSpec
+		slotSpec = Null(BodySlotSpec)
 
 		init() {
-			this.slotSpec = new BodySlotSpec().init()
+			this.slotSpec = New(BodySlotSpec)
 			return this
 		}
 
@@ -37,21 +37,21 @@ namespace flowui {
 				let m = line.match(/\s*((?:in)|(?:out))\s+(.+)/)
 				let prefix = m[1]
 				let slotsLine = m[2]
-				let slotNames = slotsLine.split(',')
+				let slotInfos = slotsLine.split(',')
 
-				if (prefix == "in") {
-					slotNames.forEach(slotName => {
-						let slot = new Slot()
-						slot.name = slotName
-						slotSpec.inputs.push()
-					})
-				} else {
-					slotNames.forEach(slotName => {
-						let slot = new Slot()
-						slot.name = slotName
-						slotSpec.outputs.push()
-					})
-				}
+				slotInfos.forEach(slotInfo => {
+					let m2 = slotInfo.match(/(?:([a-zA-Z_0-9]+)\.)?([a-zA-Z_0-9]+)\:(.+)/)
+					let [_, groupName, slotName, slotType] = m2
+					if (groupName == null) {
+						groupName = "default"
+					}
+					let groupMap = prefix == "out" ? slotSpec.outputs : slotSpec.inputs
+					let group = groupMap[groupName] ? groupMap[groupName] : groupMap[groupName] = New(SlotGroup)
+					let slot = New(SlotType)
+					slot.name = slotInfo
+					slot.slotType = slotType
+					group[slotName] = slot
+				})
 			})
 		}
 
