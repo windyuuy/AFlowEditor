@@ -4,7 +4,7 @@ namespace eds {
 
 	export type TDataFeatureFunc = (data: IDataClass) => boolean
 	export interface IDataFeature<T extends IDataClass = IDataClass> {
-		name: string
+		name?: string
 		filter?(data: T): boolean
 
 		includes?: IDataFeature<IDataClass>[]

@@ -14,16 +14,27 @@ namespace flowui {
 		/**
 		 * 输入边列表
 		 */
-		inputEdges: EdgeInfo[]
+		get inputEdges(): EdgeInfo[] {
+			let edges = dataManager.query().with({
+				filter: (data) => {
+					return data instanceof EdgeInfo && data.inputSlot.oid == this.oid
+				}
+			}).toArray<EdgeInfo>()
+			return edges
+		}
 		/**
 		 * 输出边列表
 		 */
-		outputEdges: EdgeInfo[]
+		get outputEdges(): EdgeInfo[] {
+			let edges = dataManager.query().with({
+				filter: (data) => {
+					return data instanceof EdgeInfo && data.outputSlot.oid == this.oid
+				}
+			}).toArray<EdgeInfo>()
+			return edges
+		}
 
 		init() {
-			this.inputEdges = CleanArray(this.inputEdges)
-			this.outputEdges = CleanArray(this.outputEdges)
-
 			return this
 		}
 
@@ -33,6 +44,7 @@ namespace flowui {
 		get slotTitle() {
 			return this.slotTemp.name
 		}
+
 	}
 
 }

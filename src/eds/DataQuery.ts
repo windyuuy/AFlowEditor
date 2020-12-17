@@ -35,12 +35,12 @@ namespace eds {
 			return this
 		}
 
-		toArray(): IDataClass[] {
+		toArray<T extends IDataClass>(): T[] {
 			let array: IDataClass[] = []
 			this.forEach((data) => {
 				array.push(data)
 			})
-			return array
+			return array as T[]
 		}
 		first(): IDataClass {
 			let first: IDataClass = null
