@@ -26,15 +26,7 @@ namespace flowui {
 			this.rootLayer = rootLayer
 			rootLayer.setSceneView(this)
 			rootLayer.name = "touchLayer"
-			rootLayer.scale = new Vector2(2, 1)
-
-			// let groupView = New(GroupView)
-			// groupView.parent = this.rootLayer
-			// groupView.view.attr({
-			// 	scale: [2, 1],
-			// 	anchor: [0, 0.5],
-			// 	pos: [0, 0],
-			// })
+			rootLayer.scale = new Vector2(1, 1)
 
 			let bodyView = New(BodyView)
 			bodyView.parent = rootLayer
@@ -44,7 +36,7 @@ namespace flowui {
 
 			bodyView.addComp(DragableComp)
 			let editorComp = bodyView.addComp(EditorComp)
-			editorComp.text = "lkjjjj"
+			editorComp.text = "qefwfe"
 
 			return this
 		}

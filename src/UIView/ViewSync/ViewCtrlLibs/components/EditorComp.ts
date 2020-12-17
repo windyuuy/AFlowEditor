@@ -49,7 +49,7 @@ namespace flowui {
 			// const $ = require("jquery")
 			let editorId = this.editorId
 			let p1 = $(`
-		<div id="${editorId}" class="topic-container" style="position: absolute; top: 0px; left: 0px; transform: translate(-20%,-40%);">
+		<div id="${editorId}" class="topic-container" style="position: absolute; top: 0px; left: 0px; transform: translate(-50%,-40%);">
 			<div class="scaleNode">
 				<p class="input" contenteditable="true" style="overflow-y:auto;overflow-x: hidden; "></p>
 			</div>
