@@ -10,6 +10,16 @@ namespace eds {
 		includes?: IDataFeature<IDataClass>[]
 		excludes?: IDataFeature<IDataClass>[]
 	}
+
+	export function ClassFeature<T>(cls: new () => T) {
+		return {
+			name: cls.name,
+			filter: (data) => {
+				return data instanceof cls
+			}
+		} as IDataFeature
+	}
+
 	export class DataFeature<T extends IDataClass> implements IDataFeature<T> {
 		name: string
 		filter?(data: T)

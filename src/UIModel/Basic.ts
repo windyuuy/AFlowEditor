@@ -1,5 +1,13 @@
 
+/// <reference path="../deps/spritejs/spritejs.js" />
+/// <reference path="../basic/Basic.ts" />
+/// <reference path="../basic/ObjectUtils.ts" />
+/// <reference path="../basic/Vector.ts" />
+/// <reference path="../basic/ZSize.ts" />
+
 namespace flowui {
+	window["flowui"] = flowui
+
 	export import bool = eds.bool
 	import StrTypeMap = lang.StrTypeMap
 	export import Table = lang.StrTypeMap
@@ -7,6 +15,12 @@ namespace flowui {
 	export import IDataClass = eds.IDataClass
 	import NullData = eds.NullData
 	export import NewData = eds.NewData
+
+	export import Vector = math.Vector
+	export import Vector2 = math.Vector2
+	export import Vector3 = math.Vector3
+	export import Vector4 = math.Vector4
+	export import Size2 = math.Size2
 
 	export let dataManager: eds.DataManager
 
@@ -45,7 +59,11 @@ namespace flowui {
 	export function New<T>(cls: new () => T, paras?: any[]): T {
 		let data = dataManager.addData(cls)
 		if (data["init"]) {
-			data["init"](...paras)
+			if (!paras) {
+				data["init"]()
+			} else {
+				data["init"](...paras)
+			}
 		}
 		return data
 	}
@@ -98,4 +116,5 @@ namespace flowui {
 			return Clean(container)
 		}
 	}
+
 }

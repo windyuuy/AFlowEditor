@@ -1,5 +1,7 @@
 
 namespace lang {
+	export type bool = boolean
+
 	export const EmptyCall = function (): any { }
 
 	export const EmptyTable = function () {

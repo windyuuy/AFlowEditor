@@ -29,7 +29,7 @@ namespace flods {
 					L${-halfWidth2},${-halfH}A${radius},${radius},0,0,0,${-halfWidth},${-halfH2}
 					L${-halfWidth},${halfH2}A${radius},${radius},90,0,0,${-halfWidth2},${halfH}
 					`,
-				scale: 0.5,
+				scaleX: 0.1,
 				strokeColor: '#033',
 				fillColor: '#839',
 				lineWidth: 12,
@@ -61,12 +61,19 @@ namespace flods {
 	export function test() {
 
 		const imgUrl = 'https://s5.ssl.qhres.com/static/ec9f373a383d7664.svg'
+
+		// const layer = paper.layer()
+		const layer = new spritejs.Layer()
 		const container = document.getElementById('container');
 		const paper = new Scene({
 			container,
 			width: 400,
 			height: 400,
 		})
+		paper.appendChild(layer)
+		// layer.attr({
+		// 	pos: [100, 0]
+		// })
 
 		const sprite = new Sprite(imgUrl)
 		sprite.attr({
@@ -76,7 +83,7 @@ namespace flods {
 			borderRadius: 200,
 		})
 
-		paper.layer().appendChild(sprite)
+		layer.appendChild(sprite)
 
 		let xx = {
 			width: 200,
@@ -88,7 +95,11 @@ namespace flods {
 		group.attr({
 			pos: [200, 100],
 		})
-		paper.layer().appendChild(group)
+		layer.appendChild(group)
+
+		group.addEventListener("click", (evt) => {
+			console.log(evt)
+		})
 
 	}
 }

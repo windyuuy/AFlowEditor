@@ -47,7 +47,7 @@ namespace eds {
 		}
 
 		deattachDatas<T extends IDataClass>(cls: new () => T): T[] | undefined {
-			let group = this.dataContainer.deattachFeatureGroup(cls) || []
+			let group = this.dataContainer.deattachFeatureGroup(ClassFeature(cls)) || []
 			return group as T[]
 		}
 

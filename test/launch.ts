@@ -1,4 +1,6 @@
 
 import "../dist/flods/flods"
 
-flods.test()
+// flods.test()
+flowui.MainTest()
+
