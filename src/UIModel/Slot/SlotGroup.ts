@@ -19,9 +19,26 @@ namespace flowui {
 		slots: SlotTemp[]
 
 		init() {
+			DelAll(this.slots)
 			this.slots = CleanArray(this.slots)
 
 			return this;
+		}
+		clear() {
+			this.init()
+		}
+
+		/**
+		 * 创建槽位信息
+		 * @param slotName 
+		 * @param slotType 
+		 */
+		addNewSlot(slotName: string, slotType: string) {
+			let slot = New(SlotTemp)
+			slot.name = slotName
+			slot.slotType = slotType
+			slot.group = this
+			this.slots.push(slot)
 		}
 	}
 

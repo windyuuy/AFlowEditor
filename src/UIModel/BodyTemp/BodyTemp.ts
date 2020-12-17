@@ -100,13 +100,10 @@ namespace flowui {
 					let group = groups.find(group => group.name == groupName)
 					if (group == null) {
 						group = New(SlotGroup)
+						group.name = groupName
 						groups.push(group)
 					}
-					let slot = New(SlotTemp)
-					slot.name = slotName
-					slot.slotType = slotType
-					slot.group = group
-					group[slotName] = slot
+					group.addNewSlot(slotName,slotType)
 				})
 			})
 		}

@@ -8,8 +8,26 @@ namespace flowui {
 		outputs: Table<SlotInfo>
 
 		init() {
+			DelAll(this.inputs)
 			this.inputs = CleanTable(this.inputs)
+			DelAll(this.outputs)
+			this.outputs = CleanTable(this.outputs)
 			return this
+		}
+
+		clear() {
+			this.init()
+		}
+
+		addNewSlot(slotTemp: SlotTemp) {
+			let slot = New(SlotInfo)
+			slot.slotTemp = slotTemp
+
+			if (slotTemp.slotPos == "in") {
+				TableAdd(this.inputs, slot)
+			} else {
+				TableAdd(this.outputs, slot)
+			}
 		}
 	}
 
@@ -59,14 +77,7 @@ namespace flowui {
 			this.bodyTemp = temp
 
 			temp.forEachSlots((slotTemp) => {
-				let slot = New(SlotInfo)
-				slot.slotTemp = slotTemp
-
-				if (slotTemp.slotPos == "in") {
-					TableAdd(this.bodySlotsInfo.inputs, slot)
-				} else {
-					TableAdd(this.bodySlotsInfo.outputs, slot)
-				}
+				this.bodySlotsInfo.addNewSlot(slotTemp)
 			})
 			return this
 		}
