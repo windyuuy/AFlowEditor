@@ -5,6 +5,7 @@ namespace flowui {
 
 		touchLayer: LayerView = null
 
+		hostPos: Vector2 = new Vector2()
 		beginPos: Vector2 = new Vector2()
 		curPos: Vector2 = new Vector2()
 		isDraging: bool = false
@@ -13,24 +14,33 @@ namespace flowui {
 			const touchLayer = dataManager.getTypeFeatureGroup(TouchLayerView)[0]
 			this.touchLayer = touchLayer
 
-			touchLayer.event.onNamedEvent("dragcomp", UIEventKey.mousedown, (evt) => {
+			// listen self
+			this.host.event.onNamedEvent("dragcomp", UIEventKey.mousedown, (evt) => {
 				this.isDraging = true
+			})
+			this.host.event.onNamedEvent("dragcomp", UIEventKey.mouseup, (evt) => {
+				this.isDraging = false
+			})
+
+			// listen layer
+			touchLayer.event.onNamedEvent("dragcomp", UIEventKey.mousedown, (evt) => {
 				this.beginPos.x = evt.x
 				this.beginPos.y = evt.y
 				this.curPos.merge(this.beginPos)
+				this.hostPos = this.host.position.clone()
 			})
 			touchLayer.event.onNamedEvent("dragcomp", UIEventKey.mousemove, (evt) => {
 				this.curPos.x = evt.x
 				this.curPos.y = evt.y
 
-				this.onDrag(this.curPos)
+				this.onDrag()
 			})
 			touchLayer.event.onNamedEvent("dragcomp", UIEventKey.mouseup, (evt) => {
 				this.isDraging = false
 				this.curPos.x = evt.x
 				this.curPos.y = evt.y
 
-				this.onDrag(this.curPos)
+				this.onDrag()
 			})
 		}
 
@@ -38,10 +48,13 @@ namespace flowui {
 			this.touchLayer.event.offNameEvent("dragcomp")
 		}
 
-		onDrag(pos: Vector2) {
+		onDrag() {
 			if (this._enabled) {
 				if (this.isDraging) {
-					this.host.position = pos
+					let offset: Vector2 = this.curPos.clone().subDown(this.beginPos)
+					let scale = this.touchLayer.scale
+					let scaledPos = new Vector2(offset.x / scale.x, offset.y / scale.y).addUp(this.hostPos)
+					this.host.position = scaledPos
 				}
 			}
 		}

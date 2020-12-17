@@ -22,7 +22,7 @@ namespace flowui {
 
 		init() {
 			this._transform = new Transform()
-			this._scale = 1
+			this._scale = new Vector2(1, 1)
 			this._contentSize = new Size2()
 
 			this.comps = CleanTable(this.comps)
@@ -50,15 +50,17 @@ namespace flowui {
 			return this
 		}
 
-		addComp(cls: new () => ViewComp) {
+		addComp<T extends ViewComp>(cls: new () => T): T {
 			const comp = new cls().init(this)
 			this.comps[cls.name] = comp
 			comp.add()
+			return comp
 		}
-		removeComp(cls: new () => ViewComp) {
+		removeComp<T extends ViewComp>(cls: new () => T): T {
 			const comp = this.comps[cls.name]
 			comp.remove()
 			delete this.comps[cls.name]
+			return comp as T
 		}
 
 		onLoad() {
@@ -88,6 +90,13 @@ namespace flowui {
 			return this._transform;
 		}
 
+		getWorldPosition() {
+			return this.transform.getWorldPosition()
+		}
+		getWorldScale() {
+			return this.transform.getWorldScale()
+		}
+
 		public get position(): Vector2 {
 			return this._transform.position;
 		}
@@ -96,21 +105,34 @@ namespace flowui {
 			this.view.attr({
 				pos: [value.x, value.y],
 			})
+			this.updateTransform()
+		}
+
+		protected updateTransform() {
+			this.emitCompsMsg("transform", this.transform)
 		}
 
 		get worldPosition() {
 			return this._transform.getWorldPosition()
 		}
 
-		protected _scale: number;
-		public get scale(): number {
-			return this._scale;
+		protected _scale: Vector2;
+		public get scale(): Vector2 {
+			return this._transform.scale
 		}
-		public set scale(value: number) {
-			this._scale = value;
+		public set scale(value: Vector2) {
+			this._transform.scale.merge(value)
 			this.view.attr({
-				scale: value,
+				scale: [this.scale.x, this.scale.y,],
 			})
+			this.updateTransform()
+		}
+
+		emitCompsMsg(key: string, data: any) {
+			for (let name in this.comps) {
+				let comp = this.comps[name]
+				comp.emit(key, data)
+			}
 		}
 
 		protected _contentSize: Size2
@@ -132,7 +154,7 @@ namespace flowui {
 		}
 
 		protected updateContentSize() {
-
+			this.emitCompsMsg("contentSize", this._contentSize)
 		}
 
 		private _parent: ViewBase;
@@ -144,9 +166,11 @@ namespace flowui {
 			if (parentView instanceof spritejs.Group) {
 				this._parent = value;
 				parentView.appendChild(this.view)
+				this.updateTransform()
 			} else if (parentView instanceof spritejs.Layer) {
 				this._parent = value;
 				parentView.appendChild(this.view)
+				this.updateTransform()
 			} else if (parentView == null) {
 				this._parent = null
 				this.view.remove()

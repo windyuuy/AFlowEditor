@@ -7,22 +7,36 @@ namespace flowui {
 	export class Transform {
 		parent?: Transform
 
-		scale: number = 1
+		scale: Vector2 = new Vector2(1, 1)
 		position: Vector2 = new Vector2()
 
-		getWorldPosition(): Vector2 {
+		getWebPagePosition(): Vector2 {
 			if (this.parent) {
-				return this.parent.getWorldPosition().addUp(this.position)
+				let parentPos = this.parent.getWebPagePosition()
+				let parentScale = this.parent.scale
+				let offset = this.position.clone().multUp(parentScale)
+				let pos = parentPos.addUp(offset)
+				return pos
 			} else {
 				return this.position.clone()
 			}
 		}
 
-		getWorldScale(): number {
+		getWorldPosition(): Vector2 {
 			if (this.parent) {
-				return this.parent.getWorldScale() * this.scale
+				let parentPos = this.parent.getWorldPosition()
+				let pos = parentPos.addUp(this.position)
+				return pos
 			} else {
-				return this.scale
+				return this.position.clone()
+			}
+		}
+
+		getWorldScale(): Vector2 {
+			if (this.parent) {
+				return this.parent.getWorldScale().multUp(this.scale)
+			} else {
+				return this.scale.clone()
 			}
 		}
 

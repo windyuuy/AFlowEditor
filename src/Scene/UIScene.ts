@@ -22,20 +22,29 @@ namespace flowui {
 			})
 			this.sceneView = sceneView
 
-			this.rootLayer = New(LayerView)
-			this.rootLayer.setSceneView(this)
+			const rootLayer = New(TouchLayerView)
+			this.rootLayer = rootLayer
+			rootLayer.setSceneView(this)
+			rootLayer.name = "touchLayer"
+			rootLayer.scale = new Vector2(2, 1)
 
-			const touchLayer = New(TouchLayerView)
-			touchLayer.setSceneView(this)
-			touchLayer.name = "touchLayer"
+			// let groupView = New(GroupView)
+			// groupView.parent = this.rootLayer
+			// groupView.view.attr({
+			// 	scale: [2, 1],
+			// 	anchor: [0, 0.5],
+			// 	pos: [0, 0],
+			// })
 
 			let bodyView = New(BodyView)
-			bodyView.parent = this.rootLayer
-			bodyView.transform.parent = this.rootLayer.transform
+			bodyView.parent = rootLayer
+			bodyView.transform.parent = rootLayer.transform
 			bodyView.contentSize = new Size2(200, 100)
 			bodyView.position = new Size2(200, 100)
 
 			bodyView.addComp(DragableComp)
+			let editorComp = bodyView.addComp(EditorComp)
+			editorComp.text = "lkjjjj"
 
 			return this
 		}

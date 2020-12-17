@@ -1,4 +1,4 @@
-namespace eds {
+namespace lang {
 
 	/**
 	 * Any compatible Long instance.

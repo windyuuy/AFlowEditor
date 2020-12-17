@@ -11,6 +11,13 @@ namespace flowui {
 			return this
 		}
 
+		emit(key: string, data: any) {
+			let fKey = `update${key[0].toUpperCase()}${key.substr(1)}`
+			if (this[fKey]) {
+				this[fKey](data)
+			}
+		}
+
 		onInit() {
 		}
 
@@ -65,6 +72,21 @@ namespace flowui {
 			}
 		}
 
+		updateTransform(transform: Transform) {
+
+		}
+
+		getWebPagePosition() {
+			return this.host.transform.getWebPagePosition()
+		}
+
+		getWorldPosition() {
+			return this.host.transform.getWorldPosition()
+		}
+
+		getWorldScale() {
+			return this.host.transform.getWorldScale()
+		}
 	}
 
 }

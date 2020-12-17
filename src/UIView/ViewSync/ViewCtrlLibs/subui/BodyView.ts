@@ -13,18 +13,6 @@ namespace flowui {
 			return min
 		}
 
-		private _label: string;
-		public get label(): string {
-			return this._label;
-		}
-		public set label(value: string) {
-			this._label = value;
-
-			this.labelView.attr({
-				label: value,
-			})
-		}
-
 		protected genRectPath() {
 			let size = this._contentSize
 
@@ -48,7 +36,6 @@ namespace flowui {
 			})
 		}
 
-		protected labelView: Label
 		protected rectView: Path
 
 		setupView() {
@@ -71,17 +58,6 @@ namespace flowui {
 
 			let group = new Group()
 			group.append(p1)
-
-			if (this.label) {
-				let label = new Label(this.label)
-				label.attr({
-					anchor: [0.5, 0.5],
-					pos: [0, 0],
-				})
-				ret.label = label
-				group.append(label)
-				this.labelView = label
-			}
 
 			let worldPosition = this.worldPosition
 			group.attr({
