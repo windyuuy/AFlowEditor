@@ -5,7 +5,6 @@ namespace flowui {
 
 		editorBox: any
 		onEnable() {
-
 		}
 		onDisable() {
 

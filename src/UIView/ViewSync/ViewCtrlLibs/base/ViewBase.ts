@@ -7,10 +7,15 @@ namespace flowui {
 		 */
 		readonly otype?: string
 
+		name: string = ""
+
 		/**
 		 * 视图组
 		 */
-		protected view: spritejs.Node
+		private _view: spritejs.Node;
+		public get view(): spritejs.Node {
+			return this._view;
+		}
 
 
 		protected comps: Table<ViewComp>
@@ -37,7 +42,7 @@ namespace flowui {
 
 		event: UIEventHandler
 		setView(view: spritejs.Node) {
-			this.view = view
+			this._view = view
 			this.event = new UIEventHandler().init(view)
 
 			this.onLoad()
@@ -72,6 +77,10 @@ namespace flowui {
 
 		update() {
 
+		}
+
+		setTransformParent(parent: ViewBase) {
+			this.transform.parent = parent.transform
 		}
 
 		protected _transform: Transform;

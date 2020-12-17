@@ -7,8 +7,6 @@ namespace eds {
 		readonly oid?: string
 	}
 
-	export type bool = boolean
-
 	export import ArrayHelper = lang.helper.ArrayHelper
 	export import EmptyTable = lang.EmptyTable
 	export import EmptyCall = lang.EmptyCall

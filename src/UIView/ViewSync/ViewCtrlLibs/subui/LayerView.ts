@@ -11,8 +11,13 @@ namespace flowui {
 			return layer
 		}
 
-		setSceneView(sceneView: spritejs.Scene) {
-			sceneView.appendChild(this.view)
+		scene: UIScene
+		setSceneView(scene: UIScene) {
+			this.scene = scene
+			scene.sceneView.appendChild(this.view)
+
+			this.transform.parent = scene.transform
 		}
+
 	}
 }

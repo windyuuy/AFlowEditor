@@ -2,10 +2,10 @@
 namespace flowui {
 
 	export class ViewComp {
-		view: ViewBase
+		host: ViewBase
 
 		init(view: ViewBase) {
-			this.view = view
+			this.host = view
 			this.onInit()
 			this._enabled = true
 			return this

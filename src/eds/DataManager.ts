@@ -8,11 +8,14 @@ namespace eds {
 
 		protected dataContainer: DataContainer
 
+		utils: FrameSyncUtils
+
 		constructor() {
 			this.oid = `DataManager_${DataManager._IdAcc++}`
 		}
 
 		init() {
+			this.utils = new FrameSyncUtils().init()
 			this.dataContainer = new DataContainer().init()
 			return this
 		}
@@ -42,7 +45,7 @@ namespace eds {
 
 		addData<T extends IDataClass>(cls: new () => T): T {
 			let data = new cls()
-			this.dataContainer.attach(data)
+			this.attachData(data)
 			return data
 		}
 
@@ -56,6 +59,7 @@ namespace eds {
 		}
 
 		attachData<T extends IDataClass>(data: T): T {
+			DecoECSDataClass(data, this)
 			this.dataContainer.attach(data) as T
 			return data
 		}
