@@ -14,12 +14,14 @@ namespace flowui {
 		outputs: SlotGroup[]
 
 		init() {
+			DelAll(this.inputs)
+			DelAll(this.outputs)
 			this.inputs = CleanArray(this.inputs)
 			this.outputs = CleanArray(this.inputs)
 			return this
 		}
 
-		reset() {
+		clear() {
 			this.init()
 		}
 	}
@@ -50,6 +52,10 @@ namespace flowui {
 			this.slotSpec = New(BodySlotSpec)
 			return this
 		}
+		clear() {
+			Del(this.slotSpec)
+			this.slotSpec = null
+		}
 
 		forEachSlots(call: (slotTemp: SlotTemp) => void) {
 			const slotSpec = this.slotSpec
@@ -75,7 +81,7 @@ namespace flowui {
 			slotSpecCode = slotSpecCode.replace(/，/mg, ',')
 
 			const slotSpec = this.slotSpec
-			slotSpec.reset()
+			slotSpec.clear()
 
 			let codeLines = slotSpecCode.split("\n")
 			codeLines.forEach(line => {

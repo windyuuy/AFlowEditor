@@ -46,13 +46,27 @@ namespace flowui {
 
 			return this
 		}
+		clear() {
+			Del(this.bodySlotsInfo)
+			this.bodySlotsInfo = null
+		}
 
+		/**
+		 * 从模板加载实例模型
+		 * @param temp 
+		 */
 		load(temp: BodyTemp) {
 			this.bodyTemp = temp
 
 			temp.forEachSlots((slotTemp) => {
 				let slot = New(SlotInfo)
 				slot.slotTemp = slotTemp
+
+				if (slotTemp.slotPos == "in") {
+					TableAdd(this.bodySlotsInfo.inputs, slot)
+				} else {
+					TableAdd(this.bodySlotsInfo.outputs, slot)
+				}
 			})
 			return this
 		}

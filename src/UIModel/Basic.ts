@@ -10,6 +10,32 @@ namespace flowui {
 
 	export let dataManager: eds.DataManager
 
+	/**
+	 * 遍历常规容器
+	 * @param container 
+	 * @param call 
+	 */
+	export function forEach<T>(container: T, call: (data: T, index: number | string) => any) {
+		if (container == null) {
+			return true
+		}
+
+		if (container instanceof Array) {
+			for (let i = 0; i < container.length; i++) {
+				if (call(container[i], i)) {
+					break
+				}
+			}
+		} else {
+			for (let key of Object.keys(container)) {
+				if (call(container[key], key)) {
+					break
+				}
+			}
+		}
+		return
+	}
+
 	export const Null = NullData
 	export const NULL = NullData
 	export function Alloc<T>(cls: new () => T): T {
@@ -23,9 +49,26 @@ namespace flowui {
 		}
 		return data
 	}
+	export function TableAdd(container: Object, obj: { oid: string }) {
+		container[obj.oid] = obj
+	}
 	export const NEW = New
 	export function Del<T>(data: T): bool {
-		return dataManager.deattachData(data)
+		let b = dataManager.deattachData(data)
+		if (data["clear"]) {
+			data["clear"]()
+		}
+		return b
+	}
+	/**
+	 * 删除所有注册数据
+	 * @param container 
+	 */
+	export function DelAll<T>(container: T): bool {
+		forEach(container, (data) => {
+			Del(data)
+		})
+		return true
 	}
 	export function Clean<T extends Object>(container: T): T {
 		if (container == null) {
