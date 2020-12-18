@@ -38,10 +38,10 @@ namespace flowui {
 			bodyView.contentSize = new Size2(200, 100)
 			bodyView.position = new Size2(200, 100)
 
+			bodyView.addComp(LineComp)
 			bodyView.addComp(DragableComp)
 			let editorComp = bodyView.addComp(EditorComp)
 			editorComp.text = "qefwfe"
-			bodyView.addComp(RectComp)
 
 			return this
 		}

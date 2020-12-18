@@ -6,8 +6,8 @@ namespace flowui {
 
 		init(view: ViewBase) {
 			this.host = view
-			this.onInit()
 			this._enabled = true
+			this.onInit()
 			return this
 		}
 

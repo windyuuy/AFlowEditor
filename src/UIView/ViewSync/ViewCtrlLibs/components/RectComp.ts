@@ -3,7 +3,9 @@
 
 namespace flowui {
 
-	export class RectComp extends ViewComp {
+	export class RectComp extends RenderComp {
+
+		protected viewNode: ccs.Path
 
 		get contentSize() {
 			return this.host.contentSize
@@ -16,7 +18,7 @@ namespace flowui {
 			return min
 		}
 
-		protected genRectPath() {
+		protected genRenderPath() {
 			let size = this.contentSize
 
 			let radius = this.radius || 0
@@ -35,17 +37,15 @@ namespace flowui {
 
 		protected updateContentSize() {
 			this.viewNode.attr({
-				d: this.genRectPath(),
+				d: this.genRenderPath(),
 			})
 		}
-
-		protected viewNode: ccs.Path
 
 		setUpView() {
 
 			const p1 = new ccs.Path();
 			p1.attr({
-				d: this.genRectPath(),
+				d: this.genRenderPath(),
 				strokeColor: '#033',
 				fillColor: '#839',
 				lineWidth: 4,
@@ -53,18 +53,6 @@ namespace flowui {
 			});
 
 			this.viewNode = p1
-		}
-
-		onInit() {
-			this.setUpView()
-			this.host.view.appendChild(this.viewNode)
-		}
-
-		onEnable() {
-			this.viewNode.show()
-		}
-		onDisable() {
-			this.viewNode.hide()
 		}
 
 	}
