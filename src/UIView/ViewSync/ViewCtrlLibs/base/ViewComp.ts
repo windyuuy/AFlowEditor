@@ -57,6 +57,15 @@ namespace flowui {
 
 		}
 
+		onNamedEvent(name: string, key: UIEventKey, call: (evt: UIEvent) => void, options?: EventOptions) {
+			return this.host.event.onNamedEvent(name, key, call, options)
+		}
+
+		offNameEvent(name: string) {
+			return this.host.event.offNameEvent(name)
+		}
+
+		//#region attrs
 		protected _enabled: bool = false
 		public get enabled(): bool {
 			return this._enabled
@@ -87,6 +96,7 @@ namespace flowui {
 		getWorldScale() {
 			return this.host.transform.getWorldScale()
 		}
+		//#endregion attrs
 	}
 
 }

@@ -32,6 +32,7 @@ namespace flowui {
 		dragend = "dragend",
 		mousedown = "mousedown",
 		mouseup = "mouseup",
+		multiclick = "multiclick",
 
 	}
 

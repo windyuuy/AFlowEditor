@@ -26,7 +26,6 @@ namespace flowui {
 			this.rootLayer = rootLayer
 			rootLayer.setSceneView(this)
 			rootLayer.name = "touchLayer"
-			// rootLayer.scale = new Vector2(2, 1)
 
 			const rootLayer2 = New(TouchLayerView)
 			rootLayer2.parent = rootLayer
