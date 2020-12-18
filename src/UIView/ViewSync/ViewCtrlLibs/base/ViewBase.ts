@@ -12,8 +12,8 @@ namespace flowui {
 		/**
 		 * 视图组
 		 */
-		private _view: spritejs.Node;
-		public get view(): spritejs.Node {
+		private _view: ccs.Group
+		public get view(): ccs.Group {
 			return this._view;
 		}
 
@@ -36,12 +36,12 @@ namespace flowui {
 			this.setView(view)
 		}
 
-		setupView(): spritejs.Node {
+		setupView(): ccs.Group {
 			return null
 		}
 
 		event: UIEventHandler
-		setView(view: spritejs.Node) {
+		setView(view: ccs.Group) {
 			this._view = view
 			this.event = new UIEventHandler().init(view)
 
@@ -79,6 +79,20 @@ namespace flowui {
 
 		update() {
 
+		}
+
+		private _active: bool = false;
+		public get active(): bool {
+			return this._active;
+		}
+		public set active(value: bool) {
+			this._active = value;
+
+			this.forEachComps((comp) => {
+				if (value) {
+					comp.onEnable()
+				}
+			})
 		}
 
 		protected _transform: Transform;
@@ -131,6 +145,15 @@ namespace flowui {
 			}
 		}
 
+		forEachComps(call: (comp: ViewComp, name?: string) => any) {
+			for (let name in this.comps) {
+				let comp = this.comps[name]
+				if (call(comp, name)) {
+					break
+				}
+			}
+		}
+
 		protected _contentSize: Size2
 		set contentSize(size: Size2) {
 			this._contentSize.merge(size)
@@ -160,10 +183,6 @@ namespace flowui {
 		public set viewParent(value: ViewBase) {
 			let parentView = value.view
 			if (parentView instanceof spritejs.Group) {
-				this._parent = value;
-				parentView.appendChild(this.view)
-				this.updateTransform()
-			} else if (parentView instanceof spritejs.Layer) {
 				this._parent = value;
 				parentView.appendChild(this.view)
 				this.updateTransform()

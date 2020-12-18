@@ -41,6 +41,7 @@ namespace flowui {
 			bodyView.addComp(DragableComp)
 			let editorComp = bodyView.addComp(EditorComp)
 			editorComp.text = "qefwfe"
+			bodyView.addComp(RectComp)
 
 			return this
 		}

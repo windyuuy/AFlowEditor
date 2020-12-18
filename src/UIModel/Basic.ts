@@ -22,6 +22,8 @@ namespace flowui {
 	export import Vector4 = math.Vector4
 	export import Size2 = math.Size2
 
+	export import ccs = spritejs
+
 	export let dataManager: eds.DataManager
 
 	/**
