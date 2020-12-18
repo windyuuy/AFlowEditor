@@ -26,11 +26,16 @@ namespace flowui {
 			this.rootLayer = rootLayer
 			rootLayer.setSceneView(this)
 			rootLayer.name = "touchLayer"
-			rootLayer.scale = new Vector2(1, 1)
+			// rootLayer.scale = new Vector2(2, 1)
+
+			const rootLayer2 = New(TouchLayerView)
+			rootLayer2.parent = rootLayer
+
+			const rootGroup = New(GroupView)
+			rootGroup.parent = rootLayer
 
 			let bodyView = New(BodyView)
-			bodyView.parent = rootLayer
-			bodyView.transform.parent = rootLayer.transform
+			bodyView.parent = rootGroup
 			bodyView.contentSize = new Size2(200, 100)
 			bodyView.position = new Size2(200, 100)
 

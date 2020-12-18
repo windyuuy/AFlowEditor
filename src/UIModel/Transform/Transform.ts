@@ -13,7 +13,7 @@ namespace flowui {
 		getWebPagePosition(): Vector2 {
 			if (this.parent) {
 				let parentPos = this.parent.getWebPagePosition()
-				let parentScale = this.parent.scale
+				let parentScale = this.parent.getWorldScale()
 				let offset = this.position.clone().multUp(parentScale)
 				let pos = parentPos.addUp(offset)
 				return pos

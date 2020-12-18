@@ -81,10 +81,6 @@ namespace flowui {
 
 		}
 
-		setTransformParent(parent: ViewBase) {
-			this.transform.parent = parent.transform
-		}
-
 		protected _transform: Transform;
 		public get transform(): Transform {
 			return this._transform;
@@ -158,10 +154,10 @@ namespace flowui {
 		}
 
 		private _parent: ViewBase;
-		public get parent(): ViewBase {
+		public get viewParent(): ViewBase {
 			return this._parent;
 		}
-		public set parent(value: ViewBase) {
+		public set viewParent(value: ViewBase) {
 			let parentView = value.view
 			if (parentView instanceof spritejs.Group) {
 				this._parent = value;
@@ -175,6 +171,15 @@ namespace flowui {
 				this._parent = null
 				this.view.remove()
 			}
+		}
+
+		set transformParent(parent: ViewBase) {
+			this.transform.parent = parent.transform
+		}
+
+		set parent(parent: ViewBase) {
+			this.viewParent = parent
+			this.transformParent = parent
 		}
 
 	}
