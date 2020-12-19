@@ -753,7 +753,7 @@ namespace math {
 		public static getRotation2(b: IVector): Vector3 {
 			let data = b.getBinData()
 			let th = Math.atan2(data[1], data[0])
-			return fsync.Vector3.fromNumArray([0, 0, th])
+			return Vector3.fromNumArray([0, 0, th])
 		}
 
 		/**

@@ -4,6 +4,10 @@ namespace flowui {
 	export class ViewComp {
 		host: ViewBase
 
+		get typeName() {
+			return this.constructor.name
+		}
+
 		init(view: ViewBase) {
 			this.host = view
 			this._enabled = true

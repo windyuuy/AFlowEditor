@@ -15,27 +15,27 @@ namespace flowui {
 			this.touchLayer = touchLayer
 
 			// listen self
-			this.host.event.onNamedEvent("dragcomp", UIEventKey.mousedown, (evt) => {
+			this.host.event.onNamedEvent(this.typeName, UIEventKey.mousedown, (evt) => {
 				this.isDraging = true
 			})
-			this.host.event.onNamedEvent("dragcomp", UIEventKey.mouseup, (evt) => {
+			this.host.event.onNamedEvent(this.typeName, UIEventKey.mouseup, (evt) => {
 				this.isDraging = false
 			})
 
 			// listen layer
-			touchLayer.event.onNamedEvent("dragcomp", UIEventKey.mousedown, (evt) => {
+			touchLayer.event.onNamedEvent(this.typeName, UIEventKey.mousedown, (evt) => {
 				this.beginPos.x = evt.x
 				this.beginPos.y = evt.y
 				this.curPos.merge(this.beginPos)
 				this.hostPos = this.host.position.clone()
 			})
-			touchLayer.event.onNamedEvent("dragcomp", UIEventKey.mousemove, (evt) => {
+			touchLayer.event.onNamedEvent(this.typeName, UIEventKey.mousemove, (evt) => {
 				this.curPos.x = evt.x
 				this.curPos.y = evt.y
 
 				this.onDrag()
 			})
-			touchLayer.event.onNamedEvent("dragcomp", UIEventKey.mouseup, (evt) => {
+			touchLayer.event.onNamedEvent(this.typeName, UIEventKey.mouseup, (evt) => {
 				this.isDraging = false
 				this.curPos.x = evt.x
 				this.curPos.y = evt.y
@@ -45,7 +45,7 @@ namespace flowui {
 		}
 
 		onRemove() {
-			this.touchLayer.event.offNameEvent("dragcomp")
+			this.touchLayer.event.offNameEvent(this.typeName)
 		}
 
 		onDrag() {

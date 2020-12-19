@@ -6,8 +6,6 @@ namespace flowui {
 
 	export class EditorComp extends ViewComp {
 
-		compName = "editorcomp"
-
 		onInit() {
 			this.timer = new lang.Intervals().init()
 		}
@@ -41,13 +39,13 @@ namespace flowui {
 		 */
 		protected clickTimes: number = 0
 		resetClickTimer() {
-			this.timer.clearNamedInterval(this.compName)
-			this.timer.setNamedInterval(this.compName, () => {
+			this.timer.clearNamedInterval(this.typeName)
+			this.timer.setNamedInterval(this.typeName, () => {
 				this.clickTimes = Math.max(this.clickTimes - 1, 0)
 			}, 200)
 		}
 		protected initEvent() {
-			this.onNamedEvent(this.compName, UIEventKey.click, (evt) => {
+			this.onNamedEvent(this.typeName, UIEventKey.click, (evt) => {
 				this.clickTimes++
 				this.resetClickTimer()
 
@@ -66,7 +64,7 @@ namespace flowui {
 		}
 
 		releaseEvent() {
-			this.offNameEvent(this.compName)
+			this.offNameEvent(this.typeName)
 			this.timer.clearAllInterval()
 		}
 
