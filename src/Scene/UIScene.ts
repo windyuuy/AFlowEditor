@@ -22,13 +22,13 @@ namespace flowui {
 			})
 			this.sceneView = sceneView
 
-			const rootLayer = New(TouchLayerView)
+			const rootLayer = New(LayerView)
 			this.rootLayer = rootLayer
 			rootLayer.setSceneView(this)
-			rootLayer.name = "touchLayer"
 
 			const rootLayer2 = New(TouchLayerView)
-			rootLayer2.parent = rootLayer
+			rootLayer2.name = "touchLayer"
+			rootLayer2.setSceneView(this)
 
 			const rootGroup = New(GroupView)
 			rootGroup.parent = rootLayer
@@ -43,7 +43,7 @@ namespace flowui {
 			let editorComp = bodyView.addComp(EditorComp)
 			editorComp.text = "qefwfe"
 			let ellipseComp = bodyView.addComp(EllipseComp)
-			ellipseComp.radius = 10
+			ellipseComp.radius = 100
 			ellipseComp.strokeColor = "blue"
 			ellipseComp.fillColor = "red"
 

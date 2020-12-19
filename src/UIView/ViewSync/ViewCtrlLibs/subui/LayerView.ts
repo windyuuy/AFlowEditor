@@ -6,6 +6,10 @@ namespace flowui {
 
 	export class LayerView extends ViewBase {
 
+		public get view(): ccs.Layer {
+			return this._view as ccs.Layer
+		}
+
 		setupView() {
 			let layer = new spritejs.Layer()
 			return layer

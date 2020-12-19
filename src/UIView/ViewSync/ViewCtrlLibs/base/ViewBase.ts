@@ -12,7 +12,7 @@ namespace flowui {
 		/**
 		 * 视图组
 		 */
-		private _view: ccs.Group
+		protected _view: ccs.Group
 		public get view(): ccs.Group {
 			return this._view;
 		}
