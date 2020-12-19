@@ -1,11 +1,11 @@
 
 namespace flowui {
 	export class ViewBase implements IDataClass {
-		readonly oid?: string;
+		readonly oid: string;
 		/**
 		 * 类型名
 		 */
-		readonly otype?: string
+		readonly otype: string
 
 		name: string = ""
 
@@ -61,6 +61,10 @@ namespace flowui {
 			delete this.comps[cls.name]
 			return comp as T
 		}
+		getComp<T extends ViewComp>(cls: new () => T): T {
+			const comp = this.comps[cls.name]
+			return comp as T
+		}
 
 		protected onLoad() {
 
@@ -70,6 +74,7 @@ namespace flowui {
 			this.onDestroy()
 
 			this.view.remove()
+
 		}
 
 		protected onDestroy() {
@@ -191,9 +196,37 @@ namespace flowui {
 			this.transform.parent = parent.transform
 		}
 
+		protected lifecycleChildren: ViewBase[];
+		addChild<T extends ViewBase = ViewBase>(child: T): T {
+			if (this.lifecycleChildren.indexOf(child) < 0) {
+				this.lifecycleChildren.push(child)
+			}
+			return child
+		}
+		removeChild<T extends ViewBase = ViewBase>(child: T): T {
+			let index = this.lifecycleChildren.indexOf(child)
+			if (index >= 0) {
+				this.lifecycleChildren.splice(index, 0)
+			}
+			return child
+		}
+		get children(): ViewBase[] {
+			return this.lifecycleChildren.concat()
+		}
+
+		protected _lifecycleParent: ViewBase;
+		public get lifecycleParent(): ViewBase {
+			return this._lifecycleParent;
+		}
+		public set lifecycleParent(parent: ViewBase) {
+			this._lifecycleParent = parent;
+			parent.addChild(this)
+		}
+
 		set parent(parent: ViewBase) {
 			this.viewParent = parent
 			this.transformParent = parent
+			this.lifecycleParent = parent
 		}
 
 	}

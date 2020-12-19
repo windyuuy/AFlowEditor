@@ -6,7 +6,7 @@ namespace flowui {
 
 	export class NodeView extends ViewBase {
 
-		setupView() {
+		protected setupView() {
 			let group = new Group()
 
 			let position = this.position
