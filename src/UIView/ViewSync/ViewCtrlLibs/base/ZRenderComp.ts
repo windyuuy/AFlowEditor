@@ -24,6 +24,11 @@ namespace flowui {
 			return this
 		}
 
+		onDestory() {
+			this.viewNode.remove()
+			this.viewNode = null
+		}
+
 		protected onEnable() {
 			this.viewNode.show()
 		}
@@ -33,8 +38,8 @@ namespace flowui {
 
 		protected setupStyleParams() {
 			this._strokeWidth = 1
-			this._strokeColor = "gray"
-			this._fillColor = "yellow"
+			this._strokeColor = ""
+			this._fillColor = "black"
 		}
 
 		protected updateCommonStyleSettings() {

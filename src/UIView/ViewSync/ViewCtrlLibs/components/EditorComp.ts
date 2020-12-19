@@ -4,13 +4,33 @@
 namespace flowui {
 	const $ = jquery
 
-	export class EditorComp extends ViewComp {
+	export class EditorComp extends RenderComp {
+
+		init(view: ViewBase) {
+			this.host = view
+			this._enabled = true
+			this.onInit()
+			return this
+		}
 
 		onInit() {
 			this.timer = new lang.Intervals().init()
+
+			this.initView();
 		}
 
-		protected labelView: spritejs.Label
+		releaseView() {
+			$("#editor").remove(`#${this.editorId}`)
+
+			this.viewNode.remove()
+			this.viewNode = null
+		}
+
+		onDestory() {
+			this.releaseView()
+		}
+
+		protected viewNode: spritejs.Label
 
 		private _text: string;
 		public get text(): string {
@@ -27,10 +47,11 @@ namespace flowui {
 		}
 
 		onEnable() {
-
-			this.initView();
 			this.initEvent()
+		}
 
+		onDisable() {
+			this.releaseEvent()
 		}
 
 		protected timer: lang.Intervals
@@ -80,7 +101,7 @@ namespace flowui {
 			});
 			let parent = this.host.view.parent as spritejs.Group;
 			parent.appendChild(labelView);
-			this.labelView = labelView;
+			this.viewNode = labelView;
 
 			let editorId = this.editorId;
 			// < p class="input" contenteditable = "true" style = "overflow-y:auto;overflow-x: hidden; " > </p>
@@ -117,17 +138,13 @@ namespace flowui {
 			this.isWritable = false;
 		}
 
-		onDisable() {
-			$("#editor").remove(`#${this.editorId}`)
-		}
-
 		updateText() {
 
 			// this.labelView.attr({
 			// 	text: this._text,
 			// })
-			this.labelView.text = this._text
-			this.labelView.updateText()
+			this.viewNode.text = this._text
+			this.viewNode.updateText()
 
 			let p1Text = $(`#${this.editorId}`).find(".scaleNode").find(".input")
 			p1Text.val(this._text)
@@ -149,7 +166,7 @@ namespace flowui {
 
 			let pos = this.host.position
 			let scale = this.host.scale
-			this.labelView.attr({
+			this.viewNode.attr({
 				pos: [pos.x, pos.y,],
 				scale: [scale.x, scale.y,],
 			})
@@ -170,7 +187,7 @@ namespace flowui {
 		}
 
 		protected enterReadMode() {
-			this.labelView.show()
+			this.viewNode.show()
 
 			let p1 = $(`#${this.editorId}`)
 			p1.hide()
@@ -178,7 +195,7 @@ namespace flowui {
 		}
 
 		protected enterWriteMode() {
-			this.labelView.hide()
+			this.viewNode.hide()
 
 			let p1 = $(`#${this.editorId}`)
 			p1.show()

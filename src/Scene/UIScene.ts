@@ -42,6 +42,10 @@ namespace flowui {
 			pipeView.addComp(DragableComp)
 			let editorComp = pipeView.addComp(EditorComp)
 			editorComp.text = "qefwfe"
+
+			let labelComp = pipeView.addComp(LabelComp)
+			labelComp.text = "lwkjefljweflk"
+
 			let ellipseComp = pipeView.addComp(EllipseComp)
 			ellipseComp.radius = 100
 			ellipseComp.strokeColor = "blue"

@@ -8,7 +8,7 @@ namespace flowui {
 	 */
 	export class EllipseComp extends RenderComp {
 
-		protected viewNode: ccs.Path
+		protected viewNode: ccs.Ellipse
 
 		/**
 		 * 半径
