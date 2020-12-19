@@ -24,6 +24,12 @@ namespace flowui {
 
 	export import ccs = spritejs
 
+	const _shareArray: any[] = []
+	export function _ShareArray() {
+		_shareArray.length = 0
+		return _shareArray
+	}
+
 	export let dataManager: eds.DataManager
 
 	/**

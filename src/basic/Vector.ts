@@ -229,6 +229,41 @@ namespace math {
 			return Vector.resetValues(this, value)
 		}
 
+		/**
+		 * 根据x，y决定的方向转换为角度 [-PI~PI]
+		 * @param b 
+		 */
+		public getRotationZ2(): number {
+			let data = this.getBinData()
+			let th = Math.atan2(data[1], data[0])
+			return th
+		}
+
+		/**
+		 * 根据x，y决定的方向转换为角度 [-PI~PI]
+		 * @param b 
+		 */
+		public getRotation2(): Vector3 {
+			let data = this.getBinData()
+			let th = Math.atan2(data[1], data[0])
+			return Vector3.fromNumArray([0, 0, th])
+		}
+
+		/**
+		 * 绕原点按笛卡尔坐标系弧度旋转
+		 * @param out 
+		 */
+		public rotateSelfByZero2(angle: number): this {
+			let od = this.getBinData()
+			let cosInc = Math.cos(angle)
+			let sinInc = Math.sin(angle)
+			let x = cosInc * od[0] - sinInc * od[1];
+			let y = sinInc * od[0] + cosInc * od[1];
+			od[0] = x
+			od[1] = y
+			return this
+		}
+
 		asVectorN<T extends IVector>(): T {
 			return this as IVector as T
 		}
@@ -718,7 +753,22 @@ namespace math {
 		public static getRotation2(b: IVector): Vector3 {
 			let data = b.getBinData()
 			let th = Math.atan2(data[1], data[0])
-			return Vector3.fromNumArray([0, 0, th])
+			return fsync.Vector3.fromNumArray([0, 0, th])
+		}
+
+		/**
+		 * 绕原点按笛卡尔坐标系弧度旋转
+		 * @param out 
+		 */
+		public static rotateSelfByZero2(out: IVector, angle: number): IVector {
+			let od = out.getBinData()
+			let cosInc = Math.cos(angle)
+			let sinInc = Math.sin(angle)
+			let x = cosInc * od[0] - sinInc * od[1];
+			let y = sinInc * od[0] + cosInc * od[1];
+			od[0] = x
+			od[1] = y
+			return out
 		}
 
 		public static asVectorN<T extends IVector>(b: IVector): T {
@@ -735,20 +785,6 @@ namespace math {
 
 		public static asVector4(b: IVector): Vector4 {
 			return b as Vector4
-		}
-
-		/**
-		 * 绕原点按笛卡尔坐标系弧度旋转
-		 * @param v 
-		 */
-		public static rotateSelfByZero2(v: Vector2, angle: number): Vector2 {
-			let cosInc = Math.cos(angle)
-			let sinInc = Math.sin(angle)
-			let x = cosInc * v.x - sinInc * v.y;
-			let y = sinInc * v.x + cosInc * v.y;
-			v.x = x
-			v.y = y
-			return v
 		}
 
 	}
