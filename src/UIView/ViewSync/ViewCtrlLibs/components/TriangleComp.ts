@@ -63,10 +63,8 @@ namespace flowui {
 		}
 
 		setUpView() {
-			let position = this.host.position
-
 			const traingle = new ccs.Triangle({
-				pos: [position.x, position.y],
+				pos: [0, 0],
 				sides: [this.side1, this.side2],
 				angle: toEulerAngle(this.angle),
 				fillColor: '#7cc',
