@@ -8,30 +8,85 @@ namespace flowui {
 		protected viewNode: ccs.Path
 
 		onInit() {
-			this.beginPos = new Vector2()
-			this.endPos = new Vector2()
-
-			this.beginPos.x = -100
-			this.endPos.x = -10
-			this.endPos.y = 120
+			this._beginPos = new Vector2()
+			this._endPos = new Vector2()
+			this._arrowLength = 2
+			this._arrowWidth = 2
+			this._lineWidth = 2
 		}
 
 		/**
 		 * 起始位置
 		 */
-		beginPos: Vector2
+		private _beginPos: Vector2
+		public get beginPos(): Vector2 {
+			return this._beginPos
+		}
+		public set beginPos(value: Vector2) {
+			this._beginPos = value
+
+			this.updateShape()
+		}
 		/**
 		 * 结束位置
 		 */
-		endPos: Vector2
+		private _endPos: Vector2
+		public get endPos(): Vector2 {
+			return this._endPos
+		}
+		public set endPos(value: Vector2) {
+			this._endPos = value
+
+			this.updateShape()
+		}
+
+		/**
+		 * 线宽度
+		 */
+		private _lineWidth: number = 1
+		public get lineWidth(): number {
+			return this._lineWidth
+		}
+		public set lineWidth(value: number) {
+			this._lineWidth = value
+			this.updateShape()
+		}
+		/**
+		 * 箭头长度
+		 */
+		private _arrowLength: number = 1
+		public get arrowLength(): number {
+			return this._arrowLength
+		}
+		public set arrowLength(value: number) {
+			this._arrowLength = value
+			this.updateShape()
+		}
+
+		/**
+		 * 箭头宽度
+		 */
+		private _arrowWidth: number
+		public get arrowWidth(): number {
+			return this._arrowWidth
+		}
+		public set arrowWidth(value: number) {
+			this._arrowWidth = value
+		}
+
+		protected updateShape() {
+			this.viewNode.attr({
+				d: this.genRenderPath(),
+			})
+		}
 
 		protected genRenderPath() {
 
 			let bp = this.beginPos
 			let ep2 = this.endPos
-			let w1 = 20
-			let h1 = 10
-			let h2 = 40
+			let w2 = this._arrowLength
+			let h1 = this._lineWidth
+			let h2 = this._arrowWidth
 
 			let dv = ep2.clone().subDown(bp)
 			let angle = dv.getRotationZ2()
@@ -40,11 +95,11 @@ namespace flowui {
 			let ep1 = dv.clone().rotateSelfByZero2(-angle)
 			let bp1 = new Vector2(0, 0)
 			let points: Vector2[] = _ShareArray()
-			points.push(new Vector2(ep1.x - w1, h1 / 2))
-			points.push(new Vector2(ep1.x - w1, h2 / 2))
+			points.push(new Vector2(ep1.x - w2, h1 / 2))
+			points.push(new Vector2(ep1.x - w2, h2 / 2))
 			points.push(new Vector2(ep1.x, 0))
-			points.push(new Vector2(ep1.x - w1, -h2 / 2))
-			points.push(new Vector2(ep1.x - w1, -h1 / 2))
+			points.push(new Vector2(ep1.x - w2, -h2 / 2))
+			points.push(new Vector2(ep1.x - w2, -h1 / 2))
 			points.push(new Vector2(bp1.x, -h1 / 2))
 			points.push(new Vector2(bp1.x, h1 / 2))
 			points.forEach(pt => {
@@ -64,13 +119,12 @@ namespace flowui {
 			const p1 = new ccs.Path();
 			p1.attr({
 				d: this.genRenderPath(),
-				strokeColor: '#033',
-				fillColor: '#839',
-				lineWidth: 1,
-				pos: [0, 0],
 			});
 
 			this.viewNode = p1
+
+			this.updateCommonStyleSettings()
+
 		}
 
 	}

@@ -64,13 +64,13 @@ namespace flowui {
 
 		setUpView() {
 			const traingle = new ccs.Triangle({
-				pos: [0, 0],
 				sides: [this.side1, this.side2],
 				angle: toEulerAngle(this.angle),
-				fillColor: '#7cc',
 			});
 
 			this.viewNode = traingle
+
+			this.updateCommonStyleSettings()
 		}
 
 	}

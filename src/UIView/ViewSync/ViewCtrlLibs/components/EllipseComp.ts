@@ -53,12 +53,8 @@ namespace flowui {
 
 		setUpView() {
 			const ellipse = new ccs.Ellipse({
-				pos: [0, 0],
 				radiusX: this._radiusX,
 				radiusY: this._radiusY,
-				lineWidth: 1,
-				strokeColor: 'red',
-				fillColor: 'green',
 				// startAngle: 0,
 				// endAngle: 360,
 			});

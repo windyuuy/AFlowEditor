@@ -34,6 +34,8 @@ namespace flowui {
 		onInit() {
 			let view = this.setupView()
 			this.setView(view)
+
+			this.onLoad()
 		}
 
 		setupView(): ccs.Group {
@@ -44,9 +46,6 @@ namespace flowui {
 		setView(view: ccs.Group) {
 			this._view = view
 			this.event = new UIEventHandler().init(view)
-
-			this.onLoad()
-
 			return this
 		}
 

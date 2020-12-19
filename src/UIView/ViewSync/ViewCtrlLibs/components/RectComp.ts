@@ -46,13 +46,11 @@ namespace flowui {
 			const p1 = new ccs.Path();
 			p1.attr({
 				d: this.genRenderPath(),
-				strokeColor: '#033',
-				fillColor: '#839',
-				lineWidth: 4,
-				pos: [0, 0],
 			});
 
 			this.viewNode = p1
+
+			this.updateCommonStyleSettings()
 		}
 
 	}

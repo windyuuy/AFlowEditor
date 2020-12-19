@@ -38,10 +38,10 @@ namespace flowui {
 			bodyView.contentSize = new Size2(200, 100)
 			bodyView.position = new Size2(200, 100)
 
-			// bodyView.addComp(ArrowLineComp)
+			bodyView.addComp(ArrowLineComp)
 			bodyView.addComp(DragableComp)
-			// let editorComp = bodyView.addComp(EditorComp)
-			// editorComp.text = "qefwfe"
+			let editorComp = bodyView.addComp(EditorComp)
+			editorComp.text = "qefwfe"
 			let ellipseComp = bodyView.addComp(EllipseComp)
 			ellipseComp.radius = 10
 			ellipseComp.strokeColor = "blue"
