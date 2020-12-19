@@ -30,6 +30,14 @@ namespace flowui {
 		return _shareArray
 	}
 
+	export function toEulerAngle(arcAngle: number) {
+		return arcAngle * 180 / Math.PI
+	}
+
+	export function toArcAngle(eulerAngle: number) {
+		return eulerAngle * Math.PI / 180
+	}
+
 	export let dataManager: eds.DataManager
 
 	/**
