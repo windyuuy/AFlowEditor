@@ -25,6 +25,7 @@ namespace flowui {
 			this._scale = new Vector2(1, 1)
 			this._contentSize = new Size2()
 
+			this.lifecycleChildren = CleanArray(this.lifecycleChildren)
 			this.comps = CleanTable(this.comps)
 
 			this.onInit()
@@ -74,7 +75,9 @@ namespace flowui {
 			this.onDestroy()
 
 			this.view.remove()
-
+			if (this.lifecycleChildren.length > 0) {
+				this.lifecycleChildren.forEach(child => child.destroy())
+			}
 		}
 
 		protected onDestroy() {
