@@ -1,17 +1,29 @@
 
 namespace flowui {
-	import Group = ccs.Group;
 
 	export class PipeView extends NodeView {
 		labelView: NodeView
+		background: NodeView
+		editor: NodeView
+
+		protected totalSize = new Size2(100, 200)
 
 		onLoad() {
-			this.addComp(RectComp)
-			this.addComp(EditorComp)
+			const totalSize = this.totalSize
 
-			const labelView = New(NodeView)
-			labelView.parent = this
-			this.labelView = labelView
+			const background = this.createChild(null, [RectComp])
+			this.background = background
+			background.width = totalSize.width
+			background.height = totalSize.height
+
+			this.labelView = this.createChild(null, [LabelComp])
+			this.labelView.y = totalSize.height / 2 - 10
+
+			const editor = this.createChild(null, [EditorComp])
+			editor.y = -10
+			const editorComp = editor.getComp(EditorComp)
+			editorComp.hint = "点我输入..."
+
 		}
 
 		private _title: string;

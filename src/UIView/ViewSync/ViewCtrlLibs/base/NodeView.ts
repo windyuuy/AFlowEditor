@@ -16,5 +16,15 @@ namespace flowui {
 
 			return group
 		}
+
+		createChild<T extends NodeView = NodeView>(cls?: new () => T, comps?: (new () => ViewComp)[]): T {
+			let child = New(cls || NodeView)
+			child.parent = this
+			if (comps) {
+				child.addComps(comps)
+			}
+			return child as T
+		}
+
 	}
 }

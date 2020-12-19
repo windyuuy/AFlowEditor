@@ -16,13 +16,5 @@ namespace flowui {
 			return layer
 		}
 
-		scene: UIScene
-		setSceneView(scene: UIScene) {
-			this.scene = scene
-			scene.sceneView.appendChild(this.view)
-
-			this.transform.parent = scene.transform
-		}
-
 	}
 }

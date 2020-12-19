@@ -67,6 +67,12 @@ namespace flowui {
 			return comp as T
 		}
 
+		addComps<T extends ViewComp>(comps: (new () => T)[]): T[] {
+			return comps.map(comp => {
+				return this.addComp(comp)
+			})
+		}
+
 		protected onLoad() {
 
 		}
@@ -105,6 +111,21 @@ namespace flowui {
 		protected _transform: Transform;
 		public get transform(): Transform {
 			return this._transform;
+		}
+
+		get x(): number {
+			return this._transform.position.x
+		}
+		set x(value: number) {
+			this._transform.position.x = value
+			this.updateTransform()
+		}
+		public get y(): number {
+			return this._transform.position.y
+		}
+		public set y(value: number) {
+			this._transform.position.y = value
+			this.updateTransform()
 		}
 
 		get worldPosition() {

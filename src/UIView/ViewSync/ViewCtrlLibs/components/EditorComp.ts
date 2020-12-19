@@ -32,6 +32,19 @@ namespace flowui {
 
 		protected viewNode: spritejs.Label
 
+		/**
+		 * 提示文本
+		 */
+		protected _hint: string
+		public get hint(): string {
+			return this._hint
+		}
+		public set hint(value: string) {
+			this._hint = value
+
+			this.updateText()
+		}
+
 		private _text: string;
 		public get text(): string {
 			return this._text || ""
@@ -40,6 +53,10 @@ namespace flowui {
 			this._text = value;
 
 			this.updateText()
+		}
+
+		protected get showingText() {
+			return this._text || this._hint
 		}
 
 		get editorId() {
@@ -139,15 +156,11 @@ namespace flowui {
 		}
 
 		updateText() {
-
-			// this.labelView.attr({
-			// 	text: this._text,
-			// })
-			this.viewNode.text = this._text
+			this.viewNode.text = this.showingText
 			this.viewNode.updateText()
 
 			let p1Text = $(`#${this.editorId}`).find(".scaleNode").find(".input")
-			p1Text.val(this._text)
+			p1Text.val(this.showingText)
 		}
 
 		get textArea() {
@@ -190,6 +203,7 @@ namespace flowui {
 			this.viewNode.show()
 
 			let p1 = $(`#${this.editorId}`)
+			p1.val(this._text)
 			p1.hide()
 
 		}
@@ -198,6 +212,7 @@ namespace flowui {
 			this.viewNode.hide()
 
 			let p1 = $(`#${this.editorId}`)
+			p1.val(this.showingText)
 			p1.show()
 
 			this.textArea.focus()
