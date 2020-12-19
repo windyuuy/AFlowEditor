@@ -41,7 +41,7 @@ namespace flowui {
 			})
 		}
 
-		setUpView() {
+		protected setUpView() {
 
 			const p1 = new ccs.Path();
 			p1.attr({

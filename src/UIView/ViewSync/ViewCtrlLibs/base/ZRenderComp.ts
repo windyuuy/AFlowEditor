@@ -7,7 +7,7 @@ namespace flowui {
 
 		protected viewNode: ccs.Node
 
-		setUpView() {
+		protected setUpView() {
 		}
 
 		init(view: ViewBase) {
@@ -24,10 +24,10 @@ namespace flowui {
 			return this
 		}
 
-		onEnable() {
+		protected onEnable() {
 			this.viewNode.show()
 		}
-		onDisable() {
+		protected onDisable() {
 			this.viewNode.hide()
 		}
 

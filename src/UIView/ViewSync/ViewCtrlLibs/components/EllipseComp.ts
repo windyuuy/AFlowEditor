@@ -51,7 +51,7 @@ namespace flowui {
 			this._radiusY = 1
 		}
 
-		setUpView() {
+		protected setUpView() {
 			const ellipse = new ccs.Ellipse({
 				radiusX: this._radiusX,
 				radiusY: this._radiusY,

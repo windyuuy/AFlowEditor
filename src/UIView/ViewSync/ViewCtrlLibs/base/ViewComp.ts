@@ -22,7 +22,7 @@ namespace flowui {
 			}
 		}
 
-		onInit() {
+		protected onInit() {
 		}
 
 		add() {
@@ -32,7 +32,7 @@ namespace flowui {
 			}
 		}
 
-		onAdd() {
+		protected onAdd() {
 
 		}
 
@@ -43,29 +43,29 @@ namespace flowui {
 			}
 		}
 
-		onRemove() {
+		protected onRemove() {
 
 		}
 
-		onEnable() {
+		protected onEnable() {
 
 		}
-		onDisable() {
+		protected onDisable() {
 
 		}
 
 		destroy() {
 			this.onDestory()
 		}
-		onDestory() {
+		protected onDestory() {
 
 		}
 
-		onNamedEvent(name: string, key: UIEventKey, call: (evt: UIEvent) => void, options?: EventOptions) {
+		protected onNamedEvent(name: string, key: UIEventKey, call: (evt: UIEvent) => void, options?: EventOptions) {
 			return this.host.event.onNamedEvent(name, key, call, options)
 		}
 
-		offNameEvent(name: string) {
+		protected offNameEvent(name: string) {
 			return this.host.event.offNameEvent(name)
 		}
 
@@ -85,19 +85,19 @@ namespace flowui {
 			}
 		}
 
-		updateTransform(transform: Transform) {
+		protected updateTransform(transform: Transform) {
 
 		}
 
-		getWebPagePosition() {
+		get webPagePosition() {
 			return this.host.transform.getWebPagePosition()
 		}
 
-		getWorldPosition() {
+		get worldPosition() {
 			return this.host.transform.getWorldPosition()
 		}
 
-		getWorldScale() {
+		get worldScale() {
 			return this.host.transform.getWorldScale()
 		}
 		//#endregion attrs

@@ -31,19 +31,19 @@ namespace flowui {
 			return this
 		}
 
-		onInit() {
+		protected onInit() {
 			let view = this.setupView()
 			this.setView(view)
 
 			this.onLoad()
 		}
 
-		setupView(): ccs.Group {
+		protected setupView(): ccs.Group {
 			return null
 		}
 
 		event: UIEventHandler
-		setView(view: ccs.Group) {
+		protected setView(view: ccs.Group) {
 			this._view = view
 			this.event = new UIEventHandler().init(view)
 			return this
@@ -62,7 +62,7 @@ namespace flowui {
 			return comp as T
 		}
 
-		onLoad() {
+		protected onLoad() {
 
 		}
 
@@ -72,7 +72,7 @@ namespace flowui {
 			this.view.remove()
 		}
 
-		onDestroy() {
+		protected onDestroy() {
 
 		}
 
@@ -89,7 +89,7 @@ namespace flowui {
 
 			this.forEachComps((comp) => {
 				if (value) {
-					comp.onEnable()
+					comp['onEnable']()
 				}
 			})
 		}
@@ -99,11 +99,11 @@ namespace flowui {
 			return this._transform;
 		}
 
-		getWorldPosition() {
-			return this.transform.getWorldPosition()
+		get worldPosition() {
+			return this._transform.getWorldPosition()
 		}
-		getWorldScale() {
-			return this.transform.getWorldScale()
+		get worldScale() {
+			return this._transform.getWorldScale()
 		}
 
 		public get position(): Vector2 {
@@ -119,10 +119,6 @@ namespace flowui {
 
 		protected updateTransform() {
 			this.emitCompsMsg("transform", this.transform)
-		}
-
-		get worldPosition() {
-			return this._transform.getWorldPosition()
 		}
 
 		protected _scale: Vector2;

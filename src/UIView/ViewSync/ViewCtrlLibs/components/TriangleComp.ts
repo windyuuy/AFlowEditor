@@ -62,7 +62,7 @@ namespace flowui {
 			return Math.atan2(this.host.contentSize.height, this.halfWidth)
 		}
 
-		setUpView() {
+		protected setUpView() {
 			const traingle = new ccs.Triangle({
 				sides: [this.side1, this.side2],
 				angle: toEulerAngle(this.angle),

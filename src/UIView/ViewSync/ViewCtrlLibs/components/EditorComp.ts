@@ -139,8 +139,8 @@ namespace flowui {
 		}
 
 		updateTransform() {
-			let worldPosition = this.getWebPagePosition()
-			let worldScale = this.getWorldScale()
+			let worldPosition = this.webPagePosition
+			let worldScale = this.worldScale
 			let p1 = $(`#${this.editorId}`)
 			let pScale = p1.find(".scaleNode")
 			p1.css("left", worldPosition.x)

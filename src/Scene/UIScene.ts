@@ -33,7 +33,7 @@ namespace flowui {
 			const rootGroup = New(GroupView)
 			rootGroup.parent = rootLayer
 
-			let pipeView = New(PipeView)
+			let pipeView = New(NodeView)
 			pipeView.parent = rootGroup
 			pipeView.contentSize = new Size2(200, 100)
 			pipeView.position = new Size2(200, 100)
