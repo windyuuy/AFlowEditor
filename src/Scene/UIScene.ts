@@ -33,16 +33,16 @@ namespace flowui {
 			const rootGroup = New(GroupView)
 			rootGroup.parent = rootLayer
 
-			let bodyView = New(BodyView)
-			bodyView.parent = rootGroup
-			bodyView.contentSize = new Size2(200, 100)
-			bodyView.position = new Size2(200, 100)
+			let pipeView = New(PipeView)
+			pipeView.parent = rootGroup
+			pipeView.contentSize = new Size2(200, 100)
+			pipeView.position = new Size2(200, 100)
 
-			bodyView.addComp(ArrowLineComp)
-			bodyView.addComp(DragableComp)
-			let editorComp = bodyView.addComp(EditorComp)
+			pipeView.addComp(ArrowLineComp)
+			pipeView.addComp(DragableComp)
+			let editorComp = pipeView.addComp(EditorComp)
 			editorComp.text = "qefwfe"
-			let ellipseComp = bodyView.addComp(EllipseComp)
+			let ellipseComp = pipeView.addComp(EllipseComp)
 			ellipseComp.radius = 100
 			ellipseComp.strokeColor = "blue"
 			ellipseComp.fillColor = "red"

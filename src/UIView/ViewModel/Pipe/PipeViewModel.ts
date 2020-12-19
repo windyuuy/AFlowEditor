@@ -1,7 +1,7 @@
 
 
 namespace flowui {
-	export class BodyViewModel extends ViewModelBase {
+	export class PipeViewModel extends ViewModelBase {
 		init() {
 			return this
 		}
@@ -9,11 +9,11 @@ namespace flowui {
 		/**
 		 * 管线实例信息
 		 */
-		bodyInfo: BodyInfo
+		pipeInfo: PipeInfo
 		/**
 		 * 管线展开模板信息
 		 */
-		bodyTemp: BodyTemp
+		pipeTemp: PipeTemp
 
 		/**
 		 * 管线是否处于展开状态
@@ -24,14 +24,14 @@ namespace flowui {
 		 * 是否包含代码
 		 */
 		get isOwnCode(): boolean {
-			return this.bodyTemp instanceof CodeBodyTemp
+			return this.pipeTemp instanceof CodePipeTemp
 		}
 
 		/**
 		 * 是否组装
 		 */
 		get isGroup(): boolean {
-			return this.bodyTemp instanceof GroupBodyTemp
+			return this.pipeTemp instanceof GroupPipeTemp
 		}
 
 
@@ -39,10 +39,10 @@ namespace flowui {
 		 * 模板规格定义代码
 		 */
 		public get slotSpecCode(): string {
-			return this.bodyTemp.slotSpecCode
+			return this.pipeTemp.slotSpecCode
 		}
 		public set slotSpecCode(value: string) {
-			this.bodyTemp.slotSpecCode = value
+			this.pipeTemp.slotSpecCode = value
 		}
 
 		/**

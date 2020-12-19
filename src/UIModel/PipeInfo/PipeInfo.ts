@@ -3,7 +3,7 @@ namespace flowui {
 	/**
 	 * 存储槽位实例信息
 	 */
-	export class BodySlotsInfo {
+	export class PipeSlotsInfo {
 		inputs: Table<SlotInfo>
 		outputs: Table<SlotInfo>
 
@@ -32,9 +32,9 @@ namespace flowui {
 	}
 
 	/**
-	 * 存储body type实例信息
+	 * 存储 pipe type实例信息
 	 */
-	export class BodyInfo implements eds.IDataClass {
+	export class PipeInfo implements eds.IDataClass {
 		oid: string
 
 		/**
@@ -45,39 +45,39 @@ namespace flowui {
 		/**
 		 * 模板信息
 		 */
-		bodyTemp = Null(BodyTemp)
+		pipeTemp = Null(PipeTemp)
 
 		/**
 		 * 存储槽位实例信息
 		 */
-		bodySlotsInfo = Null(BodySlotsInfo)
+		pipeSlotsInfo = Null(PipeSlotsInfo)
 
 		/**
 		 * 类型
 		 */
-		get bodyType() {
-			return this.bodyTemp.name
+		get pipeType() {
+			return this.pipeTemp.name
 		}
 
 		init() {
-			this.bodySlotsInfo = New(BodySlotsInfo)
+			this.pipeSlotsInfo = New(PipeSlotsInfo)
 
 			return this
 		}
 		clear() {
-			Del(this.bodySlotsInfo)
-			this.bodySlotsInfo = null
+			Del(this.pipeSlotsInfo)
+			this.pipeSlotsInfo = null
 		}
 
 		/**
 		 * 从模板加载实例模型
 		 * @param temp 
 		 */
-		load(temp: BodyTemp) {
-			this.bodyTemp = temp
+		load(temp: PipeTemp) {
+			this.pipeTemp = temp
 
 			temp.forEachSlots((slotTemp) => {
-				this.bodySlotsInfo.addNewSlot(slotTemp)
+				this.pipeSlotsInfo.addNewSlot(slotTemp)
 			})
 			return this
 		}

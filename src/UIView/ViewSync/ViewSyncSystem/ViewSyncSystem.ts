@@ -7,6 +7,15 @@ namespace flowui {
 
 		update() {
 
+			this.syncView()
+			this.updateView()
+		}
+
+		syncView() {
+
+		}
+
+		updateView() {
 			let views = dataManager.getFeatureGroup(ViewModelFeature)
 			views.forEach(view => {
 				view.update()

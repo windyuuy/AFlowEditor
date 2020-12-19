@@ -2,7 +2,7 @@
 namespace flowui {
 	import Group = spritejs.Group;
 
-	export class BodyView extends NodeView {
+	export class PipeView extends NodeView {
 
 		setupView() {
 			let group = new Group()

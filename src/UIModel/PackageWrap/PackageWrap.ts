@@ -12,10 +12,10 @@ namespace flowui {
 		/**
 		 * 节点模板列表
 		 */
-		bodyTemps: BodyTemp[]
+		pipeTemps: PipeTemp[]
 
 		init() {
-			this.bodyTemps = CleanArray(this.bodyTemps)
+			this.pipeTemps = CleanArray(this.pipeTemps)
 
 			return this
 		}

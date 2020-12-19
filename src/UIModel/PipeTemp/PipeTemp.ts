@@ -3,7 +3,7 @@ namespace flowui {
 	/**
 	 * 节点槽位类型信息
 	 */
-	export class BodySlotSpec {
+	export class PipeSlotSpec {
 		/**
 		 * 输入槽位列表
 		 */
@@ -29,7 +29,7 @@ namespace flowui {
 	/**
 	 * 节点信息
 	 */
-	export class BodyTemp implements eds.IDataClass {
+	export class PipeTemp implements eds.IDataClass {
 		readonly oid: string
 		readonly otype: string
 
@@ -46,10 +46,10 @@ namespace flowui {
 		/**
 		 * 由代码生成的槽点信息缓存
 		 */
-		slotSpec = Null(BodySlotSpec)
+		slotSpec = Null(PipeSlotSpec)
 
 		init() {
-			this.slotSpec = New(BodySlotSpec)
+			this.slotSpec = New(PipeSlotSpec)
 			return this
 		}
 		clear() {
@@ -103,7 +103,7 @@ namespace flowui {
 						group.name = groupName
 						groups.push(group)
 					}
-					group.addNewSlot(slotName,slotType)
+					group.addNewSlot(slotName, slotType)
 				})
 			})
 		}
