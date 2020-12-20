@@ -4,28 +4,37 @@ namespace flowui {
 	export class PipeView extends NodeView {
 		labelView: NodeView
 		background: NodeView
-		editor: NodeView
+		codeEditor: NodeView
+		slotEditor: NodeView
 
-		protected totalSize = new Size2(140, 100)
+		protected totalSize = new Size2(140, 120)
 
 		onLoad() {
 			const totalSize = this.totalSize
+
+			this.addComp(DragableComp)
 
 			const background = this.createChild(null, [RoundRectComp])
 			this.background = background
 			background.width = totalSize.width
 			background.height = totalSize.height
 
-			this.addComp(DragableComp)
+			const labelView = this.createChild(null, [LabelComp])
+			this.labelView = labelView
+			labelView.y = -totalSize.height / 2 + 12
+			labelView.getComp(LabelComp).text = "标题"
 
-			this.labelView = this.createChild(null, [LabelComp])
-			this.labelView.y = -totalSize.height / 2 + 12
-			this.labelView.getComp(LabelComp).text = "标题"
+			const slotEditor = this.createChild(null, [RectComp, EditorComp])
+			this.slotEditor = slotEditor
+			slotEditor.width = totalSize.width - 20
+			slotEditor.height = 26
+			slotEditor.y = -totalSize.height / 2 + 38
 
-			const editor = this.createChild(null, [RectComp, EditorComp])
-			editor.width = totalSize.width - 20
-			editor.height = totalSize.height - 40
-			editor.y = 10
+			const codeEditor = this.createChild(null, [RectComp, EditorComp])
+			this.codeEditor = codeEditor
+			codeEditor.width = totalSize.width - 20
+			codeEditor.height = totalSize.height - 68
+			codeEditor.y = (totalSize.height / 2 - 10 - codeEditor.height / 2)
 
 		}
 

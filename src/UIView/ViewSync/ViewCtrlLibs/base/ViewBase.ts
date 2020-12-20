@@ -225,9 +225,15 @@ namespace flowui {
 			this._contentSize.width = width
 			this.updateContentSize()
 		}
+		get width() {
+			return this.contentSize.height
+		}
 		set height(height: number) {
 			this._contentSize.height = height
 			this.updateContentSize()
+		}
+		get height() {
+			return this._contentSize.height
 		}
 
 		protected updateContentSize() {
