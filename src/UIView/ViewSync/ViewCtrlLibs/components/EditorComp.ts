@@ -9,6 +9,8 @@ namespace flowui {
 		init(view: ViewBase) {
 			this.host = view
 			this._enabled = true
+			this._hint = "点我输入..."
+			this._text = ""
 			this.onInit()
 			return this
 		}
@@ -31,6 +33,16 @@ namespace flowui {
 		}
 
 		protected viewNode: spritejs.Label
+
+		/**
+		 * 最大文本宽度
+		 */
+		maxCountPerLine: number = 100
+
+		/**
+		 * 自动折叠
+		 */
+		autoWrap: bool = true
 
 		/**
 		 * 提示文本
@@ -56,7 +68,11 @@ namespace flowui {
 		}
 
 		protected get showingText() {
-			return this._text || this._hint
+			let showText = this._text || this._hint
+			if (showText.length > 10) {
+				showText = showText.slice(0, 6) + " ..."
+			}
+			return showText
 		}
 
 		get editorId() {
@@ -116,7 +132,7 @@ namespace flowui {
 				pos: [0, 0],
 				pointerEvents: "none",
 			});
-			let parent = this.host.view.parent as spritejs.Group;
+			let parent = this.host.view
 			parent.appendChild(labelView);
 			this.viewNode = labelView;
 
@@ -125,7 +141,7 @@ namespace flowui {
 			let p1 = $(`
 		<div id="${editorId}" class="topic-container" style="position: absolute; top: 0px; left: 0px; transform: translate(-50%,-40%);">
 			<div class="scaleNode">
-				<textarea class="input" style="width:500px;height:300px;overflow-y:hidden;overflow-x:hidden;" value=""></textarea>
+				<textarea class="input" style="overflow:auto;word-break:break-all;" cols="20" value="" ></textarea>
 			</div>
 		</div>`);
 			$("#editors").append(p1);
@@ -136,12 +152,19 @@ namespace flowui {
 				self._text = evt.target["value"];
 
 				self.updateText();
-				// let p1Text = $(`#${self.editorId}`).find(".scaleNode").find(".input");
-				p1Text.css("height", function () {
-					return p1Text[0].scrollHeight - 4;
-				});
+				let p1Text = $(`#${self.editorId}`).find(".scaleNode").find(".input");
 				p1Text.css("width", function () {
-					return p1Text[0].scrollWidth - 4;
+					let content = p1Text.val().toString()
+					let lines = content.split("\n")
+					let maxLine = lang.helper.ArrayHelper.max(lines, l => l.length)
+					let maxCount = Math.min(maxLine.length, self.maxCountPerLine)
+					maxCount = Math.max(maxCount, 0)
+					p1Text.attr({
+						cols: "" + maxCount,
+					})
+					p1Text.css("height", function () {
+						return p1Text[0].scrollHeight - 4;
+					});
 				});
 			});
 
@@ -160,7 +183,10 @@ namespace flowui {
 			this.viewNode.updateText()
 
 			let p1Text = $(`#${this.editorId}`).find(".scaleNode").find(".input")
-			p1Text.val(this.showingText)
+			p1Text.val(this._text)
+			p1Text.attr({
+				placeholder: this.showingText,
+			})
 		}
 
 		get textArea() {
@@ -176,13 +202,6 @@ namespace flowui {
 			p1.css("left", worldPosition.x)
 			p1.css("top", worldPosition.y)
 			pScale.css("transform", `scale(${worldScale.x},${worldScale.y})`)
-
-			let pos = this.host.position
-			let scale = this.host.scale
-			this.viewNode.attr({
-				pos: [pos.x, pos.y,],
-				scale: [scale.x, scale.y,],
-			})
 		}
 
 		private _isWritable: bool = false;
@@ -212,7 +231,7 @@ namespace flowui {
 			this.viewNode.hide()
 
 			let p1 = $(`#${this.editorId}`)
-			p1.val(this.showingText)
+			p1.val(this._text)
 			p1.show()
 
 			this.textArea.focus()

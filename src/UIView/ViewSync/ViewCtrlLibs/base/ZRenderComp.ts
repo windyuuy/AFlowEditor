@@ -50,7 +50,7 @@ namespace flowui {
 			})
 		}
 
-		private _strokeColor: string
+		protected _strokeColor: string
 		public get strokeColor(): string {
 			return this._strokeColor
 		}
@@ -66,7 +66,7 @@ namespace flowui {
 			})
 		}
 
-		private _fillColor: string
+		protected _fillColor: string
 		public get fillColor(): string {
 			return this._fillColor
 		}
@@ -82,7 +82,7 @@ namespace flowui {
 			})
 		}
 
-		private _strokeWidth: number
+		protected _strokeWidth: number
 		public get strokeWidth(): number {
 			return this._strokeWidth
 		}

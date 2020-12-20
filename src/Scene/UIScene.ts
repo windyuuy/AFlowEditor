@@ -6,16 +6,15 @@ namespace flowui {
 	 */
 	export class UIScene {
 
-		transform: Transform
-
+		container: HTMLElement
 		sceneView: spritejs.Scene
 
 		rootLayer: LayerView
+		rootGroup: GroupView
 
-		test() {
-			this.transform = new Transform()
-
+		init() {
 			const container = document.getElementById('container');
+			this.container = container
 			const sceneView = New(SceneView)
 			sceneView.container = container
 
@@ -29,11 +28,29 @@ namespace flowui {
 
 			const rootGroup = New(GroupView)
 			rootGroup.parent = rootLayer
+			this.rootGroup = rootGroup
 
+			this.onInit()
+
+			return this
+		}
+
+		onInit() {
+			// this.test()
+			this.test2()
+		}
+
+		test() {
+			const rootGroup = this.rootGroup
 			let pipeView = New(NodeView)
 			pipeView.parent = rootGroup
 			pipeView.contentSize = new Size2(200, 100)
 			pipeView.position = new Size2(200, 100)
+
+			let ellipseComp = pipeView.addComp(EllipseComp)
+			ellipseComp.radius = 100
+			ellipseComp.strokeColor = "blue"
+			ellipseComp.fillColor = "red"
 
 			pipeView.addComp(ArrowLineComp)
 			pipeView.addComp(DragableComp)
@@ -43,21 +60,20 @@ namespace flowui {
 			let labelComp = pipeView.addComp(LabelComp)
 			labelComp.text = "lwkjefljweflk"
 
-			let ellipseComp = pipeView.addComp(EllipseComp)
-			ellipseComp.radius = 100
-			ellipseComp.strokeColor = "blue"
-			ellipseComp.fillColor = "red"
-
 			return this
 		}
 
-		init() {
-			// let pipeView = New(PipeView)
-			this.test()
+		test2() {
+			const rootGroup = this.rootGroup
+
+			const pipeView = New(PipeView)
+			pipeView.parent = rootGroup
+			pipeView.x = 400
+			pipeView.y = 400
+
 		}
 
 		update() {
-
 		}
 
 		destroy() {

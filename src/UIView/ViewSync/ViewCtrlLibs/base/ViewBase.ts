@@ -77,6 +77,11 @@ namespace flowui {
 
 		}
 
+		protected _strarted: bool = false
+		start() {
+
+		}
+
 		destroy() {
 			this.onDestroy()
 
@@ -91,7 +96,12 @@ namespace flowui {
 		}
 
 		update() {
-
+			if (!this._strarted) {
+				this._strarted = true
+				this.start()
+			}
+			this.updateViewParent()
+			this.onUpdateTransform()
 		}
 
 		private _active: bool = false;
@@ -118,14 +128,14 @@ namespace flowui {
 		}
 		set x(value: number) {
 			this._transform.position.x = value
-			this.updateTransform()
+			this.markTransformDirty()
 		}
 		public get y(): number {
 			return this._transform.position.y
 		}
 		public set y(value: number) {
 			this._transform.position.y = value
-			this.updateTransform()
+			this.markTransformDirty()
 		}
 
 		get worldPosition() {
@@ -140,14 +150,37 @@ namespace flowui {
 		}
 		public set position(value: Vector2) {
 			this._transform.position.merge(value)
+			const worldPos = this.worldPosition.clone()
 			this.view.attr({
-				pos: [value.x, value.y],
+				pos: [worldPos.x, worldPos.y],
 			})
-			this.updateTransform()
+			this.markTransformDirty()
 		}
 
-		protected updateTransform() {
-			this.emitCompsMsg("transform", this.transform)
+		protected _transformDirty: bool = false
+		protected markTransformDirty() {
+			this._transformDirty = true
+		}
+
+		protected onUpdateTransform(force: bool = false) {
+			if (force || this._transformDirty) {
+				this._transformDirty = false
+
+				// let pos = this.worldPosition
+				// let scale = this.worldScale
+				let pos = this.position
+				let scale = this.scale
+				this.view.attr({
+					pos: [pos.x, pos.y],
+					scale: [scale.x, scale.y],
+				})
+
+				this.emitCompsMsg("transform", this.transform)
+				this.children.concat().forEach(child => {
+					child.onUpdateTransform(true)
+				})
+
+			}
 		}
 
 		protected _scale: Vector2;
@@ -156,10 +189,11 @@ namespace flowui {
 		}
 		public set scale(value: Vector2) {
 			this._transform.scale.merge(value)
+			const worldScale = this.worldScale
 			this.view.attr({
-				scale: [this.scale.x, this.scale.y,],
+				scale: [worldScale.x, worldScale.y,],
 			})
-			this.updateTransform()
+			this.markTransformDirty()
 		}
 
 		emitCompsMsg(key: string, data: any) {
@@ -200,20 +234,39 @@ namespace flowui {
 			this.emitCompsMsg("contentSize", this._contentSize)
 		}
 
-		private _parent: ViewBase;
+		protected get viewContainer(): ccs.Group {
+			// return this.viewParent.viewContainer
+			return this.view
+		}
+
+		protected _viewParentDirty: bool = false
+		protected markViewParentDirt() {
+			this._viewParentDirty = true
+		}
+		protected _viewParent: ViewBase;
 		public get viewParent(): ViewBase {
-			return this._parent;
+			return this._viewParent;
 		}
 		public set viewParent(value: ViewBase) {
-			let parentView = value.view
-			if (parentView instanceof spritejs.Group) {
-				this._parent = value;
-				parentView.appendChild(this.view)
-				this.updateTransform()
-			} else if (parentView == null) {
-				this._parent = null
-				this.view.remove()
+			this.markTransformDirty()
+			this.markViewParentDirt()
+			this._viewParent = value
+		}
+		protected updateViewParent() {
+			if (this._viewParentDirty) {
+				this._viewParentDirty = false
+				let viewParent = this._viewParent
+				let parentView = viewParent.viewContainer
+				if (viewParent == null) {
+					this._viewParent = null
+					this.view.remove()
+					return true
+				} else if (parentView instanceof spritejs.Group) {
+					parentView.appendChild(this.view)
+					return true
+				}
 			}
+			return false
 		}
 
 		set transformParent(parent: ViewBase) {
@@ -234,6 +287,10 @@ namespace flowui {
 			}
 			return child
 		}
+
+		/**
+		 * 严格应该用viewchildren,而不是lifechildren
+		 */
 		get children(): ViewBase[] {
 			return this.lifecycleChildren.concat()
 		}
@@ -248,9 +305,9 @@ namespace flowui {
 		}
 
 		set parent(parent: ViewBase) {
-			this.viewParent = parent
 			this.transformParent = parent
 			this.lifecycleParent = parent
+			this.viewParent = parent
 		}
 
 	}

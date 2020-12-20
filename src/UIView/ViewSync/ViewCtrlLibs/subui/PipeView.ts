@@ -6,23 +6,26 @@ namespace flowui {
 		background: NodeView
 		editor: NodeView
 
-		protected totalSize = new Size2(100, 200)
+		protected totalSize = new Size2(140, 100)
 
 		onLoad() {
 			const totalSize = this.totalSize
 
-			const background = this.createChild(null, [RectComp])
+			const background = this.createChild(null, [RoundRectComp])
 			this.background = background
 			background.width = totalSize.width
 			background.height = totalSize.height
 
-			this.labelView = this.createChild(null, [LabelComp])
-			this.labelView.y = totalSize.height / 2 - 10
+			this.addComp(DragableComp)
 
-			const editor = this.createChild(null, [EditorComp])
-			editor.y = -10
-			const editorComp = editor.getComp(EditorComp)
-			editorComp.hint = "点我输入..."
+			this.labelView = this.createChild(null, [LabelComp])
+			this.labelView.y = -totalSize.height / 2 + 12
+			this.labelView.getComp(LabelComp).text = "标题"
+
+			const editor = this.createChild(null, [RectComp, EditorComp])
+			editor.width = totalSize.width - 20
+			editor.height = totalSize.height - 40
+			editor.y = 10
 
 		}
 

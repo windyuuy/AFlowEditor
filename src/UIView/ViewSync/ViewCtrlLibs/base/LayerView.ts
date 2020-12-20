@@ -11,6 +11,10 @@ namespace flowui {
 			return this._view as ccs.Layer
 		}
 
+		protected get viewContainer(): ccs.Layer {
+			return this._view as ccs.Layer
+		}
+
 		setupView() {
 			let layer = new spritejs.Layer()
 			return layer

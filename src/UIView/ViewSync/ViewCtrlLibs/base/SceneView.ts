@@ -8,6 +8,10 @@ namespace flowui {
 		protected onInit() {
 		}
 
+		protected get viewContainer(): ccs.Layer {
+			return this._view as ccs.Layer
+		}
+
 		protected setupView() {
 			const sceneView = new spritejs.Scene({
 				container: this._container,

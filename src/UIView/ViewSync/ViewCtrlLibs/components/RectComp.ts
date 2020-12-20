@@ -3,52 +3,38 @@
 
 namespace flowui {
 
+	/**
+	 * 矩形
+	 */
 	export class RectComp extends RenderComp {
 
-		protected viewNode: ccs.Path
+		protected viewNode: ccs.Rect
 
-		get contentSize() {
-			return this.host.contentSize
+		onInit() {
 		}
 
-		get radius(): number {
-			let size = this.contentSize
-			let min = Math.min(size.width, size.height) / 4
-			min = Math.min(20, min)
-			return min
+		protected setupStyleParams() {
+			this._strokeWidth = 1
+			this._strokeColor = "black"
+			this._fillColor = "white"
 		}
 
-		protected genRenderPath() {
-			let size = this.contentSize
-
-			let radius = this.radius || 0
-			let halfWidth = size.width / 2
-			let halfWidth2 = size.width / 2 - radius
-			let halfH = size.height / 2
-			let halfH2 = size.height / 2 - radius
-
-			return `M${-halfWidth2},${halfH}
-					L${halfWidth2},${halfH}A${radius},${radius},0,0,0,${halfWidth},${halfH2}
-					L${halfWidth},${-halfH2}A${radius},${radius},90,0,0,${halfWidth2},${-halfH}
-					L${-halfWidth2},${-halfH}A${radius},${radius},0,0,0,${-halfWidth},${-halfH2}
-					L${-halfWidth},${halfH2}A${radius},${radius},90,0,0,${-halfWidth2},${halfH}
-					`
-		}
-
-		protected updateContentSize() {
+		updateContentSize() {
+			let size = this.host.contentSize
 			this.viewNode.attr({
-				d: this.genRenderPath(),
+				pos: [-size.width / 2, -size.height / 2,],
+				size: [size.width, size.height,],
 			})
 		}
 
 		protected setUpView() {
-
-			const p1 = new ccs.Path();
-			p1.attr({
-				d: this.genRenderPath(),
+			let size = this.host.contentSize
+			const viewNode = new ccs.Rect({
+				pos: [-size.width / 2, -size.height / 2,],
+				size: [size.width, size.height,],
 			});
 
-			this.viewNode = p1
+			this.viewNode = viewNode
 
 			this.updateCommonStyleSettings()
 		}
