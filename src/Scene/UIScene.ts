@@ -29,6 +29,10 @@ namespace flowui {
 			const rootGroup = New(GroupView)
 			rootGroup.parent = rootLayer
 			this.rootGroup = rootGroup
+			let rectComp = rootGroup.addComp(RectComp)
+			rootGroup.width = 1000 * 2
+			rootGroup.height = 1000 * 2
+			rootGroup.addComp(DragableComp)
 
 			this.onInit()
 
@@ -70,6 +74,11 @@ namespace flowui {
 			pipeView.parent = rootGroup
 			pipeView.x = 400
 			pipeView.y = 400
+
+			const pipeView2 = New(PipeView)
+			pipeView2.parent = rootGroup
+			pipeView2.x = 600
+			pipeView2.y = 400
 
 		}
 

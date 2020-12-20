@@ -10,6 +10,17 @@ namespace flowui {
 		curPos: Vector2 = new Vector2()
 		isDraging: bool = false
 
+		/**
+		 * 阻止事件冒泡
+		 */
+		stopPropagation: bool = true
+
+		protected toStopPropagation(evt: UIEvent) {
+			if (this.stopPropagation) {
+				evt.stopPropagation()
+			}
+		}
+
 		onAdd() {
 			const touchLayer = dataManager.getTypeFeatureGroup(TouchLayerView)[0]
 			this.touchLayer = touchLayer
@@ -17,9 +28,13 @@ namespace flowui {
 			// listen self
 			this.host.event.onNamedEvent(this.typeName, UIEventKey.mousedown, (evt) => {
 				this.isDraging = true
+
+				this.toStopPropagation(evt)
 			})
 			this.host.event.onNamedEvent(this.typeName, UIEventKey.mouseup, (evt) => {
 				this.isDraging = false
+
+				this.toStopPropagation(evt)
 			})
 
 			// listen layer
@@ -28,12 +43,16 @@ namespace flowui {
 				this.beginPos.y = evt.y
 				this.curPos.merge(this.beginPos)
 				this.hostPos = this.host.position.clone()
+
+				this.toStopPropagation(evt)
 			})
 			touchLayer.event.onNamedEvent(this.typeName, UIEventKey.mousemove, (evt) => {
 				this.curPos.x = evt.x
 				this.curPos.y = evt.y
 
 				this.onDrag()
+
+				this.toStopPropagation(evt)
 			})
 			touchLayer.event.onNamedEvent(this.typeName, UIEventKey.mouseup, (evt) => {
 				this.isDraging = false
@@ -41,6 +60,7 @@ namespace flowui {
 				this.curPos.y = evt.y
 
 				this.onDrag()
+				this.toStopPropagation(evt)
 			})
 		}
 
