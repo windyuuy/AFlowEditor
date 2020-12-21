@@ -95,6 +95,11 @@ namespace flowui {
 			const asyncSlotView = New(AsyncSlotView)
 			asyncSlotView.parent = rootGroup
 			asyncSlotView.position = new Vector2(100, 400)
+
+			const slotGroupView = New(SlotGroupView)
+			slotGroupView.parent = rootGroup
+			slotGroupView.position = new Vector2(100, 500)
+			slotGroupView.slotsCount = 2
 		}
 
 		update() {
