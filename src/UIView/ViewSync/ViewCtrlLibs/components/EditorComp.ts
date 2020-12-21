@@ -139,7 +139,7 @@ namespace flowui {
 			let editorId = this.editorId;
 			// < p class="input" contenteditable = "true" style = "overflow-y:auto;overflow-x: hidden; " > </p>
 			let p1 = $(`
-		<div id="${editorId}" class="topic-container" style="position: absolute; top: 0px; left: 0px; transform: translate(-50%,-40%);">
+		<div id="${editorId}" class="editor-container" style="position: absolute; top: 0px; left: 0px; transform: translate(-50%,-40%);">
 			<div class="scaleNode">
 				<textarea class="input" style="overflow:auto;word-break:break-all;" cols="20" value="" ></textarea>
 			</div>

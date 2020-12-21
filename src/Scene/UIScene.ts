@@ -61,7 +61,7 @@ namespace flowui {
 			let editorComp = pipeView.addComp(EditorComp)
 			editorComp.text = "qefwfe"
 
-			let labelComp = pipeView.addComp(LabelComp)
+			let labelComp = pipeView.addComp(GLLabelComp)
 			labelComp.text = "lwkjefljweflk"
 
 			return this

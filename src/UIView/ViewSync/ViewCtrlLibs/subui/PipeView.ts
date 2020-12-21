@@ -19,10 +19,10 @@ namespace flowui {
 			background.width = totalSize.width
 			background.height = totalSize.height
 
-			const labelView = this.createChild(null, [LabelComp])
+			const labelView = this.createChild(null, [GLLabelComp])
 			this.labelView = labelView
 			labelView.y = -totalSize.height / 2 + 12
-			labelView.getComp(LabelComp).text = "标题"
+			labelView.getComp(GLLabelComp).text = "标题"
 
 			const slotEditor = this.createChild(null, [RectComp, EditorComp])
 			this.slotEditor = slotEditor
@@ -44,7 +44,7 @@ namespace flowui {
 		}
 		public set title(value: string) {
 			this._title = value;
-			this.labelView.getComp(LabelComp).text = value
+			this.labelView.getComp(GLLabelComp).text = value
 		}
 	}
 }
