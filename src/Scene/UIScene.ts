@@ -86,7 +86,15 @@ namespace flowui {
 			lineView.parent = rootGroup
 			lineView.tailPos = new Vector2(10, 0)
 			lineView.headPos = new Vector2(100, 10)
+			lineView.position = new Vector2(100, 100)
 
+			const syncSlotView = New(SyncSlotView)
+			syncSlotView.parent = rootGroup
+			syncSlotView.position = new Vector2(100, 300)
+
+			const asyncSlotView = New(AsyncSlotView)
+			asyncSlotView.parent = rootGroup
+			asyncSlotView.position = new Vector2(100, 400)
 		}
 
 		update() {

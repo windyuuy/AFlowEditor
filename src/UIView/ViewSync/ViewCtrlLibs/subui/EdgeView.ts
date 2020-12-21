@@ -35,6 +35,9 @@ namespace flowui {
 			})
 		}
 
+		/**
+		 * 设置箭头尾部位置
+		 */
 		set tailPos(value: Vector2) {
 			this.lineTail.position = value
 			this.lineView.getComp(ArrowLineComp).beginPos = value
@@ -43,6 +46,9 @@ namespace flowui {
 			return this.lineView.getComp(ArrowLineComp).beginPos
 		}
 
+		/**
+		 * 设置箭头头部位置
+		 */
 		set headPos(value: Vector2) {
 			this.lineHead.position = value
 			this.lineView.getComp(ArrowLineComp).endPos = value
