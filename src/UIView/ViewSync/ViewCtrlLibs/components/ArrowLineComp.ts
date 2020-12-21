@@ -13,6 +13,7 @@ namespace flowui {
 			this._arrowLength = 2
 			this._arrowWidth = 2
 			this._lineWidth = 2
+			this._arrowTailWidth = 0
 		}
 
 		/**
@@ -23,7 +24,7 @@ namespace flowui {
 			return this._beginPos
 		}
 		public set beginPos(value: Vector2) {
-			this._beginPos = value
+			this._beginPos.merge(value)
 
 			this.updateShape()
 		}
@@ -35,7 +36,7 @@ namespace flowui {
 			return this._endPos
 		}
 		public set endPos(value: Vector2) {
-			this._endPos = value
+			this._endPos.merge(value)
 
 			this.updateShape()
 		}
@@ -60,6 +61,17 @@ namespace flowui {
 		}
 		public set arrowLength(value: number) {
 			this._arrowLength = value
+			this.updateShape()
+		}
+		/**
+		 * 箭头拖尾长度
+		 */
+		private _arrowTailWidth: number
+		public get arrowTailWidth(): number {
+			return this._arrowTailWidth
+		}
+		public set arrowTailWidth(value: number) {
+			this._arrowTailWidth = value
 			this.updateShape()
 		}
 
@@ -87,6 +99,7 @@ namespace flowui {
 			let w2 = this._arrowLength
 			let h1 = this._lineWidth
 			let h2 = this._arrowWidth
+			let w3 = this._arrowTailWidth
 
 			let dv = ep2.clone().subDown(bp)
 			let angle = dv.getRotationZ2()
@@ -96,9 +109,9 @@ namespace flowui {
 			let bp1 = new Vector2(0, 0)
 			let points: Vector2[] = _ShareArray()
 			points.push(new Vector2(ep1.x - w2, h1 / 2))
-			points.push(new Vector2(ep1.x - w2, h2 / 2))
+			points.push(new Vector2(ep1.x - w2 - w3, h2 / 2))
 			points.push(new Vector2(ep1.x, 0))
-			points.push(new Vector2(ep1.x - w2, -h2 / 2))
+			points.push(new Vector2(ep1.x - w2 - w3, -h2 / 2))
 			points.push(new Vector2(ep1.x - w2, -h1 / 2))
 			points.push(new Vector2(bp1.x, -h1 / 2))
 			points.push(new Vector2(bp1.x, h1 / 2))

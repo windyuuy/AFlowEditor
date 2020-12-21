@@ -47,6 +47,7 @@ namespace flowui {
 		test() {
 			const rootGroup = this.rootGroup
 			let pipeView = New(NodeView)
+			pipeView.addComp(DragableComp)
 			pipeView.parent = rootGroup
 			pipeView.contentSize = new Size2(200, 100)
 			pipeView.position = new Size2(200, 100)
@@ -79,6 +80,12 @@ namespace flowui {
 			pipeView2.parent = rootGroup
 			pipeView2.x = 600
 			pipeView2.y = 400
+
+			const lineView = New(EdgeView)
+			lineView.addComp(DragableComp)
+			lineView.parent = rootGroup
+			lineView.tailPos = new Vector2(10, 0)
+			lineView.headPos = new Vector2(100, 10)
 
 		}
 

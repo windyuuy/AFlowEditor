@@ -50,6 +50,10 @@ namespace flowui {
 
 		protected _eventCallbacks: lang.event.SEvent<UIEvent>
 
+		emit(key: string, data: any) {
+			this._eventCallbacks.emit(key, data)
+		}
+
 		onEvent(key: UIEventKey, call: (event: UIEvent) => void, options?: EventOptions) {
 			if (key in DefaultUIEventKey) {
 				this.view.addEventListener(key, call, options)
@@ -107,6 +111,9 @@ namespace flowui {
 		init(view: spritejs.Node) {
 			this.eventInfos = CleanTable(this.eventInfos)
 			return super.init(view)
+		}
+		onNamedEvent2(name: string, key: string, call: (evt: UIEvent) => void, options?: EventOptions) {
+			return this.onNamedEvent(name, key as any, call)
 		}
 		onNamedEvent(name: string, key: UIEventKey, call: (evt: UIEvent) => void, options?: EventOptions) {
 			let eventInfo = new EventListenrInfo()

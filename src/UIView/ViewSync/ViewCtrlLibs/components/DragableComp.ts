@@ -75,10 +75,16 @@ namespace flowui {
 					let scale = this.touchLayer.scale
 					let scaledPos = new Vector2(offset.x / scale.x, offset.y / scale.y).addUp(this.hostPos)
 					this.host.position = scaledPos
+
+					this.host.event.emit("onDragUpdate", {
+						target: this,
+					})
+
 					this.host["onUpdateTransform"](true)
 				}
 			}
 		}
+
 	}
 
 }

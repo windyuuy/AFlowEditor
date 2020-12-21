@@ -1,4 +1,6 @@
 
+/// <reference path="ViewBase.ts" />
+
 namespace flowui {
 	import Path = spritejs.Path;
 	import Label = spritejs.Label;
