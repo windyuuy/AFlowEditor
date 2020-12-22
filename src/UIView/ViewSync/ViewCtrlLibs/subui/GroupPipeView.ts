@@ -1,10 +1,9 @@
 
 namespace flowui {
 
-	export class PipeView extends NodeView {
+	export class GroupPipeView extends NodeView {
 		labelView: NodeView
 		background: NodeView
-		codeEditor: NodeView
 		slotEditor: NodeView
 
 		protected totalSize = new Size2(140, 120)
@@ -30,12 +29,6 @@ namespace flowui {
 			slotEditor.height = 26
 			slotEditor.y = -totalSize.height / 2 + 38
 
-			const codeEditor = this.createChild(null, [RectComp, EditorComp])
-			this.codeEditor = codeEditor
-			codeEditor.width = totalSize.width - 20
-			codeEditor.height = totalSize.height - 68
-			codeEditor.y = (totalSize.height / 2 - 10 - codeEditor.height / 2)
-
 		}
 
 		private _title: string;
@@ -47,17 +40,11 @@ namespace flowui {
 			this.labelView.getComp(GLLabelComp).text = value
 		}
 
-		/**
-		 * 根据slots确定大小
-		 * @param groupCount 
-		 * @param slotCount 
-		 */
-		public setSizeWithSlots(groupCount: number, slotCount: number) {
-			const totalSize = this.totalSize
-			totalSize.height = 120 + groupCount * 5 + slotCount * 10
-
-			this.background.height = totalSize.height
+		public get contentSize(): Size2 {
+			return this.background.contentSize
 		}
-
+		public set contentSize(value: Size2) {
+			this.background.contentSize = value
+		}
 	}
 }

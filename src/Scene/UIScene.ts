@@ -71,12 +71,12 @@ namespace flowui {
 		test2() {
 			const rootGroup = this.rootGroup
 
-			const pipeView = New(PipeView)
+			const pipeView = New(CodePipeView)
 			pipeView.parent = rootGroup
 			pipeView.x = 400
 			pipeView.y = 400
 
-			const pipeView2 = New(PipeView)
+			const pipeView2 = New(CodePipeView)
 			pipeView2.parent = rootGroup
 			pipeView2.x = 600
 			pipeView2.y = 400

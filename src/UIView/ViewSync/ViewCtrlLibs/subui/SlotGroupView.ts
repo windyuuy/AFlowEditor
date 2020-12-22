@@ -4,7 +4,6 @@ namespace flowui {
 		groupView: NodeView
 
 		onLoad() {
-			this._slotCount = 0
 			this.groupView = this.createChild(null, [RectComp, DragableComp])
 			const groupView = this.groupView
 			const rectComp = groupView.getComp(RectComp)
@@ -13,13 +12,11 @@ namespace flowui {
 
 		}
 
-		private _slotCount: number
-		public get slotsCount(): number {
-			return this._slotCount
+		public get height(): number {
+			return this.groupView.height
 		}
-		public set slotsCount(value: number) {
-			this._slotCount = value
-			this.groupView.height = 40 + value * 10
+		public set height(value: number) {
+			this.groupView.height = value
 		}
 	}
 }
