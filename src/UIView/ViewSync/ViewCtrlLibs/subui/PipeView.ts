@@ -46,5 +46,18 @@ namespace flowui {
 			this._title = value;
 			this.labelView.getComp(GLLabelComp).text = value
 		}
+
+		/**
+		 * 根据slots确定大小
+		 * @param groupCount 
+		 * @param slotCount 
+		 */
+		public setSizeWithSlots(groupCount: number, slotCount: number) {
+			const totalSize = this.totalSize
+			totalSize.height = 120 + groupCount * 5 + slotCount * 10
+
+			this.background.height = totalSize.height
+		}
+
 	}
 }
