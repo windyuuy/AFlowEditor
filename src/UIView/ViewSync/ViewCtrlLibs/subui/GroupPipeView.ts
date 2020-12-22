@@ -1,7 +1,10 @@
 
 namespace flowui {
 
-	export class GroupPipeView extends NodeView {
+	export class GroupPipeView extends NodeView implements IViewSync {
+		syncFromModel(viewModel: ViewModelBase): void {
+			throw new Error("Method not implemented.")
+		}
 		labelView: NodeView
 		background: NodeView
 		slotEditor: NodeView

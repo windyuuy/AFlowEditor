@@ -1,6 +1,9 @@
 
 namespace flowui {
-	export class AsyncSlotView extends NodeView {
+	export class AsyncSlotView extends NodeView implements IViewSync {
+		syncFromModel(viewModel: ViewModelBase): void {
+			throw new Error("Method not implemented.")
+		}
 
 		shapeView: NodeView
 

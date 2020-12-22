@@ -1,6 +1,12 @@
 
 namespace flowui {
-	export class ViewModelBase {
+	export class ViewModelBase implements IDataClass {
+		readonly oid: string;
+		/**
+		 * 类型名
+		 */
+		readonly otype: string
+
 		transform: Transform
 
 		init() {
@@ -9,6 +15,10 @@ namespace flowui {
 		}
 
 		clear() {
+
+		}
+
+		updateLayout() {
 
 		}
 

@@ -1,6 +1,9 @@
 
 namespace flowui {
-	export class EdgeView extends NodeView {
+	export class EdgeView extends NodeView implements IViewSync {
+		syncFromModel(viewModel: ViewModelBase): void {
+			throw new Error("Method not implemented.")
+		}
 		lineView: NodeView
 		lineHead: NodeView
 		lineTail: NodeView

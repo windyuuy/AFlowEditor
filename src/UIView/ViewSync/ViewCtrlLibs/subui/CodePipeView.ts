@@ -1,7 +1,10 @@
 
 namespace flowui {
 
-	export class CodePipeView extends NodeView {
+	export class CodePipeView extends NodeView implements IViewSync {
+		syncFromModel(viewModel: ViewModelBase): void {
+			throw new Error("Method not implemented.")
+		}
 		labelView: NodeView
 		background: NodeView
 		codeEditor: NodeView
