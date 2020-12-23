@@ -11,7 +11,7 @@ namespace flowui {
 	export import bool = eds.bool
 	import StrTypeMap = lang.StrTypeMap
 	export import Table = lang.StrTypeMap
-	import EmptyTable = lang.EmptyTable
+	export import EmptyTable = lang.EmptyTable
 	export import IDataClass = eds.IDataClass
 	import NullData = eds.NullData
 	export import NewData = eds.NewData

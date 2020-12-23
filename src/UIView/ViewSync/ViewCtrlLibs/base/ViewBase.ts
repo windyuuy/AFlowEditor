@@ -9,6 +9,8 @@ namespace flowui {
 
 		name: string = ""
 
+		modelId: string
+
 		/**
 		 * 视图组
 		 */
@@ -82,6 +84,10 @@ namespace flowui {
 
 		}
 
+		clear(){
+			this.destroy()
+		}
+		
 		destroy() {
 			this.onDestroy()
 
