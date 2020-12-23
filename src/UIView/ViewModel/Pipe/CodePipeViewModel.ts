@@ -1,7 +1,7 @@
 
 
 namespace flowui {
-	export class PipeViewModel extends ViewModelBase {
+	export class CodePipeViewModel extends PipeViewModel {
 		init() {
 			return this
 		}
@@ -17,22 +17,19 @@ namespace flowui {
 
 		/**
 		 * 管线是否处于展开状态
+		 * 暂时无效
 		 */
-		isExpand: boolean
+		isExpand: boolean = false
 
 		/**
-		 * 是否包含代码
+		 * 是否代码块
 		 */
-		get isOwnCode(): boolean {
-			return this.pipeTemp instanceof CodePipeTemp
-		}
+		readonly isOwnCode: boolean = true
 
 		/**
-		 * 是否组装
+		 * 是否组装体
 		 */
-		get isGroup(): boolean {
-			return this.pipeTemp instanceof GroupPipeTemp
-		}
+		readonly isGroup: boolean = false
 
 
 		/**
@@ -46,9 +43,9 @@ namespace flowui {
 		}
 
 		/**
-		 * 是否展示模板规格定义代码
+		 * 是否正在编辑块规格
 		 */
-		isShowSlotSpecCode: boolean = false
+		isSlotSpecCodeEditable: boolean = false
 
 		/**
 		 * 当前代码是否可编辑

@@ -34,12 +34,10 @@ namespace flowui {
 
 		createView(model: ViewModelBase): ViewBase {
 			let view: ViewBase
-			if (model instanceof PipeViewModel) {
-				if (model.isCodeEditable) {
-					view = New(CodePipeView)
-				} else {
-					view = New(GroupPipeView)
-				}
+			if (model instanceof GroupPipeViewModel) {
+				view = New(GroupPipeView)
+			} else if (model instanceof CodePipeViewModel) {
+				view = New(CodePipeView)
 			} else if (model instanceof SlotViewModel) {
 				// 只有一种slot, 触发源slot通过构造pipe实现
 				view = New(SlotView)
