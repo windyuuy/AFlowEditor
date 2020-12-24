@@ -6,8 +6,12 @@ namespace flowui {
 		init() {
 			dataManager = new eds.DataManager().init()
 
+			this.setupScene()
+
 			this.systems = CleanArray(this.systems)
 			let sys = new ViewSyncSystem().init()
+			sys.scene = this.scene
+
 			this.systems.push(sys)
 
 			this.isRunning = true

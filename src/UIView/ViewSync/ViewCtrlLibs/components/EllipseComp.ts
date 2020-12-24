@@ -10,6 +10,12 @@ namespace flowui {
 
 		protected viewNode: ccs.Ellipse
 
+		protected setupStyleParams() {
+			this._strokeWidth = 1
+			this._strokeColor = "black"
+			this._fillColor = "white"
+		}
+
 		/**
 		 * 半径
 		 */

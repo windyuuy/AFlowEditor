@@ -9,8 +9,6 @@ namespace flowui {
 
 		name: string = ""
 
-		modelId: string
-
 		/**
 		 * 视图组
 		 */
@@ -84,10 +82,10 @@ namespace flowui {
 
 		}
 
-		clear(){
+		clear() {
 			this.destroy()
 		}
-		
+
 		destroy() {
 			this.onDestroy()
 
@@ -320,6 +318,10 @@ namespace flowui {
 			this.transformParent = parent
 			this.lifecycleParent = parent
 			this.viewParent = parent
+		}
+
+		get parent() {
+			return this._viewParent
 		}
 
 	}

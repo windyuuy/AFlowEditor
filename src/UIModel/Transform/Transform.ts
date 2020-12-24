@@ -4,11 +4,17 @@ namespace flowui {
 	/**
 	 * 相对坐标系统
 	 */
-	export class Transform {
+	export class Transform implements eds.IMerge<Transform> {
+		mergeFrom(target: Transform) {
+			this.position.merge(target.position)
+			this.scale.merge(target.scale)
+			this.rotation.merge(target.rotation)
+		}
 		parent?: Transform
 
 		scale: Vector2 = new Vector2(1, 1)
 		position: Vector2 = new Vector2()
+		rotation: Vector3 = new Vector3()
 
 		getWebPagePosition(): Vector2 {
 			if (this.parent) {

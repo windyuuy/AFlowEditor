@@ -1,7 +1,9 @@
 
+/// <reference path="DynView.ts" />
+
 namespace flowui {
 
-	export class CodePipeView extends NodeView implements IViewSync {
+	export class CodePipeView extends DynView {
 		syncFromModel(viewModel: CodePipeViewModel): void {
 			this.viewModel = viewModel
 

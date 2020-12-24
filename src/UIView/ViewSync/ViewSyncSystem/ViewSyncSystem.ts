@@ -3,6 +3,9 @@ namespace flowui {
 	const ViewFeature: eds.IDataFeature<ViewBase> = {
 		filter: (data) => data instanceof ViewBase
 	}
+	const DynViewFeature: eds.IDataFeature<DynView> = {
+		filter: (data) => data instanceof DynView
+	}
 	const ViewModelFeature: eds.IDataFeature<ViewModelBase> = {
 		filter: (data) => data instanceof ViewModelBase
 	}
@@ -25,6 +28,8 @@ namespace flowui {
 	}
 
 	export class ViewSyncSystem extends SystemBase {
+
+		scene: UIScene
 
 		update() {
 
@@ -49,6 +54,8 @@ namespace flowui {
 				throw new Error("unable to create view for invalid model.")
 			}
 
+			view.parent = this.scene.rootGroup
+
 			return view
 		}
 
@@ -64,7 +71,7 @@ namespace flowui {
 			})
 
 			let modelViewMap: { [key: string]: ViewBase } = EmptyTable()
-			let views = dataManager.getFeatureGroup(ViewFeature)
+			let views = dataManager.getFeatureGroup(DynViewFeature)
 			views.forEach(view => {
 				modelViewMap[view.modelId] = view
 			})
@@ -73,7 +80,7 @@ namespace flowui {
 			viewModels.forEach(model => {
 				if (!modelViewMap[model.oid]) {
 					let view = this.createView(model)
-					modelViewMap[view.modelId] = view
+					modelViewMap[model.oid] = view
 				}
 			})
 			for (let modelId in modelViewMap) {

@@ -1,7 +1,7 @@
 
 namespace flowui {
 
-	export class GroupPipeView extends NodeView implements IViewSync {
+	export class GroupPipeView extends DynView {
 
 		syncFromModel(viewModel: GroupPipeViewModel): void {
 			this.viewModel = viewModel

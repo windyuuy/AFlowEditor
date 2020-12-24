@@ -1,21 +1,43 @@
 
 namespace flowui {
-	export class SlotView extends NodeView implements IViewSync {
-		syncFromModel(viewModel: ViewModelBase): void {
-			throw new Error("Method not implemented.")
+	export class SlotView extends DynView {
+		syncFromModel(viewModel: SlotViewModel): void {
+			this.viewModel = viewModel
+
+			this.position = viewModel.transform.position
 		}
 
+		viewModel: SlotViewModel
 		shapeView: NodeView
 
+		newEdgeViewModel: EdgeViewModel
+
 		onLoad() {
-			this.shapeView = this.createChild(null, [TriangleComp, DragableComp])
+			this.shapeView = this.createChild(null, [EllipseComp, DragableComp])
 			const shapeView = this.shapeView
 			shapeView.width = 10
 			shapeView.height = 10
-			const triangleComp = shapeView.getComp(TriangleComp)
-			triangleComp.halfWidth = shapeView.width / 2
-			triangleComp.rotate = -90
+			const ellipseComp = shapeView.getComp(EllipseComp)
+			ellipseComp.radius = shapeView.width
 
+			const dragComp = this.shapeView.getComp(DragableComp)
+			dragComp.isFollowDrag = false
+			dragComp.event.on(DragEvent.dragmove, (evt) => {
+				let startPos = this.position.clone()
+				let curPos = dragComp.curPos.clone()
+
+				let edgeViewModel = this.newEdgeViewModel
+				if (!edgeViewModel) {
+					edgeViewModel = this.newEdgeViewModel = New(EdgeViewModel)
+				}
+				edgeViewModel.tailPos = startPos
+				edgeViewModel.arrowPos = curPos
+			})
+			dragComp.event.on(DragEvent.dragend, (evt) => {
+				if (this.newEdgeViewModel) {
+					this.newEdgeViewModel = null
+				}
+			})
 		}
 	}
 }

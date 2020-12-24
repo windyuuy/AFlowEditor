@@ -1,6 +1,6 @@
 
 namespace flowui {
-	export class SlotGroupView extends NodeView implements IViewSync {
+	export class SlotGroupView extends DynView {
 		syncFromModel(viewModel: ViewModelBase): void {
 			throw new Error("Method not implemented.")
 		}

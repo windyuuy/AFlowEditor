@@ -3,7 +3,7 @@
 namespace flowui {
 	export class SlotViewModel extends ViewModelBase {
 		init() {
-			return this
+			return super.init()
 		}
 
 		slotInfo: SlotInfo

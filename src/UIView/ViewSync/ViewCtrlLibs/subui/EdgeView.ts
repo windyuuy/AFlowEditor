@@ -1,12 +1,17 @@
 
 namespace flowui {
-	export class EdgeView extends NodeView implements IViewSync {
-		syncFromModel(viewModel: ViewModelBase): void {
-			throw new Error("Method not implemented.")
+	export class EdgeView extends DynView {
+		syncFromModel(viewModel: EdgeViewModel): void {
+			this.viewModel = viewModel
+
+			this.arrowPos = viewModel.arrowPos
+			this.tailPos = viewModel.tailPos
 		}
+
+		viewModel: EdgeViewModel
 		lineView: NodeView
-		lineHead: NodeView
-		lineTail: NodeView
+		lineHeadPt: NodeView
+		lineTailPt: NodeView
 
 		onLoad() {
 			this.lineView = this.createChild(NodeView)
@@ -17,8 +22,8 @@ namespace flowui {
 			arrowLineComp.arrowTailWidth = 2
 
 			// 增加头部端点
-			this.lineHead = this.createChild(NodeView)
-			const lineHead = this.lineHead
+			this.lineHeadPt = this.createChild(NodeView)
+			const lineHead = this.lineHeadPt
 			const ellipseComp = lineHead.addComp(EllipseComp)
 			ellipseComp.radius = 3
 			lineHead.addComp(DragableComp)
@@ -27,8 +32,8 @@ namespace flowui {
 			})
 
 			// 增加尾部端点
-			this.lineTail = this.createChild(NodeView)
-			const lineEnd = this.lineTail
+			this.lineTailPt = this.createChild(NodeView)
+			const lineEnd = this.lineTailPt
 			lineEnd.addComp(DragableComp)
 			const circleEnd = lineEnd.addComp(EllipseComp)
 			circleEnd.radius = 3
@@ -42,7 +47,7 @@ namespace flowui {
 		 * 设置箭头尾部位置
 		 */
 		set tailPos(value: Vector2) {
-			this.lineTail.position = value
+			this.lineTailPt.position = value
 			this.lineView.getComp(ArrowLineComp).beginPos = value
 		}
 		get tailPos() {
@@ -52,11 +57,11 @@ namespace flowui {
 		/**
 		 * 设置箭头头部位置
 		 */
-		set headPos(value: Vector2) {
-			this.lineHead.position = value
+		set arrowPos(value: Vector2) {
+			this.lineHeadPt.position = value
 			this.lineView.getComp(ArrowLineComp).endPos = value
 		}
-		get headPos() {
+		get arrowPos() {
 			return this.lineView.getComp(ArrowLineComp).endPos
 		}
 

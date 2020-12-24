@@ -41,7 +41,8 @@ namespace flowui {
 
 		onInit() {
 			// this.test()
-			this.test2()
+			// this.testView()
+			this.testViewMode()
 		}
 
 		test() {
@@ -68,7 +69,7 @@ namespace flowui {
 			return this
 		}
 
-		test2() {
+		testView() {
 			const rootGroup = this.rootGroup
 
 			const pipeView = New(CodePipeView)
@@ -85,7 +86,7 @@ namespace flowui {
 			lineView.addComp(DragableComp)
 			lineView.parent = rootGroup
 			lineView.tailPos = new Vector2(10, 0)
-			lineView.headPos = new Vector2(100, 10)
+			lineView.arrowPos = new Vector2(100, 10)
 			lineView.position = new Vector2(100, 100)
 
 			const syncSlotView = New(SlotView)
@@ -95,6 +96,11 @@ namespace flowui {
 			const slotGroupView = New(SlotGroupView)
 			slotGroupView.parent = rootGroup
 			slotGroupView.position = new Vector2(100, 500)
+		}
+
+		testViewMode() {
+			let slotViewModel = New(SlotViewModel)
+			slotViewModel.transform.position = new Vector2(100, 100)
 		}
 
 		update() {
