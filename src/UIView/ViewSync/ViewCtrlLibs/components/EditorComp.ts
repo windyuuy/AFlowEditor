@@ -4,13 +4,21 @@
 namespace flowui {
 	const $ = jquery
 
+	export enum EditorEvent {
+		enteredit = "enteredit",
+		leaveedit = "leaveedit",
+	}
+
 	export class EditorComp extends RenderComp {
+
+		event: lang.event.SEvent<any>
 
 		init(view: ViewBase) {
 			this.host = view
 			this._enabled = true
 			this._hint = "点我输入..."
 			this._text = ""
+			this.event = new lang.event.SEvent<any>()
 			this.onInit()
 			return this
 		}
@@ -43,6 +51,11 @@ namespace flowui {
 		 * 自动折叠
 		 */
 		autoWrap: bool = true
+
+		/**
+		 * 可自动交互
+		 */
+		autoInteractive: bool = true
 
 		/**
 		 * 提示文本
@@ -113,7 +126,9 @@ namespace flowui {
 		}
 
 		onDoubleClick() {
-			this.isWritable = true
+			if (this.autoInteractive) {
+				this.isWritable = true
+			}
 			return true
 		}
 
@@ -225,6 +240,7 @@ namespace flowui {
 			p1.val(this._text)
 			p1.hide()
 
+			this.event.emit(EditorEvent.leaveedit, {})
 		}
 
 		protected enterWriteMode() {
@@ -235,6 +251,8 @@ namespace flowui {
 			p1.show()
 
 			this.textArea.focus()
+
+			this.event.emit(EditorEvent.enteredit, {})
 		}
 
 	}

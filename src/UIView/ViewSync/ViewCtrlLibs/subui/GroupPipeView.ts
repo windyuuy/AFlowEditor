@@ -2,8 +2,23 @@
 namespace flowui {
 
 	export class GroupPipeView extends NodeView implements IViewSync {
+
 		syncFromModel(viewModel: GroupPipeViewModel): void {
+			this.viewModel = viewModel
+
+			let nodeName = viewModel.pipeInfo.name
+			let title = nodeName
+			this.title = title
+
+			let slotEditor = this.slotEditor.getComp(EditorComp)
+			slotEditor.isWritable = viewModel.isSlotSpecCodeEditable
+			if (!slotEditor.isWritable) {
+				slotEditor.text = viewModel.slotSpecCode
+			}
+
 		}
+
+		viewModel: GroupPipeViewModel
 		labelView: NodeView
 		background: NodeView
 		slotEditor: NodeView
@@ -20,16 +35,28 @@ namespace flowui {
 			background.width = totalSize.width
 			background.height = totalSize.height
 
-			const labelView = this.createChild(null, [GLLabelComp])
+			const labelView = this.createChild(null, [RectComp, EditorComp,])
 			this.labelView = labelView
 			labelView.y = -totalSize.height / 2 + 12
-			labelView.getComp(GLLabelComp).text = "标题"
+			let eidtorComp = labelView.getComp(EditorComp)
+			eidtorComp.text = "标题"
+			eidtorComp.event.on(EditorEvent.leaveedit, () => {
+				this.viewModel.pipeInfo.name = eidtorComp.text
+			})
 
 			const slotEditor = this.createChild(null, [RectComp, EditorComp])
 			this.slotEditor = slotEditor
 			slotEditor.width = totalSize.width - 20
 			slotEditor.height = 26
 			slotEditor.y = -totalSize.height / 2 + 38
+			const slotEditorComp = slotEditor.getComp(EditorComp)
+			slotEditorComp.event.on(EditorEvent.enteredit, () => {
+				this.viewModel.isSlotSpecCodeEditable = true
+			})
+			slotEditorComp.event.on(EditorEvent.leaveedit, () => {
+				this.viewModel.slotSpecCode = slotEditorComp.text
+				this.viewModel.isSlotSpecCodeEditable = false
+			})
 
 		}
 
@@ -39,7 +66,7 @@ namespace flowui {
 		}
 		public set title(value: string) {
 			this._title = value;
-			this.labelView.getComp(GLLabelComp).text = value
+			this.labelView.getComp(EditorComp).text = value
 		}
 
 		public get contentSize(): Size2 {

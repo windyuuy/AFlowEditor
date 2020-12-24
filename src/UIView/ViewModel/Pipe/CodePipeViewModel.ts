@@ -13,7 +13,7 @@ namespace flowui {
 		/**
 		 * 管线展开模板信息
 		 */
-		pipeTemp: PipeTemp
+		pipeTemp: CodePipeTemp
 
 		/**
 		 * 管线是否处于展开状态
@@ -40,6 +40,13 @@ namespace flowui {
 		}
 		public set slotSpecCode(value: string) {
 			this.pipeTemp.slotSpecCode = value
+		}
+
+		public get pipeCode(): string {
+			return this.pipeTemp.code
+		}
+		public set pipeCode(value: string) {
+			this.pipeTemp.code = value
 		}
 
 		/**
