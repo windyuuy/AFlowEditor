@@ -5,6 +5,9 @@
 /// <reference path="../basic/Vector.ts" />
 /// <reference path="../basic/ZSize.ts" />
 /// <reference path="../basic/ArrayHelper.ts" />
+/// <reference path="../eds/Basic.ts" />
+/// <reference path="../eds/DataClass.ts" />
+
 
 
 namespace flowui {
@@ -15,7 +18,7 @@ namespace flowui {
 	export import Table = lang.StrTypeMap
 	export import EmptyTable = lang.EmptyTable
 	export import IDataClass = eds.IDataClass
-	import NullData = eds.NullData
+	export import NullData = eds.NullData
 	export import NewData = eds.NewData
 
 	export import Vector = math.Vector
@@ -71,7 +74,6 @@ namespace flowui {
 	}
 
 	export const Null = NullData
-	export const NULL = NullData
 	export function Alloc<T>(cls: new () => T): T {
 		let data = dataManager.addData(cls)
 		return data
@@ -103,6 +105,10 @@ namespace flowui {
 	 * @param container 
 	 */
 	export function DelAll<T>(container: T): bool {
+		if (container == null) {
+			return false
+		}
+
 		forEach(container, (data) => {
 			Del(data)
 		})

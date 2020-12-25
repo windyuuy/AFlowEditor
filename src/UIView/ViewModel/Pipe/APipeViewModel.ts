@@ -3,6 +3,7 @@
 namespace flowui {
 	export class PipeViewModel extends ViewModelBase {
 		init() {
+			this.pipeInfo = New(PipeInfo)
 			this.slotGroupViewModels = CleanArray(this.slotGroupViewModels)
 
 			return super.init()
@@ -24,6 +25,20 @@ namespace flowui {
 		isExpand: boolean = false
 
 		slotGroupViewModels: SlotGroupViewModel[]
+
+		/**
+		 * 从选中列表中重组模板
+		 */
+		loadPipeTempFromGroups(pipeViewModels: PipeViewModel[]) {
+
+		}
+
+		/**
+		 * 引用现有模板
+		 */
+		loadPipeTempFromTemp(pipeTemp: PipeTemp) {
+
+		}
 
 		updateSlotGroups() {
 			ArrayHelper.foreachDifferentPairs(

@@ -99,11 +99,18 @@ namespace flowui {
 		}
 
 		testViewMode() {
-			let slotViewModel = New(SlotViewModel)
-			slotViewModel.transform.position = new Vector2(100, 100)
+			// let slotViewModel = New(SlotViewModel)
+			// slotViewModel.transform.position = new Vector2(100, 100)
 
-			let slotGroupViewModel = New(SlotGroupViewModel)
-			slotGroupViewModel.transform.position = new Vector2(100, 100)
+			// let slotGroupViewModel = New(SlotGroupViewModel)
+			// slotGroupViewModel.transform.position = new Vector2(100, 100)
+
+			let groupPipeViewModel = New(GroupPipeViewModel)
+			groupPipeViewModel.pipeTemp = New(PipeTemp)
+			groupPipeViewModel.slotSpecCode = `
+			in A:Hello1,B:Hello1
+			out E:Hello2,G.C:Hello2,G.D:Hello2
+			`
 
 			// let codePipeViewModel = New(CodePipeViewModel)
 			// codePipeViewModel.pipeTemp.slotSpecCode = `

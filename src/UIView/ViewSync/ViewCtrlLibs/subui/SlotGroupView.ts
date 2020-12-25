@@ -2,7 +2,7 @@
 namespace flowui {
 	export class SlotGroupView extends DynView {
 		syncFromModel(viewModel: ViewModelBase): void {
-			throw new Error("Method not implemented.")
+			this.position = viewModel.transform.position
 		}
 		groupView: NodeView
 
