@@ -87,7 +87,7 @@ namespace flowui {
 			codeLines.forEach(line => {
 				let m = line.match(/\s*((?:in)|(?:out))\s+(.+)/)
 				let prefix = m[1]
-				let slotsLine = m[2]
+				let slotsLine = m[2].trim()
 				let slotInfos = slotsLine.split(',')
 
 				slotInfos.forEach(slotInfo => {

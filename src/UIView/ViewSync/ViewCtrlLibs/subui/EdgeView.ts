@@ -28,7 +28,8 @@ namespace flowui {
 			ellipseComp.radius = 3
 			lineHead.addComp(DragableComp)
 			lineHead.event.onNamedEvent2(`ondrag_${this.oid}`, "onDragUpdate", (evt) => {
-				this.lineView.getComp(ArrowLineComp).endPos = lineHead.position
+				// this.lineView.getComp(ArrowLineComp).endPos = lineHead.position
+				this.viewModel.arrowPos = lineHead.position
 			})
 
 			// 增加尾部端点
@@ -39,7 +40,8 @@ namespace flowui {
 			circleEnd.radius = 3
 			lineEnd.addComp(DragableComp)
 			lineEnd.event.onNamedEvent2(`ondrag_${this.oid}`, "onDragUpdate", (evt) => {
-				this.lineView.getComp(ArrowLineComp).beginPos = lineEnd.position
+				// this.lineView.getComp(ArrowLineComp).beginPos = lineEnd.position
+				this.viewModel.tailPos = lineEnd.position
 			})
 		}
 

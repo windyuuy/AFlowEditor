@@ -4,6 +4,8 @@
 /// <reference path="../basic/ObjectUtils.ts" />
 /// <reference path="../basic/Vector.ts" />
 /// <reference path="../basic/ZSize.ts" />
+/// <reference path="../basic/ArrayHelper.ts" />
+
 
 namespace flowui {
 	window["flowui"] = flowui
@@ -21,6 +23,8 @@ namespace flowui {
 	export import Vector3 = math.Vector3
 	export import Vector4 = math.Vector4
 	export import Size2 = math.Size2
+
+	export import ArrayHelper = lang.helper.ArrayHelper
 
 	export import ccs = spritejs
 

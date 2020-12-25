@@ -3,7 +3,7 @@
 namespace flowui {
 	export class CodePipeViewModel extends PipeViewModel {
 		init() {
-			return this
+			return super.init()
 		}
 
 		/**
@@ -30,17 +30,6 @@ namespace flowui {
 		 * 是否组装体
 		 */
 		readonly isGroup: boolean = false
-
-
-		/**
-		 * 模板规格定义代码
-		 */
-		public get slotSpecCode(): string {
-			return this.pipeTemp.slotSpecCode
-		}
-		public set slotSpecCode(value: string) {
-			this.pipeTemp.slotSpecCode = value
-		}
 
 		public get pipeCode(): string {
 			return this.pipeTemp.code

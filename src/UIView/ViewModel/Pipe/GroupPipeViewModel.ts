@@ -3,7 +3,7 @@
 namespace flowui {
 	export class GroupPipeViewModel extends PipeViewModel {
 		init() {
-			return this
+			return super.init()
 		}
 
 		/**
@@ -13,7 +13,7 @@ namespace flowui {
 		/**
 		 * 管线展开模板信息
 		 */
-		pipeTemp: PipeTemp
+		pipeTemp: GroupPipeTemp
 
 		/**
 		 * 管线是否处于展开状态
@@ -29,16 +29,6 @@ namespace flowui {
 		 * 是否组装
 		 */
 		isGroup: boolean = true
-
-		/**
-		 * 模板规格定义代码
-		 */
-		public get slotSpecCode(): string {
-			return this.pipeTemp.slotSpecCode
-		}
-		public set slotSpecCode(value: string) {
-			this.pipeTemp.slotSpecCode = value
-		}
 
 		/**
 		 * 是否正在编辑块规格
