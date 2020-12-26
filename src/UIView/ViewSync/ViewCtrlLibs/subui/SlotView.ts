@@ -24,7 +24,8 @@ namespace flowui {
 			dragComp.isFollowDrag = false
 			dragComp.event.on(DragEvent.dragmove, (evt) => {
 				let startPos = this.position.clone()
-				let curPos = dragComp.curPos.clone()
+				// let curPos = dragComp.dragOffset.clone()
+				let curPos = dragComp.dragOffset.addUp(this.position)
 
 				let edgeViewModel = this.newEdgeViewModel
 				if (!edgeViewModel) {

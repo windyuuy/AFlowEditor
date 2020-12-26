@@ -43,6 +43,7 @@ namespace flowui {
 		 * - 书写格式
 		 */
 		slotSpecCode: string
+		lastSlotSpecCode: string
 		/**
 		 * 由代码生成的槽点信息缓存
 		 */
@@ -71,45 +72,75 @@ namespace flowui {
 			})
 		}
 
+		parseSlotInfo(slotSpecCode: string, shallWarn: boolean = false) {
+
+			let inputGroups: SlotGroup[] = []
+			let outputGroups: SlotGroup[] = []
+
+			let isOk = false
+			try {
+				let codeLines = slotSpecCode.split("\n")
+				codeLines.forEach(line => {
+					line = line.trim()
+					if (!line) {
+						return
+					}
+					let m = line.match(/\s*((?:in)|(?:out))\s+(.+)/)
+					let prefix = m[1]
+					let slotsLine = m[2].trim()
+					let slotInfos = slotsLine.split(',')
+
+					slotInfos.forEach(slotInfo => {
+						let m2 = slotInfo.match(/(?:([a-zA-Z_0-9]+)\.)?([a-zA-Z_0-9]+)\:(.+)/)
+						let [_, groupName, slotName, slotType] = m2
+						if (groupName == null) {
+							groupName = "default"
+						}
+						let groups = prefix == "out" ? outputGroups : inputGroups
+						let group = groups.find(group => group.name == groupName)
+						if (group == null) {
+							group = New(SlotGroup)
+							group.name = groupName
+							groups.push(group)
+						}
+						group.addNewSlot(slotName, slotType)
+					})
+				})
+				isOk = true
+			} catch (e) {
+				console.error("parse slots info failed:")
+			}
+
+			return {
+				isOk,
+				inputGroups,
+				outputGroups,
+			}
+		}
+
 		/**
 		 * 由槽位指示代码更新槽位信息
 		 */
 		updateSlotSpec() {
 			let slotSpecCode = this.slotSpecCode
+			if (this.lastSlotSpecCode != this.slotSpecCode) {
+				this.lastSlotSpecCode = this.slotSpecCode
 
-			// 兼容中文逗号
-			slotSpecCode = slotSpecCode.replace(/，/mg, ',')
+				// 兼容中文逗号
+				slotSpecCode = slotSpecCode.replace(/，/mg, ',')
 
-			const slotSpec = this.slotSpec
-			slotSpec.clear()
+				let { isOk, inputGroups, outputGroups, } = this.parseSlotInfo(this.slotSpecCode)
 
-			let codeLines = slotSpecCode.split("\n")
-			codeLines.forEach(line => {
-				line = line.trim()
-				if (!line) {
-					return
+				if (isOk) {
+					const slotSpec = this.slotSpec
+					slotSpec.clear()
+					slotSpec.inputs.push(...inputGroups)
+					slotSpec.outputs.push(...outputGroups)
+					this.lastSlotSpecCode = slotSpecCode
 				}
-				let m = line.match(/\s*((?:in)|(?:out))\s+(.+)/)
-				let prefix = m[1]
-				let slotsLine = m[2].trim()
-				let slotInfos = slotsLine.split(',')
 
-				slotInfos.forEach(slotInfo => {
-					let m2 = slotInfo.match(/(?:([a-zA-Z_0-9]+)\.)?([a-zA-Z_0-9]+)\:(.+)/)
-					let [_, groupName, slotName, slotType] = m2
-					if (groupName == null) {
-						groupName = "default"
-					}
-					let groups = prefix == "out" ? slotSpec.outputs : slotSpec.inputs
-					let group = groups.find(group => group.name == groupName)
-					if (group == null) {
-						group = New(SlotGroup)
-						group.name = groupName
-						groups.push(group)
-					}
-					group.addNewSlot(slotName, slotType)
-				})
-			})
+			}
+
 		}
 
 	}

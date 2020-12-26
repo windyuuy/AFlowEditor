@@ -8,7 +8,10 @@ namespace flowui {
 
 			let nodeName = viewModel.pipeInfo.name
 			let title = nodeName
-			this.title = title
+			let titleEditor = this.titleView.getComp(EditorComp)
+			if (!titleEditor.isWritable) {
+				this.title = title
+			}
 
 			let slotEditor = this.slotEditor.getComp(EditorComp)
 			slotEditor.isWritable = viewModel.isSlotSpecCodeEditable
@@ -19,7 +22,7 @@ namespace flowui {
 		}
 
 		viewModel: GroupPipeViewModel
-		labelView: NodeView
+		titleView: NodeView
 		background: NodeView
 		slotEditor: NodeView
 
@@ -35,10 +38,12 @@ namespace flowui {
 			background.width = totalSize.width
 			background.height = totalSize.height
 
-			const labelView = this.createChild(null, [RectComp, EditorComp,])
-			this.labelView = labelView
-			labelView.y = -totalSize.height / 2 + 12
-			let eidtorComp = labelView.getComp(EditorComp)
+			const titleView = this.createChild(null, [RectComp, EditorComp,])
+			this.titleView = titleView
+			titleView.width = totalSize.width - 20
+			titleView.height = 12
+			titleView.y = -totalSize.height / 2 + 12
+			let eidtorComp = titleView.getComp(EditorComp)
 			eidtorComp.text = "标题"
 			eidtorComp.event.on(EditorEvent.leaveedit, () => {
 				this.viewModel.pipeInfo.name = eidtorComp.text
@@ -66,7 +71,7 @@ namespace flowui {
 		}
 		public set title(value: string) {
 			this._title = value;
-			this.labelView.getComp(EditorComp).text = value
+			this.titleView.getComp(EditorComp).text = value
 		}
 
 		public get contentSize(): Size2 {

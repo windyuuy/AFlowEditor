@@ -81,6 +81,11 @@ namespace flowui {
 			})
 		}
 
+		get dragOffset(): Vector2 {
+			let offset = this.curPos.clone().subDown(this.beginPos)
+			return offset
+		}
+
 		onRemove() {
 			this.touchLayer.event.offNameEvent(this.typeName)
 		}

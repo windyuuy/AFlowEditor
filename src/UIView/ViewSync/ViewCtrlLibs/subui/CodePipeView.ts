@@ -47,6 +47,8 @@ namespace flowui {
 
 			const titleView = this.createChild(null, [RectComp, EditorComp])
 			this.titleView = titleView
+			titleView.width = totalSize.width - 20
+			titleView.height = 12
 			titleView.y = -totalSize.height / 2 + 12
 			let eidtorComp = titleView.getComp(EditorComp)
 			eidtorComp.text = "标题"
