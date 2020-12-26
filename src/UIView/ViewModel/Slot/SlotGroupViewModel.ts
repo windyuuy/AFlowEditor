@@ -28,6 +28,10 @@ namespace flowui {
 						slotViewModel.updateLayout()
 					}
 				})
+			this.updateLayout()
+		}
+
+		updateLayout() {
 		}
 
 		createSlotViewModel(slotTemp: SlotTemp) {
@@ -37,11 +41,11 @@ namespace flowui {
 			let slotViewModel = New(SlotViewModel)
 			slotViewModel.slotInfo = slotInfo
 			slotViewModel.slotTemp = slotTemp
-			if (slotTemp.slotType == "in") {
-				slotViewModel.transform.position = this.transform.position
-			} else if (slotTemp.slotType == "out") {
-				slotViewModel.transform.position = this.transform.position
-			}
+			// if (slotTemp.slotType == "in") {
+			// 	slotViewModel.transform.position = this.transform.position
+			// } else if (slotTemp.slotType == "out") {
+			// 	slotViewModel.transform.position = this.transform.position
+			// }
 
 			return slotViewModel
 		}

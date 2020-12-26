@@ -6,19 +6,20 @@ namespace flowui {
 		syncFromModel(viewModel: GroupPipeViewModel): void {
 			this.viewModel = viewModel
 
-			let nodeName = viewModel.pipeInfo.name
-			let title = nodeName
 			let titleEditor = this.titleView.getComp(EditorComp)
 			if (!titleEditor.isWritable) {
-				this.title = title
+				this.title = viewModel.pipeInfo.name
 			}
 
 			let slotEditor = this.slotEditor.getComp(EditorComp)
-			slotEditor.isWritable = viewModel.isSlotSpecCodeEditable
 			if (!slotEditor.isWritable) {
 				slotEditor.text = viewModel.slotSpecCode
 			}
 
+			this.updateLayout()
+		}
+
+		updateLayout() {
 		}
 
 		viewModel: GroupPipeViewModel
@@ -46,7 +47,12 @@ namespace flowui {
 			let eidtorComp = titleView.getComp(EditorComp)
 			eidtorComp.text = "标题"
 			eidtorComp.event.on(EditorEvent.leaveedit, () => {
-				this.viewModel.pipeInfo.name = eidtorComp.text
+				CmdManager.runCmd({
+					name: "修改标题",
+					forward: () => {
+						this.viewModel.pipeInfo.name = eidtorComp.text
+					}
+				})
 			})
 
 			const slotEditor = this.createChild(null, [RectComp, EditorComp])
@@ -59,8 +65,13 @@ namespace flowui {
 				this.viewModel.isSlotSpecCodeEditable = true
 			})
 			slotEditorComp.event.on(EditorEvent.leaveedit, () => {
-				this.viewModel.slotSpecCode = slotEditorComp.text
 				this.viewModel.isSlotSpecCodeEditable = false
+				CmdManager.runCmd({
+					name: "修改槽点",
+					forward: () => {
+						this.viewModel.slotSpecCode = slotEditorComp.text
+					},
+				})
 			})
 
 		}

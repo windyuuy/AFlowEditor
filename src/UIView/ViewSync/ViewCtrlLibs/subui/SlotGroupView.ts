@@ -13,6 +13,7 @@ namespace flowui {
 			this.groupView.width = 40
 			this.groupView.height = 40
 
+			this.updateLayout()
 		}
 
 		public get height(): number {
@@ -21,5 +22,10 @@ namespace flowui {
 		public set height(value: number) {
 			this.groupView.height = value
 		}
+
+		updateLayout() {
+
+		}
+
 	}
 }
