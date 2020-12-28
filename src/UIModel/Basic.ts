@@ -19,6 +19,7 @@ namespace flowui {
 	export import EmptyTable = lang.EmptyTable
 	export import IDataClass = eds.IDataClass
 	export import NullData = eds.NullData
+	export import RefData = eds.NullData
 	export import NewData = eds.NewData
 
 	export import Vector = math.Vector

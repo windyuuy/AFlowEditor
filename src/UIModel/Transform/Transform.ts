@@ -12,9 +12,27 @@ namespace flowui {
 		}
 		parent?: Transform
 
-		scale: Vector2 = new Vector2(1, 1)
-		position: Vector2 = new Vector2()
-		rotation: Vector3 = new Vector3()
+		private _scale: Vector2 = new Vector2(1, 1)
+		public get scale(): Vector2 {
+			return this._scale
+		}
+		public set scale(value: Vector2) {
+			this._scale.merge(value)
+		}
+		private _position: Vector2 = new Vector2()
+		public get position(): Vector2 {
+			return this._position
+		}
+		public set position(value: Vector2) {
+			this._position.merge(value)
+		}
+		private _rotation: Vector3 = new Vector3()
+		public get rotation(): Vector3 {
+			return this._rotation
+		}
+		public set rotation(value: Vector3) {
+			this._rotation.merge(value)
+		}
 
 		getWebPagePosition(): Vector2 {
 			if (this.parent) {

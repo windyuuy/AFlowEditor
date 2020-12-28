@@ -191,8 +191,8 @@ namespace math {
 			return Vector.multUp(this as IVector as T, vec2)
 		}
 
-		multUpVar<T extends IVector>(v: number): T {
-			return Vector.multUpVar(this as IVector as T, v)
+		multUpVar(v: number) {
+			return Vector.multUpVar(this, v)
 		}
 
 		multVar<T extends IVector>(v: number): T {
@@ -356,6 +356,12 @@ namespace math {
 			return vec
 		}
 	}
+
+	export class AA {
+		protected data: number[]
+	}
+
+	export type ReadonlyVector2 = Readonly<Vector2> & AA
 
 	export interface IVector3SpecInput {
 		x?: number,
