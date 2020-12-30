@@ -22,6 +22,10 @@ namespace math {
 			this.y = n
 		}
 
+		clone(): Size2 {
+			return new Size2(this.x, this.y)
+		}
+
 		static fromSize2Like(size2: ISize2Spec): Size2 {
 			let vec = new Size2().copySize2ike(size2)
 			return vec

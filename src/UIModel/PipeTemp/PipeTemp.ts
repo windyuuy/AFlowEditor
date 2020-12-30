@@ -101,6 +101,7 @@ namespace flowui {
 						if (group == null) {
 							group = New(SlotGroup)
 							group.name = groupName
+							group.slotPos = prefix as any
 							groups.push(group)
 						}
 						group.addNewSlot(slotName, slotType)

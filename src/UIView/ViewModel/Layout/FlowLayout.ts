@@ -4,7 +4,10 @@ namespace flowui {
 	/**
 	 * 支持单通道流式布局
 	 */
-	export class FlowLayout implements ILayout {
+	export class FlowLayout extends LayoutBase {
+		owner: string
+		name: string
+
 		horizontal: boolean = false
 		vertical: boolean = true
 
@@ -47,7 +50,7 @@ namespace flowui {
 		 * 获取子节点位置
 		 * @param index 
 		 */
-		getChildPosAt(index: number): Vector2 {
+		protected getChildPosAt(index: number): Vector2 {
 			this.checkChildIndex(index)
 
 			let y = 0

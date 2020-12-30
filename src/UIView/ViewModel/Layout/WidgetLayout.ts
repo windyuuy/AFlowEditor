@@ -1,6 +1,8 @@
 
 namespace flowui {
-	export class WidgetLayout implements ILayout {
+	export class WidgetLayout extends LayoutBase {
+		owner: string
+		name: string
 
 		/**
 		 * 按父节点尺寸作偏移
@@ -24,7 +26,7 @@ namespace flowui {
 		/**
 		 * 相对于父节点的尺寸比例
 		 */
-		parentSizing: Vector2 = new Vector2(1, 1)
+		parentSizing: Size2 = new Size2(1, 1)
 
 		parent: ILayout = DefaultLayout
 
@@ -58,7 +60,7 @@ namespace flowui {
 			let size = this.sizeOffset.clone()
 				.addUp(this.parentSizing.clone().multUp(this.parent.borderSize))
 			// 暂时不考虑相对子节点的尺寸适应
-			return size as Size2
+			return size
 		}
 	}
 }

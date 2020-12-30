@@ -1,5 +1,5 @@
 
-/// <reference path="DynView.ts" />
+/// <reference path="../DynView.ts" />
 
 namespace flowui {
 
@@ -7,19 +7,31 @@ namespace flowui {
 		syncFromModel(viewModel: CodePipeViewModel): void {
 			this.viewModel = viewModel
 
-			let titleEditor = this.titleView.getComp(EditorComp)
-			if (!titleEditor.isWritable) {
-				this.title = viewModel.pipeInfo.name
+			ViewLayoutHelper.applyModelLayout(this, this.viewModel)
+
+			{
+				const titleView = this.titleView
+				let titleEditor = titleView.getComp(EditorComp)
+				if (!titleEditor.isWritable) {
+					this.title = viewModel.pipeInfo.name
+				}
+				ViewLayoutHelper.applyModelLayout(titleView, viewModel.titleViewModel)
 			}
 
-			let slotEditor = this.slotEditor.getComp(EditorComp)
-			if (!slotEditor.isWritable) {
-				slotEditor.text = viewModel.slotSpecCode
+			{
+				let slotEditor = this.slotEditor.getComp(EditorComp)
+				if (!slotEditor.isWritable) {
+					slotEditor.text = viewModel.slotSpecCode
+				}
+				ViewLayoutHelper.applyModelLayout(this.slotEditor, viewModel.slotCodeViewModel)
 			}
 
-			let codeEditor = this.codeEditor.getComp(EditorComp)
-			if (!codeEditor.isWritable) {
-				codeEditor.text = viewModel.pipeCode
+			{
+				let codeEditor = this.codeEditor.getComp(EditorComp)
+				if (!codeEditor.isWritable) {
+					codeEditor.text = viewModel.pipeCode
+				}
+				ViewLayoutHelper.applyModelLayout(this.codeEditor, viewModel.codeViewModel)
 			}
 		}
 

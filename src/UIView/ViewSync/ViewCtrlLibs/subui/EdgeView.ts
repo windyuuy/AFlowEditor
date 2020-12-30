@@ -4,6 +4,8 @@ namespace flowui {
 		syncFromModel(viewModel: EdgeViewModel): void {
 			this.viewModel = viewModel
 
+			this.position = this.viewModel.layout.position
+
 			this.arrowPos = viewModel.arrowPos
 			this.tailPos = viewModel.tailPos
 		}

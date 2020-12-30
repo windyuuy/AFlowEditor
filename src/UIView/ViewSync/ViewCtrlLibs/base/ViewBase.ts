@@ -23,7 +23,7 @@ namespace flowui {
 		init() {
 			this._transform = new Transform()
 			this._scale = new Vector2(1, 1)
-			this._contentSize = new Size2()
+			this._contentSize = new Size2(1, 1)
 
 			this.lifecycleChildren = CleanArray(this.lifecycleChildren)
 			this.comps = CleanTable(this.comps)
@@ -154,10 +154,10 @@ namespace flowui {
 		}
 		public set position(value: Vector2) {
 			this._transform.position.merge(value)
-			const worldPos = this.worldPosition.clone()
-			this.view.attr({
-				pos: [worldPos.x, worldPos.y],
-			})
+			// const worldPos = this.worldPosition.clone()
+			// this.view.attr({
+			// 	pos: [worldPos.x, worldPos.y],
+			// })
 			this.markTransformDirty()
 		}
 
@@ -193,10 +193,10 @@ namespace flowui {
 		}
 		public set scale(value: Vector2) {
 			this._transform.scale.merge(value)
-			const worldScale = this.worldScale
-			this.view.attr({
-				scale: [worldScale.x, worldScale.y,],
-			})
+			// const worldScale = this.worldScale
+			// this.view.attr({
+			// 	scale: [worldScale.x, worldScale.y,],
+			// })
 			this.markTransformDirty()
 		}
 
@@ -241,6 +241,7 @@ namespace flowui {
 		}
 
 		protected updateContentSize() {
+			this.markTransformDirty()
 			this.emitCompsMsg("contentSize", this._contentSize)
 		}
 

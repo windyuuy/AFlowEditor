@@ -4,7 +4,7 @@ namespace flowui {
 		syncFromModel(viewModel: SlotViewModel): void {
 			this.viewModel = viewModel
 
-			this.position = viewModel.transform.position
+			ViewLayoutHelper.applyModelLayout(this, this.viewModel)
 		}
 
 		viewModel: SlotViewModel

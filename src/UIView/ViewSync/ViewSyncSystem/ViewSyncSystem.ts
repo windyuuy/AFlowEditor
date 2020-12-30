@@ -6,8 +6,8 @@ namespace flowui {
 	const DynViewFeature: eds.IDataFeature<DynView> = {
 		filter: (data) => data instanceof DynView
 	}
-	const ViewModelFeature: eds.IDataFeature<ViewModelBase> = {
-		filter: (data) => data instanceof ViewModelBase
+	const ViewModelFeature: eds.IDataFeature<NodeViewModel> = {
+		filter: (data) => data instanceof NodeViewModel
 	}
 
 	/**
@@ -16,11 +16,11 @@ namespace flowui {
 	export class ViewModelMap {
 		protected _map: { [key: string]: string } = {}
 
-		registerViewModel(viewModel: ViewModelBase, view: ViewBase) {
+		registerViewModel(viewModel: NodeViewModel, view: ViewBase) {
 			this._map[viewModel.oid] = view.oid
 		}
 
-		getView(viewModel: ViewModelBase): ViewBase {
+		getView(viewModel: NodeViewModel): ViewBase {
 			let viewId = this._map[viewModel.oid]
 			let view = dataManager.getDataById(viewId)
 			return view as ViewBase
@@ -37,7 +37,7 @@ namespace flowui {
 			this.updateView()
 		}
 
-		createView(model: ViewModelBase): ViewBase {
+		createView(model: NodeViewModel): ViewBase {
 			let view: ViewBase
 			if (model instanceof GroupPipeViewModel) {
 				view = New(GroupPipeView)
@@ -65,7 +65,7 @@ namespace flowui {
 				viewModel.updateLayout()
 			})
 
-			const modelMap: { [key: string]: ViewModelBase } = EmptyTable()
+			const modelMap: { [key: string]: NodeViewModel } = EmptyTable()
 			viewModels.forEach(model => {
 				modelMap[model.oid] = model
 			})

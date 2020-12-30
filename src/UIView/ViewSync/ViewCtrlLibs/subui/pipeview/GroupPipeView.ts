@@ -6,20 +6,23 @@ namespace flowui {
 		syncFromModel(viewModel: GroupPipeViewModel): void {
 			this.viewModel = viewModel
 
-			let titleEditor = this.titleView.getComp(EditorComp)
-			if (!titleEditor.isWritable) {
-				this.title = viewModel.pipeInfo.name
+			ViewLayoutHelper.applyModelLayout(this, this.viewModel)
+
+			{
+				let titleEditor = this.titleView.getComp(EditorComp)
+				if (!titleEditor.isWritable) {
+					this.title = viewModel.pipeInfo.name
+				}
+				ViewLayoutHelper.applyModelLayout(this.titleView, viewModel.titleViewModel)
 			}
 
-			let slotEditor = this.slotEditor.getComp(EditorComp)
-			if (!slotEditor.isWritable) {
-				slotEditor.text = viewModel.slotSpecCode
+			{
+				let slotEditor = this.slotEditor.getComp(EditorComp)
+				if (!slotEditor.isWritable) {
+					slotEditor.text = viewModel.slotSpecCode
+				}
+				ViewLayoutHelper.applyModelLayout(this.slotEditor, viewModel.slotCodeViewModel)
 			}
-
-			this.updateLayout()
-		}
-
-		updateLayout() {
 		}
 
 		viewModel: GroupPipeViewModel
@@ -32,7 +35,14 @@ namespace flowui {
 		onLoad() {
 			const totalSize = this.totalSize
 
-			this.addComp(DragableComp)
+			const dragableComp = this.addComp(DragableComp)
+			let posOffset: Vector2
+			dragableComp.event.on(DragEvent.dragbegin, () => {
+				posOffset = this.viewModel.layout.posOffset.clone()
+			})
+			dragableComp.event.on(DragEvent.dragmove, () => {
+				this.viewModel.layout.posOffset = posOffset.clone().addUp(dragableComp.dragOffset)
+			})
 
 			const background = this.createChild(null, [RoundRectComp])
 			this.background = background

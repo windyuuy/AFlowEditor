@@ -1,4 +1,6 @@
 
+/// <reference path="../UIModel/Basic.ts" />
+
 namespace flowui {
 
 	/**

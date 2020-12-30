@@ -4,7 +4,10 @@ namespace flowui {
 	/**
 	 * 支持包装组合型layout
 	 */
-	export class ComposeLayout implements ILayout {
+	export class ComposeLayout extends LayoutBase {
+		owner: string
+		name: string
+
 		borderLayout: ILayout
 		contentLayout: ILayout
 
@@ -23,7 +26,14 @@ namespace flowui {
 			return this.contentLayout.calcChildContentSize(widget)
 		}
 
-		parent?: ILayout = DefaultLayout
+		protected _parent?: ILayout = DefaultLayout
+		public get parent(): ILayout {
+			return this._parent
+		}
+		public set parent(value: ILayout) {
+			this._parent = value
+			this.borderLayout.parent = value
+		}
 
 	}
 

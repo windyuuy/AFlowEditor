@@ -1,12 +1,20 @@
 
 
 namespace flowui {
-	export class SlotGroupViewModel extends ViewModelBase {
+	export class SlotGroupViewModel extends NodeViewModel {
+		static sGroupHeight = 20
+
 		init() {
 			this.slotViewModels = CleanArray(this.slotViewModels)
 
-			return super.init()
+			super.init()
+
+			this.layout.owner = "SlotGroupViewModel"
+
+			return this
 		}
+
+		layout = NewData(WidgetLayout)
 
 		slotGroupInfo: SlotGroup
 
@@ -28,10 +36,23 @@ namespace flowui {
 						slotViewModel.updateLayout()
 					}
 				})
+
 			this.updateLayout()
+
 		}
 
 		updateLayout() {
+			// 更新列表所有信号槽布局
+			this.slotViewModels.forEach((model, index) => {
+				const layout = model.layout
+				model.transformParent = this
+				layout.parentAnchor.y = -0.5
+				layout.selfAnchor.y = 0.5
+				layout.posOffset.y = index * SlotViewModel.sModelHeight
+
+				// model.transform.position = layout.position
+				model.applyLayoutPositionAffection()
+			})
 		}
 
 		createSlotViewModel(slotTemp: SlotTemp) {
@@ -41,11 +62,6 @@ namespace flowui {
 			let slotViewModel = New(SlotViewModel)
 			slotViewModel.slotInfo = slotInfo
 			slotViewModel.slotTemp = slotTemp
-			// if (slotTemp.slotType == "in") {
-			// 	slotViewModel.transform.position = this.transform.position
-			// } else if (slotTemp.slotType == "out") {
-			// 	slotViewModel.transform.position = this.transform.position
-			// }
 
 			return slotViewModel
 		}

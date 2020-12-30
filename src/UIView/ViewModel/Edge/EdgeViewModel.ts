@@ -1,7 +1,7 @@
 
 
 namespace flowui {
-	export class EdgeViewModel extends ViewModelBase {
+	export class EdgeViewModel extends NodeViewModel {
 		init() {
 			this._arrowPos = new Vector2()
 			this._tailPos = new Vector2()
@@ -13,8 +13,8 @@ namespace flowui {
 		 */
 		edgeInfo: EdgeInfo
 
-		inputSlot: SlotInfo
-		outputSlot: SlotInfo
+		inputSlotViewModel: SlotViewModel
+		outputSlotViewModel: SlotViewModel
 
 		isDraging: bool
 		private _arrowPos: Vector2

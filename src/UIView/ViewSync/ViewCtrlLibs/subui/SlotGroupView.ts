@@ -1,9 +1,14 @@
 
 namespace flowui {
 	export class SlotGroupView extends DynView {
-		syncFromModel(viewModel: ViewModelBase): void {
-			this.position = viewModel.transform.position
+		syncFromModel(viewModel: NodeViewModel): void {
+			// this.position = viewModel.transform.position
+			this.viewModel = viewModel
+
+			ViewLayoutHelper.applyModelLayout(this, this.viewModel)
+
 		}
+
 		groupView: NodeView
 
 		onLoad() {

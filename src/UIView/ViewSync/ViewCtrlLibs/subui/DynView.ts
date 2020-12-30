@@ -7,9 +7,9 @@ namespace flowui {
 			return this.viewModel && this.viewModel.oid
 		}
 
-		viewModel: ViewModelBase
+		viewModel: NodeViewModel
 
-		syncFromModel(viewModel: ViewModelBase): void {
+		syncFromModel(viewModel: NodeViewModel): void {
 		}
 	}
 }
