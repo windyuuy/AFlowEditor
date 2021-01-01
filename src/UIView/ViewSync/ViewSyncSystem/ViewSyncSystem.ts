@@ -33,6 +33,7 @@ namespace flowui {
 
 		update() {
 
+			// TODO: 修正图层问题
 			EdgeAutoLocator.update()
 			this.syncView()
 

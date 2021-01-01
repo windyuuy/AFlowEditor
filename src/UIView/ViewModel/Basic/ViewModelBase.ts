@@ -45,7 +45,8 @@ namespace flowui {
 		}
 
 		clear() {
-
+			Del(this.layout)
+			this.layout = null
 		}
 
 		updateLayout() {

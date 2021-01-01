@@ -59,10 +59,14 @@ namespace flowui {
 	}
 
 	export class EdgeViewModel extends NodeViewModel {
+
+		/**
+		 * 线长
+		 */
 		edgeLen() {
 			return this.inputJointViewModel.pos.distance(this.outputJointViewModel.pos)
 		}
-		is
+
 		init() {
 			this.inputJointViewModel.jointPos = SlotPosType.in
 			this.outputJointViewModel.jointPos = SlotPosType.out

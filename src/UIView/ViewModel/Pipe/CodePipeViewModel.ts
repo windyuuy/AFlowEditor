@@ -12,6 +12,13 @@ namespace flowui {
 			return super.init()
 		}
 
+		clear() {
+			Del(this.codeViewModel)
+			this.codeViewModel = null
+
+			super.clear()
+		}
+
 		/**
 		 * 管线实例信息
 		 */

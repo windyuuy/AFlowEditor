@@ -28,6 +28,11 @@ namespace flowui {
 
 		slotViewModels: SlotViewModel[]
 
+		clear() {
+			DelAll(this.slotViewModels)
+			this.slotViewModels = CleanArray(this.slotViewModels)
+		}
+
 		updateSlots() {
 			ArrayHelper.foreachDifferentPairs(
 				this.slotViewModels, (slotViewModel) => { return slotViewModel.slotTemp.oid },

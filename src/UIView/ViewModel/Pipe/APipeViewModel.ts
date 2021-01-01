@@ -32,6 +32,15 @@ namespace flowui {
 			return this
 		}
 
+		clear() {
+			Del(this.titleViewModel)
+			this.titleViewModel = null
+			Del(this.slotCodeViewModel)
+			this.slotCodeViewModel = null
+
+			super.clear()
+		}
+
 		layout = RefData(WidgetLayout)
 
 		/**
