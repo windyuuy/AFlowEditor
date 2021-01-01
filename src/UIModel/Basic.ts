@@ -5,8 +5,8 @@
 /// <reference path="../basic/Vector.ts" />
 /// <reference path="../basic/ZSize.ts" />
 /// <reference path="../basic/ArrayHelper.ts" />
-/// <reference path="../eds/Basic.ts" />
-/// <reference path="../eds/DataClass.ts" />
+/// <reference path="../deps/eds/Basic.ts" />
+/// <reference path="../deps/eds/DataClass.ts" />
 
 
 
