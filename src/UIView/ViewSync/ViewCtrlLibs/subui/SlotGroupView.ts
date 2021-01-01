@@ -6,26 +6,29 @@ namespace flowui {
 			this.viewModel = viewModel
 
 			ViewLayoutHelper.applyModelLayout(this, this.viewModel)
-
+			this.backgroundView.contentSize = this.contentSize
 		}
 
-		groupView: NodeView
+		backgroundView: NodeView
 
 		onLoad() {
-			this.groupView = this.createChild(null, [RectComp, DragableComp])
-			const groupView = this.groupView
-			const rectComp = groupView.getComp(RectComp)
-			this.groupView.width = 40
-			this.groupView.height = 40
+			// 创建动态背景
+			{
+				this.backgroundView = this.createChild(null, [RectComp, DragableComp])
+				const groupView = this.backgroundView
+				const rectComp = groupView.getComp(RectComp)
+				this.backgroundView.width = 40
+				this.backgroundView.height = 40
+			}
 
 			this.updateLayout()
 		}
 
 		public get height(): number {
-			return this.groupView.height
+			return this.backgroundView.height
 		}
 		public set height(value: number) {
-			this.groupView.height = value
+			this.backgroundView.height = value
 		}
 
 		updateLayout() {

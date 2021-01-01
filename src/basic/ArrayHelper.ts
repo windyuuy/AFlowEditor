@@ -1,6 +1,15 @@
 namespace lang.helper {
 
 	export class ArrayHelper {
+
+		static sum<T>(eles: T[], call: (e: T) => number): number {
+			let sum0 = 0
+			eles.forEach((ele) => {
+				sum0 += call(ele)
+			})
+			return sum0
+		}
+
 		static max<T>(ls: T[], call: (e: T) => number): T | undefined {
 			let maxValue = -Infinity
 			let maxEle = ls[0]

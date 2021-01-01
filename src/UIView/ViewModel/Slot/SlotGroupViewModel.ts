@@ -2,7 +2,15 @@
 
 namespace flowui {
 	export class SlotGroupViewModel extends NodeViewModel {
-		static sGroupHeight = 20
+		// /**
+		//  * 组高
+		//  * @deprecated
+		//  */
+		// static sGroupHeight = 30
+		/**
+		 * 槽点间距
+		 */
+		static sSlotDivision = 3
 
 		init() {
 			this.slotViewModels = CleanArray(this.slotViewModels)
@@ -37,18 +45,21 @@ namespace flowui {
 					}
 				})
 
+			this.layout.sizeOffset.width = 10
+			this.layout.sizeOffset.height = (SlotViewModel.sModelHeight + SlotGroupViewModel.sSlotDivision) * this.slotViewModels.length
+
 			this.updateLayout()
 
 		}
 
 		updateLayout() {
-			// 更新列表所有信号槽布局
+			this.applyLayoutPositionAffection()
+
+			// 更新槽点列表布局
 			this.slotViewModels.forEach((model, index) => {
 				const layout = model.layout
 				model.transformParent = this
-				layout.parentAnchor.y = -0.5
-				layout.selfAnchor.y = 0.5
-				layout.posOffset.y = index * SlotViewModel.sModelHeight
+				layout.posOffset.y = index * (SlotViewModel.sModelHeight + SlotGroupViewModel.sSlotDivision) + SlotGroupViewModel.sSlotDivision / 2
 
 				// model.transform.position = layout.position
 				model.applyLayoutPositionAffection()

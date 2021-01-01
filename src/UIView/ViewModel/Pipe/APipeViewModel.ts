@@ -17,6 +17,8 @@ namespace flowui {
 	}
 
 	export class PipeViewModel extends NodeViewModel {
+		static sSlotGroupDivision = 4
+
 		init() {
 			this.pipeInfo = New(PipeInfo)
 			this.slotGroupViewModels = CleanArray(this.slotGroupViewModels)
@@ -135,7 +137,7 @@ namespace flowui {
 				layout.posOffset.y = 5
 			}
 
-			// 信号槽定义代码
+			// 槽点定义代码布局
 			{
 				const layout = this.slotCodeViewModel.layout
 				this.slotCodeViewModel.transformParent = this
@@ -155,13 +157,18 @@ namespace flowui {
 			const inputs = this.slotGroupViewModels.filter(group => group.slotGroupInfo.slotPos == "in")
 			const outputs = this.slotGroupViewModels.filter(group => group.slotGroupInfo.slotPos == "out")
 
-			let maxGroupCount = Math.max(inputs.length, outputs.length)
-			this.layout.sizeOffset.height = 120 + maxGroupCount * SlotGroupViewModel.sGroupHeight
-
-			this.applyLayoutPositionAffection()
+			// this.applyLayoutPositionAffection()
 
 			this.updateSlotGroupsLayout(inputs)
 			this.updateSlotGroupsLayout(outputs)
+
+			// 根据内容动态更新自身高度
+			let len1 = ArrayHelper.sum(inputs, (e) => e.contentSize.height + PipeViewModel.sSlotGroupDivision)
+			let len2 = ArrayHelper.sum(outputs, (e) => e.contentSize.height + PipeViewModel.sSlotGroupDivision)
+			let maxHeight = Math.max(len1, len2)
+			// this.layout.sizeOffset.height = 120 + maxGroupCount * SlotGroupViewModel.sGroupHeight
+			this.layout.sizeOffset.height = 120 + maxHeight
+			this.applyLayoutPositionAffection()
 
 		}
 
@@ -170,6 +177,7 @@ namespace flowui {
 		 * @param groups 
 		 */
 		updateSlotGroupsLayout(groups: SlotGroupViewModel[]) {
+			let lastY = 15
 			groups.forEach((groupModel, index) => {
 				let layout = groupModel.layout
 				groupModel.transformParent = this
@@ -184,7 +192,10 @@ namespace flowui {
 					// 输出处于右侧
 					layout.parentAnchor.x = 0.5
 				}
-				layout.posOffset.y = index * SlotGroupViewModel.sGroupHeight
+				layout.parentAnchor.y = -0.5
+				layout.selfAnchor.y = 0.5
+				layout.posOffset.y = lastY
+				lastY += layout.borderSize.height + PipeViewModel.sSlotGroupDivision
 				// 应用layout更新布局
 				groupModel.applyLayoutPositionAffection()
 			})

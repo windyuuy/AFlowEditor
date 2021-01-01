@@ -7,11 +7,11 @@ namespace flowui {
 		/**
 		 * 按父节点尺寸作偏移
 		 */
-		parentAnchor: Vector2 = new Vector2(0.5, 0.5)
+		parentAnchor: Vector2 = new Vector2(0, 0)
 		/**
 		 * 按自身尺寸做偏移
 		 */
-		selfAnchor: Vector2 = new Vector2(0.5, 0.5)
+		selfAnchor: Vector2 = new Vector2(0, 0)
 
 		/**
 		 * 偏移固定值
@@ -21,12 +21,12 @@ namespace flowui {
 		/**
 		 * 固定尺寸偏移
 		 */
-		sizeOffset: Size2 = new Size2()
+		sizeOffset: Size2 = new Size2(1, 1)
 
 		/**
 		 * 相对于父节点的尺寸比例
 		 */
-		parentSizing: Size2 = new Size2(1, 1)
+		parentSizing: Size2 = new Size2(0, 0)
 
 		parent: ILayout = DefaultLayout
 
