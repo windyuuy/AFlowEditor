@@ -23,6 +23,8 @@ namespace flowui {
 		}
 
 		/**
+		 * ## 关节动态链接流程:
+		 * - 仅允许 slot.out -> joint.in 或者 joint.out -> slot.in 的组合
 		 * - 当且仅当拖动结束之后:
 		 * 	- 如果处于绑定状态:
 		 * 		- 如果距离绑定的槽点圆心距离 D>radius+1
@@ -50,7 +52,9 @@ namespace flowui {
 					slots.forEach(slot => {
 						let D = joint.pos.distance(slot.transform.getWorldPosition())
 						if (D < slot.radius + this.attractDistance) {
-							joint.connectSlot(slot)
+							if (joint.jointPos != slot.slotTemp.slotPos) {
+								joint.connectSlot(slot)
+							}
 						} else {
 							// pass
 						}

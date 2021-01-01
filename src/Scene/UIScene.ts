@@ -104,16 +104,26 @@ namespace flowui {
 
 			// let slotGroupViewModel = New(SlotGroupViewModel)
 			// slotGroupViewModel.transform.position = new Vector2(100, 100)
-
-			let groupPipeViewModel = New(GroupPipeViewModel)
-			groupPipeViewModel.pipeTemp = New(PipeTemp)
-			groupPipeViewModel.slotSpecCode = `
+			{
+				let groupPipeViewModel = New(GroupPipeViewModel)
+				groupPipeViewModel.pipeTemp = New(PipeTemp)
+				groupPipeViewModel.slotSpecCode = `
 in A:Hello1,B:Hello1
 out E:Hello2,G.C:Hello2,G.D:Hello2
 `.trim()
-			groupPipeViewModel.layout.posOffset.y = 400
-			groupPipeViewModel.layout.posOffset.x = 200
-
+				groupPipeViewModel.layout.posOffset.y = 400
+				groupPipeViewModel.layout.posOffset.x = 150
+			}
+			{
+				let groupPipeViewModel = New(GroupPipeViewModel)
+				groupPipeViewModel.pipeTemp = New(PipeTemp)
+				groupPipeViewModel.slotSpecCode = `
+in A:Hello1,B:Hello1
+out E:Hello2,G.C:Hello2,G.D:Hello2
+`.trim()
+				groupPipeViewModel.layout.posOffset.y = 400
+				groupPipeViewModel.layout.posOffset.x = 350
+			}
 			// let codePipeViewModel = New(CodePipeViewModel)
 			// codePipeViewModel.pipeTemp.slotSpecCode = `
 			// in A,B

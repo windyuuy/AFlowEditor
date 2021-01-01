@@ -2,7 +2,13 @@
 
 namespace flowui {
 	export class EdgeJointViewModel implements IDataClass {
+
+		jointPos: SlotPosType = SlotPosType.in
+
 		connectSlot(slot: SlotViewModel) {
+			if (this.jointPos == slot.slotTemp.slotPos) {
+				throw new Error("invalid composition to concat")
+			}
 			this.slotViewModel = slot
 		}
 		depart() {
@@ -54,6 +60,8 @@ namespace flowui {
 
 	export class EdgeViewModel extends NodeViewModel {
 		init() {
+			this.inputJointViewModel.jointPos = SlotPosType.in
+			this.outputJointViewModel.jointPos = SlotPosType.out
 			return super.init()
 		}
 
