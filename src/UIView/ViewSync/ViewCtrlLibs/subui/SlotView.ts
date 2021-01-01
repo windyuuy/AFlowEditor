@@ -26,27 +26,20 @@ namespace flowui {
 				let startPos = this.position.clone()
 				let curPos = dragComp.dragOffset.addUp(this.position)
 
-				// 需要根据方向重新计算起始焊点
-				let startJointPos = curPos.clone()
-					.subDown(startPos)
-					.normalizeSelf()
-					.multUpVar(ellipseComp.radius)
-					.addUp(startPos)
-
 				let edgeViewModel = this.newEdgeViewModel
 				if (!edgeViewModel) {
 					edgeViewModel = this.newEdgeViewModel = this.createEdgeViewModel()
 				}
-				edgeViewModel.tailPos = startJointPos
+				// edgeViewModel.tailPos = startJointPos
 				edgeViewModel.arrowPos = curPos
-				edgeViewModel.isDraging = true
+				edgeViewModel.isDragingOutput = true
 			})
 			dragComp.event.on(DragEvent.dragend, (evt) => {
 				if (this.newEdgeViewModel) {
 					CmdManager.runCmd({
 						name: "创建连线",
 						forward: () => {
-							this.newEdgeViewModel.isDraging = false
+							this.newEdgeViewModel.isDragingOutput = false
 							this.newEdgeViewModel = null
 						}
 					})

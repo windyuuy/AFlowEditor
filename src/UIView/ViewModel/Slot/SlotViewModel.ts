@@ -15,6 +15,13 @@ namespace flowui {
 		slotInfo: SlotInfo
 		slotTemp: SlotTemp
 
+		/**
+		 * 获取槽点半径
+		 */
+		get radius() {
+			return this.contentSize.width / 2
+		}
+
 		initLayout() {
 			const layout = this.layout
 			layout.parentAnchor.x = -0.5
