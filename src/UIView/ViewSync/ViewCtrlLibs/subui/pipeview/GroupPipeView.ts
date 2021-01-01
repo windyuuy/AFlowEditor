@@ -37,10 +37,10 @@ namespace flowui {
 
 			const dragableComp = this.addComp(DragableComp)
 			let posOffset: Vector2
-			dragableComp.event.on(DragEvent.dragbegin, () => {
+			dragableComp.event.on(DragEvent.grabbegin, () => {
 				posOffset = this.viewModel.layout.posOffset.clone()
 			})
-			dragableComp.event.on(DragEvent.dragmove, () => {
+			dragableComp.event.on(DragEvent.grabmove, () => {
 				this.viewModel.layout.posOffset = posOffset.clone().addUp(dragableComp.dragOffset)
 			})
 

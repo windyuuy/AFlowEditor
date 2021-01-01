@@ -2,9 +2,9 @@
 namespace flowui {
 
 	export enum DragEvent {
-		dragbegin = "dragbegin",
-		dragmove = "dragmove",
-		dragend = "dragend",
+		grabbegin = "grabbegin",
+		grabmove = "grabmove",
+		grabend = "grabend",
 	}
 
 	export class DragableComp extends ViewComp {
@@ -100,7 +100,7 @@ namespace flowui {
 						this.host.position = scaledPos
 					}
 
-					this.emitEvent(DragEvent.dragmove, {
+					this.emitEvent(DragEvent.grabmove, {
 						target: this,
 					})
 					this.host["onUpdateTransform"](true)
@@ -109,13 +109,13 @@ namespace flowui {
 		}
 
 		onDragBegin() {
-			this.emitEvent(DragEvent.dragbegin, {
+			this.emitEvent(DragEvent.grabbegin, {
 				target: this,
 			})
 		}
 
 		onDragEnd() {
-			this.emitEvent(DragEvent.dragend, {
+			this.emitEvent(DragEvent.grabend, {
 				target: this,
 			})
 			this.host["onUpdateTransform"](true)

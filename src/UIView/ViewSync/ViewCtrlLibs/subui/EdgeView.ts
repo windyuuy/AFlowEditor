@@ -33,11 +33,11 @@ namespace flowui {
 			const ellipseComp = lineHead.addComp(EllipseComp)
 			ellipseComp.radius = 3
 			lineHead.addComp(DragableComp)
-			lineHead.event.onNamedEvent2(this.lineId, DragEvent.dragmove, (evt) => {
+			lineHead.event.onNamedEvent2(this.lineId, DragEvent.grabmove, (evt) => {
 				this.viewModel.isDragingOutput = true
 				this.viewModel.arrowPos = lineHead.position
 			})
-			lineHead.event.onNamedEvent2(this.lineId, DragEvent.dragend, (evt) => {
+			lineHead.event.onNamedEvent2(this.lineId, DragEvent.grabend, (evt) => {
 				this.viewModel.isDragingOutput = false
 			})
 
@@ -48,11 +48,11 @@ namespace flowui {
 			const circleEnd = lineEnd.addComp(EllipseComp)
 			circleEnd.radius = 3
 			lineEnd.addComp(DragableComp)
-			lineEnd.event.onNamedEvent2(this.lineId, DragEvent.dragmove, (evt) => {
+			lineEnd.event.onNamedEvent2(this.lineId, DragEvent.grabmove, (evt) => {
 				this.viewModel.isDragingInput = true
 				this.viewModel.tailPos = lineEnd.position
 			})
-			lineEnd.event.onNamedEvent2(this.lineId, DragEvent.dragend, (evt) => {
+			lineEnd.event.onNamedEvent2(this.lineId, DragEvent.grabend, (evt) => {
 				this.viewModel.isDragingInput = false
 			})
 		}

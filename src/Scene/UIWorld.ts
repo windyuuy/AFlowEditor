@@ -6,6 +6,9 @@ namespace flowui {
 		init() {
 			dataManager = new eds.DataManager().init()
 
+			// TODO: debug
+			window["dataManager"] = dataManager
+
 			this.setupScene()
 
 			this.systems = CleanArray(this.systems)

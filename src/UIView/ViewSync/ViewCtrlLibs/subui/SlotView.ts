@@ -22,7 +22,7 @@ namespace flowui {
 
 			const dragComp = this.shapeView.getComp(DragableComp)
 			dragComp.isFollowDrag = false
-			dragComp.event.on(DragEvent.dragmove, (evt) => {
+			dragComp.event.on(DragEvent.grabmove, (evt) => {
 				let startPos = this.position.clone()
 				let curPos = dragComp.dragOffset.addUp(this.position)
 
@@ -30,11 +30,17 @@ namespace flowui {
 				if (!edgeViewModel) {
 					edgeViewModel = this.newEdgeViewModel = this.createEdgeViewModel()
 				}
-				edgeViewModel.arrowPos = curPos
 
 				this.updateEdgeDraggingState(true)
+
+				if (edgeViewModel.isDragingInput) {
+					edgeViewModel.tailPos = curPos
+				} else if (edgeViewModel.isDragingOutput) {
+					edgeViewModel.arrowPos = curPos
+				}
+
 			})
-			dragComp.event.on(DragEvent.dragend, (evt) => {
+			dragComp.event.on(DragEvent.grabend, (evt) => {
 				if (this.newEdgeViewModel) {
 					CmdManager.runCmd({
 						name: "创建连线",
@@ -52,6 +58,7 @@ namespace flowui {
 		 */
 		protected updateEdgeDraggingState(b: boolean) {
 			const edgeViewModel = this.newEdgeViewModel
+			// console.log("this.viewModel.slotTemp.slotPos:", this.viewModel.slotTemp.slotPos)
 			if (this.viewModel.slotTemp.slotPos == SlotPosType.out) {
 				edgeViewModel.isDragingOutput = b
 			} else if (this.viewModel.slotTemp.slotPos == SlotPosType.in) {
