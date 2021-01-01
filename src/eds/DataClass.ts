@@ -9,7 +9,7 @@ namespace eds {
 		readonly otype?: string
 
 		/**
-		 * 是否自动gc释放
+		 * TODO: 是否自动gc释放
 		 */
 		// autoRelease?: bool
 	}

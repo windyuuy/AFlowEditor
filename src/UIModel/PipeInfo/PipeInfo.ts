@@ -40,7 +40,7 @@ namespace flowui {
 		/**
 		 * 节点名称
 		 */
-		name: string
+		name: string = "标题"
 
 		/**
 		 * 模板信息

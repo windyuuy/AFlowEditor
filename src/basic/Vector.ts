@@ -199,8 +199,8 @@ namespace math {
 			return Vector.multVar(this as IVector as T, v)
 		}
 
-		normalizeSelf<T extends IVector>(): T {
-			return Vector.normalizeSelf(this as IVector as T)
+		normalizeSelf() {
+			return Vector.normalizeSelf(this)
 		}
 
 		len<T extends IVector>(): number {

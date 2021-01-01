@@ -9,11 +9,11 @@ namespace flowui {
 		/**
 		 * 管线实例信息
 		 */
-		pipeInfo: PipeInfo
+		pipeInfo = RefData(PipeInfo)
 		/**
 		 * 管线展开模板信息
 		 */
-		pipeTemp: GroupPipeTemp
+		pipeTemp = RefData(GroupPipeTemp)
 
 		/**
 		 * 管线是否处于展开状态

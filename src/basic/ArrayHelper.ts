@@ -1,8 +1,8 @@
 namespace lang.helper {
 
-	export class ArrayHelper {
+	export class TArrayHelper {
 
-		static sum<T>(eles: T[], call: (e: T) => number): number {
+		sum<T>(eles: T[], call: (e: T) => number): number {
 			let sum0 = 0
 			eles.forEach((ele) => {
 				sum0 += call(ele)
@@ -10,7 +10,7 @@ namespace lang.helper {
 			return sum0
 		}
 
-		static max<T>(ls: T[], call: (e: T) => number): T | undefined {
+		max<T>(ls: T[], call: (e: T) => number): T | undefined {
 			let maxValue = -Infinity
 			let maxEle = ls[0]
 			for (let e of ls) {
@@ -23,7 +23,7 @@ namespace lang.helper {
 			return maxEle
 		}
 
-		static min<T>(ls: T[], call: (e: T) => number): T | undefined {
+		min<T>(ls: T[], call: (e: T) => number): T | undefined {
 			let minValue = Infinity
 			let minEle = ls[0]
 			for (let e of ls) {
@@ -36,7 +36,7 @@ namespace lang.helper {
 			return minEle
 		}
 
-		static foreachDifferentPairs<T, F>(ls1: T[], call1: (e: T) => string, ls2: F[], call2: (e: F) => string, call: (e1: T, e2: F) => any) {
+		foreachDifferentPairs<T, F>(ls1: T[], call1: (e: T) => string, ls2: F[], call2: (e: F) => string, call: (e1: T, e2: F) => any) {
 			const ls1Map: { [key: string]: T } = EmptyTable()
 			const ls2Map: { [key: string]: F } = EmptyTable()
 			ls1.forEach(e => {
@@ -62,5 +62,7 @@ namespace lang.helper {
 		}
 
 	}
+
+	export const ArrayHelper = new TArrayHelper()
 
 }

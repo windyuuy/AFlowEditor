@@ -108,9 +108,11 @@ namespace flowui {
 			let groupPipeViewModel = New(GroupPipeViewModel)
 			groupPipeViewModel.pipeTemp = New(PipeTemp)
 			groupPipeViewModel.slotSpecCode = `
-			in A:Hello1,B:Hello1
-			out E:Hello2,G.C:Hello2,G.D:Hello2
-			`
+in A:Hello1,B:Hello1
+out E:Hello2,G.C:Hello2,G.D:Hello2
+`.trim()
+			groupPipeViewModel.layout.posOffset.y = 400
+			groupPipeViewModel.layout.posOffset.x = 200
 
 			// let codePipeViewModel = New(CodePipeViewModel)
 			// codePipeViewModel.pipeTemp.slotSpecCode = `

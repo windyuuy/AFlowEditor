@@ -11,12 +11,16 @@ namespace flowui {
 		/**
 		 * 边缘信息
 		 */
-		edgeInfo: EdgeInfo
+		edgeInfo = RefData(EdgeInfo)
 
-		inputSlotViewModel: SlotViewModel
-		outputSlotViewModel: SlotViewModel
+		inputSlotViewModel = RefData(SlotViewModel)
+		outputSlotViewModel = RefData(SlotViewModel)
 
-		isDraging: bool
+		/**
+		 * 当前连线是否处于主动拖动状态
+		 */
+		isDraging: bool = false
+
 		private _arrowPos: Vector2
 		public get arrowPos(): Vector2 {
 			return this._arrowPos
@@ -30,6 +34,14 @@ namespace flowui {
 		}
 		public set tailPos(value: Vector2) {
 			this._tailPos.merge(value)
+		}
+
+		updateLayout() {
+			if (this.isDraging) {
+				let tailPos = this.inputSlotViewModel.transform.position
+				let arrowPos = this.outputSlotViewModel.transform.position
+
+			}
 		}
 	}
 }

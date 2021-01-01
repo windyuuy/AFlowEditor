@@ -9,7 +9,7 @@ namespace flowui {
 	export type IEditorAction = () => void
 	export interface IEditorCmd {
 		name: string
-		forward: IEditorAction
+		forward?: IEditorAction
 		backward?: IEditorAction
 	}
 
@@ -32,10 +32,12 @@ namespace flowui {
 		}
 
 		runCmd(cmd: IEditorCmd) {
-			try {
-				cmd.forward()
-			} catch (e) {
-				console.error(`执行失败: ${cmd.name}`, e)
+			if (cmd.forward) {
+				try {
+					cmd.forward()
+				} catch (e) {
+					console.error(`执行失败: ${cmd.name}`, e)
+				}
 			}
 			if (cmd.backward) {
 				try {

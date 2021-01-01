@@ -83,7 +83,7 @@ namespace flowui {
 		protected get showingText() {
 			let showText = this._text || this._hint
 			if (showText.length > 10) {
-				showText = showText.slice(0, 6) + " ..."
+				showText = showText.trim().slice(0, 6) + " ..."
 			}
 			return showText
 		}
@@ -167,20 +167,6 @@ namespace flowui {
 				self._text = evt.target["value"];
 
 				self.updateText();
-				let p1Text = $(`#${self.editorId}`).find(".scaleNode").find(".input");
-				p1Text.css("width", function () {
-					let content = p1Text.val().toString()
-					let lines = content.split("\n")
-					let maxLine = lang.helper.ArrayHelper.max(lines, l => l.length)
-					let maxCount = Math.min(maxLine.length, self.maxCountPerLine)
-					maxCount = Math.max(maxCount, 0)
-					p1Text.attr({
-						cols: "" + maxCount,
-					})
-					p1Text.css("height", function () {
-						return p1Text[0].scrollHeight - 4;
-					});
-				});
 			});
 
 			p1Text.on("blur", (evt) => {
@@ -193,6 +179,31 @@ namespace flowui {
 			this.isWritable = false;
 		}
 
+		updateEditorSize() {
+			const self = this;
+			let p1Text = $(`#${self.editorId}`).find(".scaleNode").find(".input");
+			p1Text.css("width", function () {
+				let content = p1Text.val().toString()
+				let lines = content.split("\n")
+				let maxLine = lang.helper.ArrayHelper.max(lines, l => l.length)
+				let maxCount = Math.min(maxLine.length, self.maxCountPerLine)
+
+				maxCount = Math.max(maxCount, 0)
+				p1Text.attr({
+					cols: "" + maxCount,
+				})
+
+				// TODO: 待改进
+				setTimeout(() => {
+					if (p1Text[0].scrollHeight > 0) {
+						p1Text.css("height", function () {
+							return p1Text[0].scrollHeight - 4;
+						});
+					}
+				}, 100)
+			});
+		}
+
 		updateText() {
 			this.viewNode.text = this.showingText
 			this.viewNode.updateText()
@@ -202,6 +213,8 @@ namespace flowui {
 			p1Text.attr({
 				placeholder: this.showingText,
 			})
+
+			this.updateEditorSize()
 		}
 
 		get textArea() {

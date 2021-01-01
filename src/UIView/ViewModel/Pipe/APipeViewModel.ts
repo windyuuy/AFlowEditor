@@ -37,11 +37,11 @@ namespace flowui {
 		/**
 		 * 管线实例信息
 		 */
-		pipeInfo: PipeInfo
+		pipeInfo = RefData(PipeInfo)
 		/**
 		 * 管线展开模板信息
 		 */
-		pipeTemp: PipeTemp
+		pipeTemp = RefData(PipeTemp)
 
 		/**
 		 * 标题布局
@@ -122,7 +122,7 @@ namespace flowui {
 			// 初始化自身布局
 			{
 				const layout = this.layout
-				layout.sizeOffset.width = 140
+				layout.sizeOffset.width = 150
 				layout.sizeOffset.height = 120
 			}
 
@@ -130,22 +130,24 @@ namespace flowui {
 			{
 				const layout = this.titleViewModel.layout
 				this.titleViewModel.transformParent = this
-				layout.sizeOffset.width = this.layout.borderSize.width - 20
+				layout.sizeOffset.width = this.layout.borderSize.width - 50
 				layout.sizeOffset.height = 20
 				layout.parentAnchor.y = -0.5
 				layout.selfAnchor.y = -0.5
 				layout.posOffset.y = 5
+				this.titleViewModel.applyLayoutPositionAffection()
 			}
 
 			// 槽点定义代码布局
 			{
 				const layout = this.slotCodeViewModel.layout
 				this.slotCodeViewModel.transformParent = this
-				layout.sizeOffset.width = this.layout.borderSize.width - 20
+				layout.sizeOffset.width = this.layout.borderSize.width - 50
 				layout.sizeOffset.height = 20
 				layout.parentAnchor.y = -0.5
 				layout.selfAnchor.y = 0.5
 				layout.posOffset.y = 20
+				this.slotCodeViewModel.applyLayoutPositionAffection()
 			}
 
 		}

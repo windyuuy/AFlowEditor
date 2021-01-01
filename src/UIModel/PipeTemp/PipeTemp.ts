@@ -36,13 +36,13 @@ namespace flowui {
 		/**
 		 * 模板名称
 		 */
-		name: string
+		name: string = "PipeTemp_标题"
 
 		/**
 		 * 指示槽位设置的代码
 		 * - 书写格式
 		 */
-		slotSpecCode: string
+		slotSpecCode: string = ""
 		lastSlotSpecCode: string
 		/**
 		 * 由代码生成的槽点信息缓存
