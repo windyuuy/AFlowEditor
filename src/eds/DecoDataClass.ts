@@ -22,10 +22,14 @@ namespace eds {
 					return data
 				},
 				set: function (value) {
-					let targetOid = value.oid
-					if (this[hiddenProp] != targetOid) {
-						this[hiddenProp] = targetOid
-						// this.dataManager.dirtyManager.markDirty(this)
+					if (value == null) {
+						this[hiddenProp] = ""
+					} else {
+						let targetOid = value.oid
+						if (this[hiddenProp] != targetOid) {
+							this[hiddenProp] = targetOid
+							// this.dataManager.dirtyManager.markDirty(this)
+						}
 					}
 				}
 			});

@@ -2,6 +2,12 @@
 
 namespace flowui {
 	export class EdgeJointViewModel implements IDataClass {
+		connectSlot(slot: SlotViewModel) {
+			this.slotViewModel = slot
+		}
+		depart() {
+			this.slotViewModel = null
+		}
 		readonly oid?: string;
 		/**
 		 * 类型名
@@ -12,6 +18,10 @@ namespace flowui {
 		 * 当前端点是否处于主动拖动状态
 		 */
 		isDraging: boolean = false
+		/**
+		 * 标记是否拖动过一次
+		 */
+		isDragOnce: boolean = false
 		/**
 		 * 端点位置
 		 */
@@ -75,13 +85,19 @@ namespace flowui {
 			return this.inputJointViewModel.isDraging
 		}
 		public set isDragingInput(value: bool) {
-			this.inputJointViewModel.isDraging = value
+			if (this.inputJointViewModel.isDraging != value) {
+				this.inputJointViewModel.isDragOnce = this.inputJointViewModel.isDraging
+				this.inputJointViewModel.isDraging = value
+			}
 		}
 		public get isDragingOutput(): bool {
 			return this.outputJointViewModel.isDraging
 		}
 		public set isDragingOutput(value: bool) {
-			this.outputJointViewModel.isDraging = value
+			if (this.outputJointViewModel.isDraging != value) {
+				this.outputJointViewModel.isDragOnce = this.outputJointViewModel.isDraging
+				this.outputJointViewModel.isDraging = value
+			}
 		}
 
 		public get arrowPos(): Vector2 {
