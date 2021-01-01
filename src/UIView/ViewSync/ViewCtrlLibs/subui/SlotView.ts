@@ -42,15 +42,26 @@ namespace flowui {
 			})
 			dragComp.event.on(DragEvent.grabend, (evt) => {
 				if (this.newEdgeViewModel) {
-					CmdManager.runCmd({
-						name: "创建连线",
-						forward: () => {
-							this.updateEdgeDraggingState(false)
-							this.newEdgeViewModel = null
-						}
-					})
+					if (!this.isValidNewEdge(this.newEdgeViewModel)) {
+						// 连线过短, 直接删除
+						Del(this.newEdgeViewModel)
+						this.newEdgeViewModel = null
+					} else {
+						CmdManager.runCmd({
+							name: "创建连线",
+							forward: () => {
+								this.updateEdgeDraggingState(false)
+								this.newEdgeViewModel = null
+							}
+						})
+					}
 				}
 			})
+		}
+
+		isValidNewEdge(newEdgeViewModel: EdgeViewModel) {
+			return (newEdgeViewModel.inputJointViewModel.isPortBinded && newEdgeViewModel.outputJointViewModel.isPortBinded)
+				|| newEdgeViewModel.edgeLen() >= this.viewModel.radius
 		}
 
 		/**
