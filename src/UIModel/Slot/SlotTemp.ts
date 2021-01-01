@@ -20,7 +20,7 @@ namespace flowui {
 		/**
 		 * 槽位方位
 		 */
-		get slotPos() {
+		get slotPos(): SlotPosType {
 			return this.group.slotPos
 		}
 

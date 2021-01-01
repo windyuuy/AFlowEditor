@@ -23,7 +23,7 @@ namespace flowui {
 			let slot = New(SlotInfo)
 			slot.slotTemp = slotTemp
 
-			if (slotTemp.slotPos == "in") {
+			if (slotTemp.slotPos == SlotPosType.in) {
 				TableAdd(this.inputs, slot)
 			} else {
 				TableAdd(this.outputs, slot)

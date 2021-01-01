@@ -30,16 +30,16 @@ namespace flowui {
 				if (!edgeViewModel) {
 					edgeViewModel = this.newEdgeViewModel = this.createEdgeViewModel()
 				}
-				// edgeViewModel.tailPos = startJointPos
 				edgeViewModel.arrowPos = curPos
-				edgeViewModel.isDragingOutput = true
+
+				this.updateEdgeDraggingState(true)
 			})
 			dragComp.event.on(DragEvent.dragend, (evt) => {
 				if (this.newEdgeViewModel) {
 					CmdManager.runCmd({
 						name: "创建连线",
 						forward: () => {
-							this.newEdgeViewModel.isDragingOutput = false
+							this.updateEdgeDraggingState(false)
 							this.newEdgeViewModel = null
 						}
 					})
@@ -47,10 +47,36 @@ namespace flowui {
 			})
 		}
 
+		/**
+		 * 更新连线拖动状态
+		 */
+		protected updateEdgeDraggingState(b: boolean) {
+			const edgeViewModel = this.newEdgeViewModel
+			if (this.viewModel.slotTemp.slotPos == SlotPosType.out) {
+				edgeViewModel.isDragingOutput = b
+			} else if (this.viewModel.slotTemp.slotPos == SlotPosType.in) {
+				edgeViewModel.isDragingInput = b
+			} else {
+				throw new Error("unsupport slot pos")
+			}
+		}
+
 		protected createEdgeViewModel() {
 			const edgeViewModel = New(EdgeViewModel)
 			// TODO: 需要考虑或者屏蔽逆向连线
-			edgeViewModel.inputSlotViewModel = this.viewModel
+			switch (this.viewModel.slotTemp.slotPos) {
+				case SlotPosType.in: {
+					edgeViewModel.outputSlotViewModel = this.viewModel
+					break
+				}
+				case SlotPosType.out: {
+					edgeViewModel.inputSlotViewModel = this.viewModel
+					break
+				}
+				default: {
+					throw new Error("unsupport slot pos")
+				}
+			}
 			return edgeViewModel
 		}
 	}

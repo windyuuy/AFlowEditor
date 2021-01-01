@@ -156,8 +156,8 @@ namespace flowui {
 		 * 更新所有信号槽组信息
 		 */
 		updateLayout() {
-			const inputs = this.slotGroupViewModels.filter(group => group.slotGroupInfo.slotPos == "in")
-			const outputs = this.slotGroupViewModels.filter(group => group.slotGroupInfo.slotPos == "out")
+			const inputs = this.slotGroupViewModels.filter(group => group.slotGroupInfo.slotPos == SlotPosType.in)
+			const outputs = this.slotGroupViewModels.filter(group => group.slotGroupInfo.slotPos == SlotPosType.out)
 
 			// this.applyLayoutPositionAffection()
 

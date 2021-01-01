@@ -100,24 +100,30 @@ namespace flowui {
 						this.host.position = scaledPos
 					}
 
-					this.host.event.emit("onDragUpdate", {
+					this.emitEvent(DragEvent.dragmove, {
 						target: this,
 					})
-
-					this.event.emit(DragEvent.dragmove, {})
-
 					this.host["onUpdateTransform"](true)
 				}
 			}
 		}
 
 		onDragBegin() {
-			this.event.emit(DragEvent.dragbegin, {})
+			this.emitEvent(DragEvent.dragbegin, {
+				target: this,
+			})
 		}
 
 		onDragEnd() {
-			this.event.emit(DragEvent.dragend, {})
+			this.emitEvent(DragEvent.dragend, {
+				target: this,
+			})
 			this.host["onUpdateTransform"](true)
+		}
+
+		protected emitEvent(key: string, evt: any) {
+			this.host.event.emit(key, evt)
+			this.event.emit(key, evt)
 		}
 
 	}

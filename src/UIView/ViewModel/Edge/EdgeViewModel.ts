@@ -1,6 +1,47 @@
 
 
 namespace flowui {
+	export class EdgeJointViewModel implements IDataClass {
+		readonly oid?: string;
+		/**
+		 * 类型名
+		 */
+		readonly otype?: string
+
+		/**
+		 * 当前端点是否处于主动拖动状态
+		 */
+		isDraging: boolean = false
+		/**
+		 * 端点位置
+		 */
+		pos: Vector2 = new Vector2()
+		/**
+		 * 绑定的槽点
+		 */
+		slotViewModel = RefData(SlotViewModel)
+
+		/**
+		 * 是否已绑定端点
+		 */
+		get isPortBinded(): boolean {
+			return !this.isDraging && !!this.slotViewModel
+		}
+
+		/**
+		 * 是否判定为已拆离
+		 */
+		get isInDepart(): boolean {
+			let modelPos = this.slotViewModel.transform.getWorldPosition()
+			let selfPos = this.pos
+			if (selfPos.distance(modelPos) - this.slotViewModel.radius > 2) {
+				return true
+			}
+			return false
+		}
+
+	}
+
 	export class EdgeViewModel extends NodeViewModel {
 		init() {
 			return super.init()
@@ -11,35 +52,56 @@ namespace flowui {
 		 */
 		edgeInfo = RefData(EdgeInfo)
 
-		inputSlotViewModel = RefData(SlotViewModel)
-		outputSlotViewModel = RefData(SlotViewModel)
+		inputJointViewModel = NewData(EdgeJointViewModel)
+		outputJointViewModel = NewData(EdgeJointViewModel)
+
+		public get inputSlotViewModel() {
+			return this.inputJointViewModel.slotViewModel
+		}
+		public set inputSlotViewModel(value) {
+			this.inputJointViewModel.slotViewModel = value
+		}
+		public get outputSlotViewModel() {
+			return this.outputJointViewModel.slotViewModel
+		}
+		public set outputSlotViewModel(value) {
+			this.outputJointViewModel.slotViewModel = value
+		}
 
 		/**
 		 * 当前连线是否处于主动拖动状态
 		 */
-		isDragingInput: bool = false
-		isDragingOutput: bool = false
+		public get isDragingInput(): bool {
+			return this.inputJointViewModel.isDraging
+		}
+		public set isDragingInput(value: bool) {
+			this.inputJointViewModel.isDraging = value
+		}
+		public get isDragingOutput(): bool {
+			return this.outputJointViewModel.isDraging
+		}
+		public set isDragingOutput(value: bool) {
+			this.outputJointViewModel.isDraging = value
+		}
 
-		private _arrowPos: Vector2 = new Vector2()
 		public get arrowPos(): Vector2 {
-			return this._arrowPos
+			return this.outputJointViewModel.pos
 		}
 		public set arrowPos(value: Vector2) {
-			this._arrowPos.merge(value)
+			this.outputJointViewModel.pos.merge(value)
 		}
-		private _tailPos: Vector2 = new Vector2()
 		public get tailPos(): Vector2 {
-			return this._tailPos
+			return this.inputJointViewModel.pos
 		}
 		public set tailPos(value: Vector2) {
-			this._tailPos.merge(value)
+			this.inputJointViewModel.pos.merge(value)
 		}
 
 		updateLayout() {
 			let tailPos = this.tailPos
 			let arrowPos = this.arrowPos
-			let isInputBinded = !this.isDragingInput && this.inputSlotViewModel
-			let isOutputBinded = !this.isDragingOutput && this.outputSlotViewModel
+			let isInputBinded = !this.isDragingInput && !!this.inputSlotViewModel
+			let isOutputBinded = !this.isDragingOutput && !!this.outputSlotViewModel
 			if (isInputBinded) {
 				tailPos = this.inputSlotViewModel.transform.getWorldPosition()
 			}

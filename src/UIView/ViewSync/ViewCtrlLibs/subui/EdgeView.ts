@@ -15,6 +15,10 @@ namespace flowui {
 		lineHeadPt: NodeView
 		lineTailPt: NodeView
 
+		protected get lineId() {
+			return `ondrag_${this.oid}`
+		}
+
 		onLoad() {
 			this.lineView = this.createChild(NodeView)
 			const lineView = this.lineView
@@ -29,9 +33,12 @@ namespace flowui {
 			const ellipseComp = lineHead.addComp(EllipseComp)
 			ellipseComp.radius = 3
 			lineHead.addComp(DragableComp)
-			lineHead.event.onNamedEvent2(`ondrag_${this.oid}`, "onDragUpdate", (evt) => {
-				// this.lineView.getComp(ArrowLineComp).endPos = lineHead.position
+			lineHead.event.onNamedEvent2(this.lineId, DragEvent.dragmove, (evt) => {
+				this.viewModel.isDragingOutput = true
 				this.viewModel.arrowPos = lineHead.position
+			})
+			lineHead.event.onNamedEvent2(this.lineId, DragEvent.dragend, (evt) => {
+				this.viewModel.isDragingOutput = false
 			})
 
 			// 增加尾部端点
@@ -41,9 +48,12 @@ namespace flowui {
 			const circleEnd = lineEnd.addComp(EllipseComp)
 			circleEnd.radius = 3
 			lineEnd.addComp(DragableComp)
-			lineEnd.event.onNamedEvent2(`ondrag_${this.oid}`, "onDragUpdate", (evt) => {
-				// this.lineView.getComp(ArrowLineComp).beginPos = lineEnd.position
+			lineEnd.event.onNamedEvent2(this.lineId, DragEvent.dragmove, (evt) => {
+				this.viewModel.isDragingInput = true
 				this.viewModel.tailPos = lineEnd.position
+			})
+			lineEnd.event.onNamedEvent2(this.lineId, DragEvent.dragend, (evt) => {
+				this.viewModel.isDragingInput = false
 			})
 		}
 

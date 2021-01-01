@@ -11,7 +11,7 @@ namespace flowui {
 		/**
 		 * 槽位方位
 		 */
-		slotPos: "in" | "out"
+		slotPos: SlotPosType
 
 		/**
 		 * 槽位模板列表

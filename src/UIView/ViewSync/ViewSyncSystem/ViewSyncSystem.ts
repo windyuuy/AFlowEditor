@@ -33,6 +33,8 @@ namespace flowui {
 
 		update() {
 
+			EdgeAutoLocator.update()
+
 			this.syncView()
 			this.updateView()
 		}
